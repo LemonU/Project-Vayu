@@ -1,9 +1,9 @@
 % !TEX root = ./Requirment.tex
 \documentclass{article}
 \usepackage[utf8]{inputenc}
- 
+\usepackage{url} 
 \title{Sections and Chapters}
-\author{Gubert Farnsworth}
+\author{Christina Korsman,Oussama Saoudi}
 \date{ }
   
 \begin{document}
@@ -13,21 +13,99 @@
 \tableofcontents
 
 \section{Introduction}
-   
 \subsection{Purpose}
+This document is intended to act as a software requirements 
+specification for the program, which will outline the 
+requirements that the software must meet and the priority 
+of each of said requirements. The intended audience for the document 
+is the client requesting the software, who will use it to understand 
+the formalized specification for the software project being developed. 
+The software developers will also use the document in the development 
+of components to ensure that they meet the requirements specified.
+
 \subsection{Scope}
-\subsection{Definitions. Acronyms, and Abbreviations}
+The software being developed is called Project: Vayu.\\
+ 
+ Project: Vayu aims to provide information on natural disasters, 
+ particularly information on property damage in sorted order, 
+ and geographical locations affected by particular natural disasters. 
+ The software will not add new data.\\
+  
+The objective of the project is to present natural disaster information in forms relevant to
+disaster relief organizations and governments. 
+This will be done by presenting regions prone to
+certain disasters and which regions are most affected by natural 
+disasters and their property costs and casualties. The representation can 
+be modified depending on the time of year, allowing for resource management of 
+relief to be allocated to the right places at the right times of the year.
+
 \subsection{References}
+[1]“Disaster Prediction App – Apps on Google Play,” Google. [Online].
+Available:  \url{ https://play.google.com/store/apps/details?id=com.disasterprediction.ios&hl=en_CA.}
+[Accessed: 07-Feb-2020]. \\
+
+[2]“MyFireWatch - Bushfire map information Australia”, Myfirewatch.landgate.wa.gov.au,
+ 2020. [Online]. Available: \url{ https://myfirewatch.landgate.wa.gov.au/map.html. }
+ [Accessed: 07- Feb- 2020].
+
 \subsection{Overview}
+
+The remainder of the document will consist of previous works and 
+their purposes, the primary function of the software, user characteristics 
+and the software’s target audience, constraints on the software design, 
+and finally assumptions and dependencies in the project. This document is 
+formatted in standard SRS 1998 format.
+
+
 
 \section{Overall Description}
 \subsection{Product perspective}
-\subsection{Product function}
-\subsection{User characteristics}
-\subsection{Constraints}
-\subsection{Assumptions and dependencies}
+    \subsubsection*{Disaster Prediction App[1]} :
+    This mobile application reports space weather changes as well as earthquake 
+    incidents around the world. It shares similar characteristics with this 
+    project such as reporting recent weather trends (albeit on the interplanetary 
+    level) and this project as it is only concerned with solar influences and 
+    earthquakes, but not storms, blizzards, or tornados, etc., which are more 
+    relevant to daily lives. A way to improve it will be to include data reports on 
+    hazardous weather that are more often concerned by people, like those 
+    mentioned beforehand.
+    \subsubsection*{MyFireWatch[2]} :
+    MyFireWatch is a web service that visualizes recent fires by projecting 
+    their location on a map. Similar to the proposed project, it highlights 
+    regions most recently and often affected by natural hazards. However, it is 
+    limited to just visualizing incidences of fire, not analyzing if there is any
+    relation between the incidences’ geographic location and occurrence time, 
+    which may be implemented to enhance the service’s usefulness.
 
-\section{Specific Requirments}
+
+\subsection{Product function}
+The main function that the software will perform is visualizing the danger 
+of a certain geographical region, providing guidance to avoid such 
+hazards. The geographical location will be provided by the user 
+through the use of a mobile GPS device or the manual input of positional 
+coordinates.   
+
+\subsection{User characteristics}
+The intended users of this product will need minimal knowledge of the 
+operation of a mobile device. The target audience will be mainly directed 
+to government and rescue personnel.
+
+\subsection{Constraints}
+The reliability of the data is constrained, due to the non-infinity set 
+of natural disasters recorded in the dataset. Another constraint with 
+this data set is the limited set of data points relating to time.  
+
+\section{Specific Features}
+\subsection{Information Display}
+
+\subsection{Design Constraints}
+The product design must be consistent with Mcmaster Software Engineering 2XB3 Software Engineering Practice and Experience:Binding Theory to Practice Final project documentation.
+
+\section{Software System Attributes}
+\subsection{Maintainability}
+Using Git issue tracker to allow the ease of maintablity and process tracker. The product will use separation of concerns along with modularity to allow for ease of maintenance.
+\subsection{Portability}
+Through the use of java and the product will be allowed to run on any system that supports Java 8 and above.
 
 
 \end{document}
