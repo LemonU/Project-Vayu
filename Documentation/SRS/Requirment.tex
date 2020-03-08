@@ -113,12 +113,6 @@ The format accepted for input data files shall only be of Comma Separated Value 
  
  
 \section{Specific Features }
-\subsection{Information Display}
-The product will display the information on a GUI.
- 
- Information related to property cost and sorted locations will be presented in a list form.
- 
-Information relating 
 \subsection{Functional Requirements}
     \begin{itemize}
         \item The system shall provide the user with a list of affected areas sorted by property damage cost.
@@ -160,10 +154,11 @@ Information relating
     process the data for finding and creating the convex hulls, and amount of 
     time it takes to sort the data.
         \subsection{Functional Requirements Priorities}
-            \subsubsection{Sort Locations Based On Damage} Essential
-            \subsubsection{Output Affected Regions to File} Essential
-            \subsubsection{Display Affected Regions on Map} Conditional
-     
+        \begin{itemize}
+            \item{Sort Locations Based On Damage} Essential
+            \item{Output Affected Regions to File} Essential
+            \item{Display Affected Regions on Map} Conditional
+        \end{itemize}
         \subsection{Likely Changes to System Maintenance Procedure}
             Changes to system maintenance procedure may include but are not limited to the following:
     \begin{itemize}
