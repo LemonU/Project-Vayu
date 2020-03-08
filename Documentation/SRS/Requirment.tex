@@ -4,11 +4,43 @@
 \usepackage{url} 
 \title{Sections and Chapters}
 \author{Christina Korsman,Oussama Saoudi}
-\date{ }
+\date{\today}
   
 \begin{document}
-  
-\maketitle
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+            
+        \Huge
+        \textbf{Software Requirement Specification}
+
+        \LARGE
+        \vspace{0.5cm}
+        \textbf{Project Vayu}\\
+        \vspace{0.2cm}
+        Lab 2, Group 5
+
+        \vspace{0.2cm}
+        \today
+            
+        \vspace{1.5cm}
+            
+        \Large
+        Oussama Saoudi, Lennon Yu\\
+        Christina Korsman, Diego Soriano
+
+        \vfill
+            
+        \vspace{0.8cm}
+                        
+        \large
+        SFWRENG 2XB3\\
+        Software Engineering Practice and Experience:\\
+        Binding Theory to Practice\\
+        Department of Computing and Software\\
+        McMaster University            
+    \end{center}
+\end{titlepage}
   
 \tableofcontents
 \pagebreak
@@ -58,7 +90,7 @@ Available: \url{ https://play.google.com/store/apps/details?id=com.disasterpredi
   
 \section{Overall Description}
 \subsection{Product perspective}
-\subsubsection*{Disaster Prediction App[1]} :
+\subsubsection*{Disaster Prediction App[1]} 
     This mobile application reports space weather changes as well as earthquake 
     incidents around the world. It shares similar characteristics with this project 
     such as reporting recent weather trends (albeit on the interplanetary level) and 
@@ -67,7 +99,7 @@ Available: \url{ https://play.google.com/store/apps/details?id=com.disasterpredi
     A way to improve it will be to include data reports on hazardous weather that are 
     more often concerned by people, like those mentioned beforehand.
  
-\subsubsection*{MyFireWatch[2]} :
+\subsubsection*{MyFireWatch[2]} 
     MyFireWatch is a web service that visualizes recent fires by projecting their 
     location on a map. Similar to the proposed project, it highlights regions most 
     recently and often affected by natural hazards. However, it is limited to just 
@@ -113,6 +145,13 @@ The format accepted for input data files shall only be of Comma Separated Value 
  
  
 \section{Specific Features }
+<<<<<<< HEAD
+=======
+\subsection{Information Display}
+The product will display the information on a GUI. Information related to property cost and 
+sorted locations will be presented in a list form.
+
+>>>>>>> 09b984610762a57273d4d1316728d85cd67cb4e2
 \subsection{Functional Requirements}
     \begin{itemize}
         \item The system shall provide the user with a list of affected areas sorted by property damage cost.
@@ -154,11 +193,19 @@ The format accepted for input data files shall only be of Comma Separated Value 
     process the data for finding and creating the convex hulls, and amount of 
     time it takes to sort the data.
         \subsection{Functional Requirements Priorities}
+<<<<<<< HEAD
         \begin{itemize}
             \item{Sort Locations Based On Damage} Essential
             \item{Output Affected Regions to File} Essential
             \item{Display Affected Regions on Map} Conditional
         \end{itemize}
+=======
+            \begin{itemize}
+                \item Sort Locations Based on Damage: Essential
+                \item Output Affected Regions to File: Essential
+                \item Display Affected Regions on Map: Conditional
+            \end{itemize}
+>>>>>>> 09b984610762a57273d4d1316728d85cd67cb4e2
         \subsection{Likely Changes to System Maintenance Procedure}
             Changes to system maintenance procedure may include but are not limited to the following:
     \begin{itemize}
