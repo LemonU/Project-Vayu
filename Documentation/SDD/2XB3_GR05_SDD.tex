@@ -5,39 +5,64 @@
 \usepackage{amsfonts}
 \usepackage{listings}
 \usepackage{url}
+ %% MIS CODE
+ 
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{hhline}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{url}
 
+%\oddsidemargin -10mm
+%\evensidemargin -10mm
+\textwidth 160mm
+\textheight 200mm
+\renewcommand\baselinestretch{1.0}
+
+\newcounter{stepnum}
+
+%% Comments
+
+\usepackage{color}
+
+\newif\ifcomments\commentstrue
+
+\ifcomments
+\newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\else
+\newcommand{\authornote}[3]{}
+\newcommand{\todo}[1]{}
+\fi
+
+\newcommand{\wss}[1]{\authornote{blue}{SS}{#1}}
+
+ 
+ %% MIS CODE 
+ 
+ 
 \pagestyle {plain}
 \pagenumbering{arabic}
-
+ 
 \begin{document}
-% \begin{titlepage}
-% \begin{center}
-
-% \Huge
-% \textbf{Project Vayu}\\
-% \vspace{0.5cm}
-% \LARGE
-% \textbf{Software Design Description}\\
-% \vspace{1.5cm}
-% \large
-% Oussama Saoudi, Lennon Yu\\
-% Christina Korsman, Diego Soriano
-
-% \end{center}
-% \end{titlepage}
+%~~~~~~~~~~~~~~~~~~~~~~~  Title  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 \begin{titlepage}
     \begin{center}
         \vspace*{1cm}
             
         \Huge
         \textbf{Software Design Document}
-
+ 
         \LARGE
         \vspace{0.5cm}
         \textbf{Project Vayu}\\
         \vspace{0.2cm}
         Lab 2, Group 5
-
+ 
         \vspace{0.5cm}
         Revision: 0.1\\
         \vspace{0.2cm}
@@ -48,7 +73,7 @@
         \Large
         Oussama Saoudi, Lennon Yu\\
         Christina Korsman, Diego Soriano
-
+ 
         \vfill
             
         \vspace{0.8cm}
@@ -61,4 +86,452 @@
         McMaster University            
     \end{center}
 \end{titlepage}
+ 
+\newpage
+%~~~~~~~~~~~~~~~~~~~~~~~  Revision  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\Large \noindent \textbf{Revisions}\\
+\normalsize
+\begin{center}
+    \begin{tabular}{|| c | c | p{7cm} ||} 
+    \hline
+    Revision & Date & Changes\\
+    \hline\hline
+    V0.1 & 27 Feb 2020 & Added skeleton \\ 
+    \hline
+    ~ & ~ & ~ \\
+    \hline
+    ~ & ~ & ~ \\
+    \hline
+    ~ & ~ & ~ \\
+    \hline
+    ~ & ~ & ~ \\
+    \hline
+\end{tabular}
+\end{center}
+ 
+\Large \noindent \textbf{Team Members}\\
+\normalsize
+\begin{center}
+    \begin{tabular}{|| c | c | l ||} 
+    \hline
+    Name & Student No. & Role\\
+    \hline\hline
+    Oussama Saoudi & 400172153 & Project Lead, Search Alg. Dev. \\ 
+    \hline
+    Lennon Yu & 400183521 & Doc. Maintainer, Graph Alg. Dev. \\
+    \hline
+    Christina Korsman & 400192880 & Transcriber, UI/UX Dev. \\
+    \hline
+    Diego Soriano & 400172910 & Grunk, Sort Alg. Dev. \\
+    \hline
+\end{tabular}
+\end{center}
+ 
+\normalsize
+By virtue of submitting this document we electronically sign and date
+that the work being submitted by all the individuals in the group is
+their exclusive work as a group and we consent to make available the
+application developed through SE-2XB3 project, the reports,
+presentations, and assignments (not including my name and student number)
+for future teaching purposes. 
+ 
+\newpage
+%~~~~~~~~~~~~~~~~~~~~~~~  Contribution  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\Large \textbf{Contributions}
+\normalsize
+\begin{center}
+    \begin{tabular}{|| c | c | l | p{7cm} ||} 
+    \hline
+    Name & Roles & Contributions & Comments\\
+    \hline\hline
+    ~ & ~ & ~ \\ 
+    \hline
+    ~ & ~ & ~ \\
+    \hline
+    ~ & ~ & ~ \\
+    \hline
+    ~ & ~ & ~ \\
+    \hline
+\end{tabular}
+\end{center}
+ 
+\newpage
+%~~~~~~~~~~~~~~~~~~~~~~~  Summary  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\Large \noindent \textbf{Summary}\\
+\normalsize
+Here is the summary.
+ 
+\newpage
+%~~~~~~~~~~~~~~~~~~~~~~~  Table of Content  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\normalsize
+\tableofcontents
+\newpage
+%~~~~~~~~~~~~~~~~~~~~~~~  Body  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+% \section{Introduction} 
+    
+\section{SDD Identification}
+    \subsection{Scope}
+    \subsection{Authorship}
+    \subsection{Context}
+    \subsection{References}
+[1]Cengproject.cankaya.edu.tr, 2020. [Online]. Available: http://cengproject.cankaya.edu.tr/wp-content/uploads/sites/10/2017/12/SDD-ieee-1016-2009.pdf. [Accessed: 22- Mar- 2020].
+    \subsection{Context}
+    \subsection{Design Languages}
+    The Design language that will be use is UML.
+    \subsection{Body}
+    \subsection{Summary}
+    \subsection{Glossary}
+    
+        
+\section{Design Stakeholders}
+    The stakeholder of the design subject with respective design concerns are the following:
+    \begin{itemize}
+        \item Governments
+        \begin{itemize}
+            \item Disaster Regions %TODO: LABEL THE CONCERNS
+            \item Casualties
+            \item Severity Indicator
+        \end{itemize}
+        
+        \item Non-profit Organizations
+        \begin{itemize}
+            \item Disaster Regions %TODO: LABEL THE CONCERNS
+            \item Casualties
+            \item Severity Indicator
+        \end{itemize}
+        
+        \item Insurance Companies
+        \begin{itemize}
+            \item Property Damage
+            \item Severity Indicator
+        \end{itemize}
+        
+    \end{itemize}
+\section{Design Views}
+\section{Design Viewpoints}
+        \subsection{Context viewpoint}%%all
+            Context viewpoint depicts all the services provided.
+            \subsubsection{Design concerns}
+                %The user will be interacting the filter class that will dictate the output of nodes that the user will see. The output will be done through %GUI? the outfile File
+                % This will cover the functional requirements  [FR1.1], [FR1.2], [FR1.3], [FR1.4]
+            \subsubsection{Design entities}
+                The external active elements that the system will be working with, is the user and the data set.
+            \subsubsection{Design relationships}
+                The system will receive location data , or filter data from the user. With this input the system will out the severity and disaster from the surround area. if applicable the filter on the type of disaster in that area.
+            \subsubsection{Design  Constraints}
+                %The interaction will be through a %moblie computer application?
+        \subsection{Composition viewpoint}%Lennon
+            Summary of system composition here
+            \subsubsection{Design concerns}
+            NYI
+            \subsubsection{Design entities}
+            NYI
+            \subsubsection{Design Relationship}
+            NYI
+            \subsubsection{Design attributes}
+            NYI
+        \subsection{Logical viewpoint}%Oussama
+                %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////////////////////////////////////////////
+                 \newpage
+                \subsubsection* {QuickSort}
+                
+                \paragraph*{Module}
+                
+                QuickSort
+                
+                \subsubsection* {Uses}
+                N/A
+                
+                \subsubsection* {Syntax}
+
+                \paragraph{}* {Exported Constants}
+                None
+                
+                \subsubsection* {Exported Types}
+
+                \subsubsection* {Exported Access Programs}
+                
+                \begin{tabular}{| l | l | l | p{5cm} |}
+                \hline
+                \textbf{Routine Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+                \hline
+                 &  &  & ~\\
+                \hline
+                \end{tabular}
+                
+                \subsubsection* {Semantics}
+                
+                \paragraph* {State Variables} 
+                
+                \paragraph{}* {State Invariant}
+                None
+                               %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////////////////////////////////////////////
+                 \newpage
+                \subsubsection* {QuickSort}
+                
+                \paragraph*{Module}
+                
+                QuickSort
+                
+                \subsubsection* {Uses}
+                N/A
+                
+                \subsubsection* {Syntax}
+
+                \paragraph{}* {Exported Constants}
+                None
+                
+                \subsubsection* {Exported Types}
+
+                \subsubsection* {Exported Access Programs}
+                
+                \begin{tabular}{| l | l | l | p{5cm} |}
+                \hline
+                \textbf{Routine Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+                \hline
+                 &  &  & ~\\
+                \hline
+                \end{tabular}
+                
+                \subsubsection* {Semantics}
+                
+                \paragraph* {State Variables} 
+                
+                \paragraph{}* {State Invariant}
+                None
+        
+                %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////////////////////////////////////////////
+                 \newpage
+                \subsection* {Node}
+                
+                \subsubsection*{Module}
+                Node
+                
+                \subsection* {Uses}
+                N/A
+                
+                \subsection* {Syntax}
+                
+                \subsubsection{}* {Exported Constants}
+                None
+                \subsubsection* {Exported Types}
+                Node = ?
+
+                
+                \subsubsection* {Exported Access Programs}
+                None
+                
+                \subsection* {Semantics}
+                
+                \subsubsection* {State Variables}
+                
+                $disaster: Landtypes$
+                
+                $lat: int$
+                
+                $long: int$
+                
+                $casualties: int$
+                
+                $damage: int$
+                
+                \subsubsection* {State Invariant}
+                None
+                \subsubsection* {Design Concerns}
+                
+                %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////////////////////////////////////////////
+                %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////Christina ////////////////////////////////////////
+                \newpage
+                \subsection* {DiasterType}
+                
+                \subsubsection*{Module}
+                DiasterType
+                
+                \subsection* {Uses}
+                N/A
+                
+                \subsection* {Syntax}
+                
+                \subsubsection*{} {Exported Constants}
+                None
+                \subsubsection* {Exported Types}
+                Landtypes = \{Astronomical Low Tide, Avalanche, Blizzard, Coastal Flood, Cold/Wind Chill, Debris Flow, Dense Fog, Dense Smoke, Drought, Dust Devil, Dust Storm, Excessive Heat, Extreme Cold/Wind Chill, Flash Flood, Flood,Frost/Freeze,Funnel Cloud, Freezing Fog, Hail, Heat, Heavy Rain, Heavy Snow, High Surf, High Wind, Hurricane(Typhoon),Ice Storm, Lake-Effect Snow, Lake shore Flood,Lighting, Marine Hail, Marine High Wind, Marine Strong Wind, Marine Thunder  \}\\
+
+       str         \subsubsection* {Exported Access Programs}
+                
+                
+                \begin{tabular}{| l | l | l | p{5cm} |}
+                \hline
+                \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+                \hline
+                new DiasterType & DiasterType & DiasterType & ~\\
+                \hline
+                \end{tabular}
+                
+                \subsection* {Semantics}
+                    \subsubsection* {State Variables} None
+                    \subsubsection*{} {State Invariant}None
+                
+                \newpage
+               
+                %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////////////////////////////////////////////
+                %//////////////////////////////////////////////////////////////
+                %...............DIEGODIEGODIEGODIEGODIEGODIEGODIEGODIEGO.......
+                %/////////////////////////////////////////////////////////////
+                 \newpage
+                %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////////////////////////////////////////////
+                \subsection* {Parser}
+                
+                \subsubsection*{Module}
+                
+                Parser
+                
+                \subsection* {Uses}
+                
+                N/A
+                
+                \subsection* {Syntax}
+                \subsubsection*{} {Exported Constants}
+                
+                None
+                
+                \subsubsection* {Exported Types}
+                
+                getData() = ArrayList$<$Node$>$
+                
+                \subsubsection* {Exported Access Programs}
+                
+                
+                \begin{tabular}{| l | l | l | p{5cm} |}
+                \hline
+                \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+                \hline
+                new Parser & Landtypes & LanduseT & ~\\
+                \hline
+                \end{tabular}
+                
+                \subsubsection{}* {Considerations}
+                
+                When implementing in Java, use enums (as shown in Tutorial 06 for ElementT).
+                %//////////////////////////////////////////////////////////////
+                %............................................................
+                %/////////////////////////////////////////////////////////////
+                            
+        \subsection{Dependency viewpoint}%Diego
+            This viewpoint highlights the relationships and interconnections amongst the different packages and methods in this project.
+            
+            \subsubsection{Design concerns}
+            
+            
+            \subsubsection{Design entities}
+            %Subsystem, component, module
+            
+            \subsubsection{Design relationships}
+            %Uses, provides, and requires
+            
+            \subsubsection{Design Attributes}
+            %name, type, purpose, dependencies, and resources
+        
+        \subsection{Information viewpoint}%Christina
+            This viewpoint shows the persistent data structures that will be apply in this project.
+            \subsubsection{Design concerns}
+                Concerns of this viewpoint are the persistent data structures. The way that this will be address is that the data will be stored in a Graph. This covers the functional requirements [FR2.1], [FR2.1]
+            
+            \subsubsection{Design entities}
+                %data items, data types , classes, data stores , access mechanism 
+                 Modules 
+                \begin{itemize}
+                    \item QuickSort - A module that implements the quick sort algorithm on the graph 
+                    \item Casualties Comparator - A module compare the casualties of two disasters 
+                    \item Property Damage Comparator - A module compare the property damage of two disasters 
+                    \item Proximity Comparator 
+                    \item Node - A class that store the data relating to a disaster occurrence. 
+                    \item Weather Type Enum - A Data type for all type of disasters in the data set
+                    \item Parser -Take the file and transfers the data to another class to be used 
+                   % \item File Output - The result of the user interacting with the program. It is an interface
+                    \item Filter - A class that filters out certain weather types 
+                    \item Graph - A graph data strucure 
+                    \item Connected Components Finder (Algorithm)- A module that implements algorithm that finds connected components on the Graph
+                    \item Convex Hull finder(Algorithm) -A module that implements an algorithm that finds the convex hull on the graph
+                    \item Convex Hull - A module that implements the Convex Data structure 
+                    \item KD-Tree (Data Structure)- A module that implements the KD- Tree Data structure 
+                   % \item GUI- 
+                \end{itemize}
+                
+            \subsubsection{Design relationships}
+                \begin{itemize}
+                    \item Quicksort use the node class as it the object type to be sorted.
+                    \item Causalities Comparator will use Node. It will use the getter accessor methods to allow the comparison 
+                    \item Property Damage Comparator will use Node. It will use the getter accessor methods to allow the comparison
+                    \item Promitiy Comparator will use Node. It will use the getter accessor methods to allow the comparison 
+                    \item Node use Enum for the disaster type that it will store for that occurrence 
+                   % \item File Output use Filter to make a list of disaster of the filter input types. 
+                    \item Filter use Weather Type to apply the filter to be used.
+                    \item Graph class use the node class to create a graph data structure 
+                    \item Parser use Nodes, taking data and separating it into the correct places for the Node.
+                    \item finder use Graph and Convex Hull
+                    
+                    \item Convex hull will use graph 
+                    %i have no idea how it will be implemented 
+                    \item KD -tree will use graph 
+                \end{itemize}
+                
+            \subsubsection{Design Attributes}
+                %persistence and quality properties
+                Node will be persistently use through out this software,as it is the main container for the data.
+                
+        \subsection{Patterns use viewpoint}%Lennon
+            Summary of patterns use viewpoint here.
+            \subsubsection{Design concerns}
+            NYI
+            \subsubsection{Design entities}
+            NYI
+            \subsubsection{Design relationships}
+            NYI
+            \subsubsection{Design Attributes}
+            NYI
+            \subsubsection{Design  Constraints}
+            NYI
+            
+        % interface will be done after all modules are completed 
+        \subsection{Interface viewpoint}%Christina or Diego
+            \subsubsection{Design concerns}
+               
+            \subsubsection{Design elements}
+                
+        \subsection{Algorithm viewpoint}%Oussama
+            \subsubsection{Design concerns}
+             \subsubsection{Design Attributes}
+
+\section{Design Overlays}
+\section{Design Rationale}
+\section{Review}
+
+\normalsize
 \end{document}
+% a description of the classes/modules you have decided to use in your application, and your explanation of why you have decomposed the application into those classes; You should include a UML class diagram showing a static representation of your application classes and relationship between classes; 
+
+% for each class, a description of the interface (public entities), and make sure that there is a description of the semantics (behaviour) of each public method in the class, as well as a description of the syntax
+
+% a view of the uses relationship;
+
+% include a trace back to requirements in each class interface;
+
+% for each class, a description of the implementation (private entities), including class variables - include enough detail to show how the class variables are maintained by the methods in the class; you should include two UML state machine diagrams for two most interesting classes in your implementation; 
+
+%  an internal review/evaluation of your design.
