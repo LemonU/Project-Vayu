@@ -326,13 +326,29 @@ Here is the summary.
 
                 
                 \subsubsection* {Exported Access Programs}
-                None
+                
+
+                \begin{tabular}{| l | l | l | p{5cm} |}
+                    \hline
+                    \textbf{Routine Name} & \textbf{In} & \textbf{Out} & \textbf{Description}\\
+                    \hline
+                    disaster&&DisasterType& Returns the disaster type of the datapoint.\\
+                    \hline
+                    latitude&&double& Returns the latitude position of the datapoint.\\
+                    \hline
+                    longitude&&double& Returns the longitude position of the datapoint.\\
+                    \hline
+                    casualties&&int& Returns the number of casulaties caused by the disaster.\\
+                    \hline
+                    damage&&int& Returns the amount of property damge in USD.\\
+                    \hline
+                    \end{tabular}
                 
                 \subsection* {Semantics}
                 
                 \subsubsection* {State Variables}
                 
-                $disaster: Landtypes$
+                $disaster: DisasterType$
                 
                 $lat: int$
                 
@@ -349,40 +365,85 @@ Here is the summary.
                 %//////////////////////////////////////////////////////////////
                 %............................................................
                 %/////////////////////////////////////////////////////////////
+                \newpage
+                \subsection* {KdTree}
+                
+                \subsubsection*{Module}
+                KdTree
+                
+                \subsection* {Uses}
+                Node
+                
+                \subsection* {Syntax}
+                
+                \subsubsection{}* {Exported Constants}
+                None
+                \subsubsection* {Exported Types}
+                KdTree = ?
+
+                
+                \subsubsection* {Exported Access Programs}
+                
+
+                \begin{tabular}{| l | l | l | p{5cm} |}
+                    \hline
+                    \textbf{Routine Name} & \textbf{In} & \textbf{Out} & \textbf{Description}\\
+                    \hline
+                    sortByPorximity&lat: int, long: int&ArrayList<Node>& Returns a sorted list of nodes sorted by their proximity to a given point\\
+                    \hline
+                    getPoints&point: Node, radius: int&Set<Node>& Returns set of nodes that are within the radius of the Node, and have same DisasterType\\
+                    \hline
+                    \end{tabular}
+                
+                \subsection* {Semantics}
+                
+                \subsubsection* {State Variables}
+                                
+                \subsubsection* {State Invariant}
+                None
+                \subsubsection* {Design Concerns}
+                This module facilitates the sorting by proximity functinoal requirment ([FR1.4]) using the method sortByProximity().
+                In addition it assists in creating connections to the graph, which facilitates the creation of disaster regions for 
+                functional requirements [FR2.1] and [FR5.3]
+
                 %//////////////////////////////////////////////////////////////
                 %............................................................
                 %/////////////////////Christina ////////////////////////////////////////
                 \newpage
-                \subsection* {DiasterType}
+                \subsection* {CCFinder}
                 
                 \subsubsection*{Module}
-                DiasterType
+                CCFinder
                 
                 \subsection* {Uses}
-                N/A
+                Graph, Node
                 
                 \subsection* {Syntax}
                 
                 \subsubsection*{} {Exported Constants}
                 None
-                \subsubsection* {Exported Types}
-                Landtypes = \{Astronomical Low Tide, Avalanche, Blizzard, Coastal Flood, Cold/Wind Chill, Debris Flow, Dense Fog, Dense Smoke, Drought, Dust Devil, Dust Storm, Excessive Heat, Extreme Cold/Wind Chill, Flash Flood, Flood,Frost/Freeze,Funnel Cloud, Freezing Fog, Hail, Heat, Heavy Rain, Heavy Snow, High Surf, High Wind, Hurricane(Typhoon),Ice Storm, Lake-Effect Snow, Lake shore Flood,Lighting, Marine Hail, Marine High Wind, Marine Strong Wind, Marine Thunder  \}\\
 
-       str         \subsubsection* {Exported Access Programs}
+                \subsubsection* {Exported Types}
+                None
+
+                \subsubsection* {Exported Access Programs}
                 
                 
                 \begin{tabular}{| l | l | l | p{5cm} |}
                 \hline
-                \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions}\\
+                \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Description}\\
                 \hline
-                new DiasterType & DiasterType & DiasterType & ~\\
+                getCC & Graph & Set<Set<Node>> & Generates the set of connected components and returns a set of set of nodes, where
+                each set of nodes is a conncected component.\\
                 \hline
                 \end{tabular}
                 
                 \subsection* {Semantics}
                     \subsubsection* {State Variables} None
                     \subsubsection*{} {State Invariant}None
-                
+                    \subsubsection* {Design Concerns}
+                    Used to group sets of nodes in a graph into connected components. Used in making convex hull which lead to
+                    making DisasterAreas. 
                 \newpage
                
                 %//////////////////////////////////////////////////////////////
