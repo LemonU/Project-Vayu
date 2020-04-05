@@ -19,26 +19,37 @@ public class ConvexHullBuilder {
 	 * item has a type Point.
 	 * @return second to top item in Stack pointStack.
 	 */
-	private Point nextToTop() {}
+	private Point nextToTop() {
+		Point temp = pointStack.pop();
+		Point output = pointStack.top();
+		pointStack.push(temp);
+		return output; 
+	}
 	
 	/**
 	 * Exchanges Points in the two array positions array[p1] and
 	 * array[p2]
-	 * @param array Array to perform swap of index positions p1 and p2
-	 * @param p1 Index of first element to swap with
-	 * @param p2 Index of the second element to swap with
+	 * @param points Array to perform swap of index positions p1 and p2
+	 * @param point Index of first element to swap with
+	 * @param point2 Index of the second element to swap with
 	 * @return
 	 */
-	private void exch(Point[] array, int p1, int p2) {}
+	private void exch(ArrayList<Point> points, int p1, int p2) {
+		Point temp = points.get(p1);
+		points.set(p1, points.get(p2));
+		points.set(p2, temp);
+	}
 	
 	/**
 	 * Returns the distance squared of the two Points p1 and p2 by calculating the
 	 * hypotenuse squared. 
 	 * @param p1 First Point to calculate distance
 	 * @param p2 Second Point to calculate distance
-	 * @return the distance squared between p1 and p2
+	 * @return the distance squared between p1 and p2, of type Double
 	 */
-	private int distanceSq(Point p1,Point p2) {}
+	private double distanceSq(Point p1,Point p2) {
+		return (p1.x() - p2.x())*(p1.x() - p2.x()) + (p1.y() - p2.y())*(p1.y() - p2.y());
+	}
 	
 	/**
 	 * Checks if points p1, p2, and p3 have a clockwise, collinear, or counterclockwise
@@ -49,7 +60,12 @@ public class ConvexHullBuilder {
 	 * @param p3 Third Point in orientation
 	 * @return Integer representing orientation of the Points.
 	 */
-	private int orientation(Point p1, Point p2, Point p3) {}
+	private int orientation(Point p1, Point p2, Point p3) {
+		double val = (p2.y() - p1.y())*(p3.x() - p2.x()) -
+					(p2.x() - p1.x()) * (p3.y() - p2.y());
+		if(val == 0) return 0;
+		return (val > 0) ? 1 : 2;
+	}
 	
 	/**
 	 * Comparator for comparing points by angle to a given anchor Point,
@@ -59,16 +75,84 @@ public class ConvexHullBuilder {
 	 */
 	private class PointComparator implements Comparator<Point>{
 
+		private Point anchor;
+		private PointComparator(Point anchor) {
+			this.anchor = anchor;
+		}
 		@Override
-		public int compare(Point arg0, Point arg1) {
-			// TODO Auto-generated method stub
-			return 0;
-		}}
+		public int compare(Point p1, Point p2) {
+			int ori = orientation(anchor,p1,p2);
+			
+			// if collinear, return -1 if p2 farther than p1, p1 otherwise
+			if(ori == 0) {
+				return (distanceSq(anchor,p2) >= distanceSq(anchor,p1) ? -1 : 1);
+			}
+			
+			// return -1 if orientation is counter clock-wise, 1 if clock-wise
+			return (ori == 2) ? -1 : 1;
+		}
+		}
+	
+	// TEMPORARY METHOD
+	private void qsort(ArrayList<Object> list,Comparator k ) {}
 	
 	/**
 	 * Computes the convex hull of the list of points provided
 	 * @param points List of points in the set to compute convex set
 	 * @return Set of Points representing the convex hull of the points parameter
 	 */
-	private HashSet<Point> convexHull(ArrayList<Point> points) {}
+	private HashSet<Point> convexHull(ArrayList<Point> points) {
+		double ymin = points.get(0).y(); 
+		int min = 0;
+		
+		//Find lowest y, if there are multiple points with same y value, pick leftmost of them.
+		for(int i =1; i < points.size(); i++) {
+			double y = points.get(i).y();
+			if(y < ymin || (ymin == y && points.get(i).x() < points.get(min).x())) {
+				ymin = points.get(i).y();
+				min = i;
+			}
+		}
+		
+		
+		// Place bottom-most point at the first position
+		exch(points,0,min);
+		
+		qsort(points.subList(1, points.size()-1),new PointComparator(points.get(0)));
+		
+		ArrayList<Point> aux = new ArrayList<>();
+		aux.add(points.get(0));
+		
+		// Recreates array without collinear points existing
+		for(int i = 1; i < points.size(); i++) {
+			while(i < points.size() -1 && 
+					orientation(points.get(0),
+							points.get(i),
+							points.get(i+1))
+					== 0){
+				i++;
+			}
+			aux.add(points.get(i));
+		}
+		if (aux.size()< 3) {
+			return null;
+		}
+		
+		pointStack.push(aux.get(0));
+		pointStack.push(aux.get(1));
+		pointStack.push(aux.get(2));
+		
+		for(int i = 0; i < aux.size(); i++) {
+			while(orientation(nextToTop(),pointStack.top(),aux.get(i)) != 2) {
+				pointStack.pop();
+			}
+			pointStack.push(aux.get(i));	
+		}
+		
+		HashSet<Point> output = new HashSet<>();
+		for(Point e : pointStack) {
+			output.add(e);
+		}
+		return output;
+	}
 }

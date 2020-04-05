@@ -56,6 +56,14 @@ public class Stack<Item> implements Iterable<Item>{
         numberOfValues--;
         return output;
     }
+    
+    /**
+     * Returns the top item in the stack without popping it
+     * @return top Item in the stack
+     */
+    public Item top() {
+    	return first.item;
+    }
     /**
      * Pushes item to the top of the stack
      * @param item Adds item to the top of the stack 
