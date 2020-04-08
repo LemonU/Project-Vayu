@@ -4,13 +4,22 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
+/**
+ * Connected Component finder for undirected graph with numerical vertex identifiers
+ */
 public class CCFinder {
 
-    private int componentCount;
-    private Hashtable<Integer, Boolean> marked;
-    private Hashtable<Integer, Integer> id;
-    private Hashtable<Integer, ArrayList<Integer>> components;
+    private int componentCount;    // # of existing components
+    private Hashtable<Integer, Boolean> marked;    // records if a vertex has been explored
+    private Hashtable<Integer, Integer> id;    // maps a vertex to its belonged component's id
+    private Hashtable<Integer, ArrayList<Integer>> components;    // maps a component's id to its included vertices
 
+    /**
+     * Constructs a new Connected Component Finder
+     * @param G
+     * The input undirected graph in which the connected
+     * components are to be found
+     */
     public CCFinder(Graph G) {
         componentCount = 0;
         marked = new Hashtable<>();
@@ -50,22 +59,58 @@ public class CCFinder {
         
     }
 
+    /**
+     * Checks if two vertices are in the same component
+     * (i.e. a path exists between two vertices)
+     * @param v The first vertex
+     * @param w The second vertex
+     * @return
+     * Returns true if {@code v} and {@code w} belong to
+     * the same component, false otherwise
+     */
     public boolean connected(int v, int w) {
         return id.get(v) == id.get(w);
     }
 
+    /**
+     * Gets the number of existing connected components.
+     * One may assume that all component id's are less than
+     * this value.
+     * @return
+     * The number of existing connected components
+     */
     public int componentCount() {
         return componentCount;
     }
 
+    /**
+     * Gets the id of the component that a vertex belongs to
+     * @param v The vertex
+     * @return
+     * The id of the component that vertex {@code v} belongs to
+     */
     public int componentIdOf(int v) {
         return id.get(v);
     }
 
+    /**
+     * Gets the size of the component that a vertex belongs to
+     * @param v The vertex
+     * @return
+     * The size of the component that vertex {@code v} belongs to
+     */
     public int componentSizeOf(int v) {
         return components.get(id.get(v)).size();
     }
 
+    /**
+     * Gets all vertices that are in the same component as a specifed
+     * vertex.
+     * Notice: the specifed vertex itself will be included as the result.
+     * @param v The vertex used to find all other connected vertices
+     * @return
+     * And iterable object containing all vertices connected with {@code v}
+     */
     public Iterable<Integer> connectedVerticesOf(int v) {
         return components.get(componentIdOf(v));
     }
