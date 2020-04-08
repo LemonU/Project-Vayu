@@ -114,6 +114,16 @@ public class CCFinder {
     public Iterable<Integer> connectedVerticesOf(int v) {
         return components.get(componentIdOf(v));
     }
+    
+    /**
+     * Gets a connected component by its id
+     * @param id The id of the connected component
+     * @return
+     * An iterable object cotaining all vertices of this component
+     */
+    public Iterable<Integer> getComponentById(int id) {
+        return components.get(id);
+    }
 
     @Override
     public String toString() {
