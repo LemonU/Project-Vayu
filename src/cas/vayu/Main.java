@@ -3,7 +3,8 @@ package cas.vayu;
 public class Main {
 
 	public static void main(String[] args) {
-		System.out.println("NYI");
+		//System.out.println("NYI");
+		
 	}
 	
 }
