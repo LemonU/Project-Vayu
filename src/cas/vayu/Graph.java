@@ -44,6 +44,15 @@ public class Graph {
     }
 
     /**
+     * Gets all vertices in the graph
+     * @return
+     * An Iterable object containing all vertices
+     */
+    public Iterable<Integer> vertices() {
+        return adj.keySet();
+    }
+
+    /**
      * Gets the number of vertices in this graph
      * @return
      */
