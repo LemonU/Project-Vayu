@@ -1,9 +1,7 @@
-package cas;
+package cas.vayu;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-
-import cas.vayu.Graph;
 
 public class CCFinder {
 
