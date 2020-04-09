@@ -10,18 +10,18 @@ import java.util.HashSet;
  *
  */
 public class ConvexHullBuilder {
-	private Stack<Point> pointStack;
+	private Stack<DisasterPoint> pointStack;
 	public ConvexHullBuilder() {
 		
 	}
 	/**
 	 * Returns the second to the top item in the pointStack. The
-	 * item has a type Point.
+	 * item has a type DisasterPoint.
 	 * @return second to top item in Stack pointStack.
 	 */
-	private Point nextToTop() {
-		Point temp = pointStack.pop();
-		Point output = pointStack.top();
+	private DisasterPoint nextToTop() {
+		DisasterPoint temp = pointStack.pop();
+		DisasterPoint output = pointStack.top();
 		pointStack.push(temp);
 		return output; 
 	}
@@ -29,25 +29,25 @@ public class ConvexHullBuilder {
 	/**
 	 * Exchanges Points in the two array positions array[p1] and
 	 * array[p2]
-	 * @param points Array to perform swap of index positions p1 and p2
+	 * @param disasterPoints Array to perform swap of index positions p1 and p2
 	 * @param point Index of first element to swap with
 	 * @param point2 Index of the second element to swap with
 	 * @return
 	 */
-	private void exch(ArrayList<Point> points, int p1, int p2) {
-		Point temp = points.get(p1);
-		points.set(p1, points.get(p2));
-		points.set(p2, temp);
+	private void exch(ArrayList<DisasterPoint> disasterPoints, int p1, int p2) {
+		DisasterPoint temp = disasterPoints.get(p1);
+		disasterPoints.set(p1, disasterPoints.get(p2));
+		disasterPoints.set(p2, temp);
 	}
 	
 	/**
 	 * Returns the distance squared of the two Points p1 and p2 by calculating the
 	 * hypotenuse squared. 
-	 * @param p1 First Point to calculate distance
-	 * @param p2 Second Point to calculate distance
+	 * @param p1 First DisasterPoint to calculate distance
+	 * @param p2 Second DisasterPoint to calculate distance
 	 * @return the distance squared between p1 and p2, of type Double
 	 */
-	private double distanceSq(Point p1,Point p2) {
+	private double distanceSq(DisasterPoint p1,DisasterPoint p2) {
 		return (p1.x() - p2.x())*(p1.x() - p2.x()) + (p1.y() - p2.y())*(p1.y() - p2.y());
 	}
 	
@@ -55,12 +55,12 @@ public class ConvexHullBuilder {
 	 * Checks if points p1, p2, and p3 have a clockwise, collinear, or counterclockwise
 	 * orientation. If they are in a counter clock-wise orientation, returns 2, clock-wise
 	 * returns 1 and collinear returns 0.
-	 * @param p1 First Point in orientation
-	 * @param p2 Second Point in orientation
-	 * @param p3 Third Point in orientation
+	 * @param p1 First DisasterPoint in orientation
+	 * @param p2 Second DisasterPoint in orientation
+	 * @param p3 Third DisasterPoint in orientation
 	 * @return Integer representing orientation of the Points.
 	 */
-	private int orientation(Point p1, Point p2, Point p3) {
+	private int orientation(DisasterPoint p1, DisasterPoint p2, DisasterPoint p3) {
 		double val = (p2.y() - p1.y())*(p3.x() - p2.x()) -
 					(p2.x() - p1.x()) * (p3.y() - p2.y());
 		if(val == 0) return 0;
@@ -68,19 +68,19 @@ public class ConvexHullBuilder {
 	}
 	
 	/**
-	 * Comparator for comparing points by angle to a given anchor Point,
+	 * Comparator for comparing points by angle to a given anchor DisasterPoint,
 	 * used in performing Graham Scacn algorithm.
 	 * @author OussamaSaoudi
 	 *
 	 */
-	private class PointComparator implements Comparator<Point>{
+	private class PointComparator implements Comparator<DisasterPoint>{
 
-		private Point anchor;
-		private PointComparator(Point anchor) {
+		private DisasterPoint anchor;
+		private PointComparator(DisasterPoint anchor) {
 			this.anchor = anchor;
 		}
 		@Override
-		public int compare(Point p1, Point p2) {
+		public int compare(DisasterPoint p1, DisasterPoint p2) {
 			int ori = orientation(anchor,p1,p2);
 			
 			// if collinear, return -1 if p2 farther than p1, p1 otherwise
@@ -98,41 +98,41 @@ public class ConvexHullBuilder {
 	
 	/**
 	 * Computes the convex hull of the list of points provided
-	 * @param points List of points in the set to compute convex set
+	 * @param disasterPoints List of points in the set to compute convex set
 	 * @return Set of Points representing the convex hull of the points parameter
 	 */
-	private HashSet<Point> convexHull(ArrayList<Point> points) {
-		double ymin = points.get(0).y(); 
+	private HashSet<DisasterPoint> convexHull(ArrayList<DisasterPoint> disasterPoints) {
+		double ymin = disasterPoints.get(0).y(); 
 		int min = 0;
 		
 		//Find lowest y, if there are multiple points with same y value, pick leftmost of them.
-		for(int i =1; i < points.size(); i++) {
-			double y = points.get(i).y();
-			if(y < ymin || (ymin == y && points.get(i).x() < points.get(min).x())) {
-				ymin = points.get(i).y();
+		for(int i =1; i < disasterPoints.size(); i++) {
+			double y = disasterPoints.get(i).y();
+			if(y < ymin || (ymin == y && disasterPoints.get(i).x() < disasterPoints.get(min).x())) {
+				ymin = disasterPoints.get(i).y();
 				min = i;
 			}
 		}
 		
 		
 		// Place bottom-most point at the first position
-		exch(points,0,min);
+		exch(disasterPoints,0,min);
 		
-		qsort(points.subList(1, points.size()-1),new PointComparator(points.get(0)));
+		qsort(disasterPoints.subList(1, disasterPoints.size()-1),new PointComparator(disasterPoints.get(0)));
 		
-		ArrayList<Point> aux = new ArrayList<>();
-		aux.add(points.get(0));
+		ArrayList<DisasterPoint> aux = new ArrayList<>();
+		aux.add(disasterPoints.get(0));
 		
 		// Recreates array without collinear points existing
-		for(int i = 1; i < points.size(); i++) {
-			while(i < points.size() -1 && 
-					orientation(points.get(0),
-							points.get(i),
-							points.get(i+1))
+		for(int i = 1; i < disasterPoints.size(); i++) {
+			while(i < disasterPoints.size() -1 && 
+					orientation(disasterPoints.get(0),
+							disasterPoints.get(i),
+							disasterPoints.get(i+1))
 					== 0){
 				i++;
 			}
-			aux.add(points.get(i));
+			aux.add(disasterPoints.get(i));
 		}
 		if (aux.size()< 3) {
 			return null;
@@ -149,8 +149,8 @@ public class ConvexHullBuilder {
 			pointStack.push(aux.get(i));	
 		}
 		
-		HashSet<Point> output = new HashSet<>();
-		for(Point e : pointStack) {
+		HashSet<DisasterPoint> output = new HashSet<>();
+		for(DisasterPoint e : pointStack) {
 			output.add(e);
 		}
 		return output;

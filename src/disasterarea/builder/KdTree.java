@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class KdTree {
     private static final boolean VERT = true;
-    private static final boolean HOR = false;
     private Node root;
 	private RectA fullMap;
 	private static final double maxLat = 180;
@@ -25,40 +24,40 @@ public class KdTree {
 	 */
 	private class Node{
 		private Node left, right;
-		private Point p;
+		private DisasterPoint p;
 		private boolean orientation; //true == vertical, false == horizontal
 		private int size;
 		private RectA rect;
 		/**
 		 * Constructor for node taking all the information Node stores
-		 * @param p Point in 2D space the node represents
+		 * @param p DisasterPoint in 2D space the node represents
 		 * @param size Size of the node's subtree
 		 * @param orientation Orientation of the node's dividing line. True for
 		 * 					vertical and false for horizontal
 		 * @param rect Rectangle representing the space the point resides in and 
 		 * the space the node divides.
 		 */
-		public Node(Point p, int size, boolean orientation, RectA rect) {
+		public Node(DisasterPoint p, int size, boolean orientation, RectA rect) {
 			this.size = size;
 			this.rect = rect;
 			setPoint(p,orientation);
 		}
 		/**
 		 * Resets the Node's point p and orientation values
-		 * @param p Point in 2D space the node represents
+		 * @param p DisasterPoint in 2D space the node represents
 		 * @param orientation Orientation of the node's dividing line. True for
 		 * 					vertical and false for horizontal
 		 */
-		public void setPoint(Point p, boolean orientation) {
+		public void setPoint(DisasterPoint p, boolean orientation) {
 			this.p = p;
 			this.orientation = orientation;
 		}
 		
 		/**
 		 * Getter for the point stored in the node.
-		 * @return returns Point stored in the node.
+		 * @return returns DisasterPoint stored in the node.
 		 */
-		private Point getPoint() {
+		private DisasterPoint getPoint() {
 			return this.p;
 		}
 	}
@@ -85,20 +84,20 @@ public class KdTree {
 		/**
 		 * Checks if given point p is in the RectA object, ie if it is within
 		 * the bounds of being between xmin and xmax, and ymin and ymax (inclusive).
-		 * @param p Point to check if in the Rectangle contains the point p
+		 * @param p DisasterPoint to check if in the Rectangle contains the point p
 		 * @return boolean to represent if the point is inside the RectA
 		 */
-		private boolean contains(Point p) {
+		private boolean contains(DisasterPoint p) {
 			return xmin <= p.x() && p.x() <= xmax && ymin <= p.y() && p.y() <= ymax; 
 		}
 		
 		/**
 		 * Returns the distance squared from the given point to the
 		 * RectA object.
-		 * @param p Point to check distance to the rectangle
+		 * @param p DisasterPoint to check distance to the rectangle
 		 * @return Double type distance squared from point to rectangle
 		 */
-		private double distanceSquaredTo(Point p) {
+		private double distanceSquaredTo(DisasterPoint p) {
 			if(contains(p)) return 0;
 			if(p.x() < xmin) {
 				if(p.y() < ymin) {
@@ -138,19 +137,19 @@ public class KdTree {
 			return xmax;
 		}
 	}
-	private double distanceSquaredTo(Point p1, Point p2) {
+	private double distanceSquaredTo(DisasterPoint p1, DisasterPoint p2) {
 		return (p1.x() - p2.x())*(p1.x() - p2.x()) + (p1.y() - p2.y()) *(p1.y() - p2.y());
 	}
 	
 	/**
-	 * Inserts Point p into the kd-tree
-	 * @param p Point in 2D space to insert
+	 * Inserts DisasterPoint p into the kd-tree
+	 * @param p DisasterPoint in 2D space to insert
 	 */
-	public void insert(Point p) {
+	public void insert(DisasterPoint p) {
 		if(p == null) throw new IllegalArgumentException();
 		this.root = insert(root,p,VERT,minLat,minLon,maxLat,maxLon);
 	}
-	private Node insert(Node node, Point p, boolean orientation, double xmin, double ymin, double xmax, double ymax) {
+	private Node insert(Node node, DisasterPoint p, boolean orientation, double xmin, double ymin, double xmax, double ymax) {
 		if(node == null) {
 			return new Node(p,1,orientation,new RectA(xmin, ymin, xmax, ymax));
 		}
@@ -185,12 +184,12 @@ public class KdTree {
 		return n.size;
 	}
 	
-	private int compareX(Point p1, Point p2) {
+	private int compareX(DisasterPoint p1, DisasterPoint p2) {
 		if( p2.x() > p1.x()) return 1;
 		else if(p1.x() > p2.x() ) return -1;
 		else return 0;
 	}
-	private int compareY(Point p1, Point p2) {
+	private int compareY(DisasterPoint p1, DisasterPoint p2) {
 		if( p2.y() > p1.y()) return 1;
 		else if(p1.y() > p2.y() ) return -1;
 		else return 0;
@@ -199,18 +198,18 @@ public class KdTree {
 	/**
 	 * Finds the Nearest point in the KDTree to the given query point,
 	 * and return that point.
-	 * @param query Point that is closest to return point
-	 * @return Point in the KDTree that is nearest to the query point
+	 * @param query DisasterPoint that is closest to return point
+	 * @return DisasterPoint in the KDTree that is nearest to the query point
 	 */
-	public Point nearestPoint(Point query) {
+	public DisasterPoint nearestPoint(DisasterPoint query) {
 		if(query == null) throw new IllegalArgumentException();
 		if (root == null) return null;
-		Point nearest = null;
-		ArrayList<Point> not = new ArrayList<>();
+		DisasterPoint nearest = null;
+		ArrayList<DisasterPoint> not = new ArrayList<>();
 		return nearestPoint(root,query,nearest,not);
 	}
 	
-	private Point nearestPoint(Node node, Point query, Point nearestPoint, ArrayList<Point> not) {
+	private DisasterPoint nearestPoint(Node node, DisasterPoint query, DisasterPoint nearestPoint, ArrayList<DisasterPoint> not) {
 		if(nearestPoint == null && !not.contains(node.getPoint())) nearestPoint = node.getPoint();
 		if(node == null) return nearestPoint;
 		if(distanceSquaredTo(node.getPoint(),query) < distanceSquaredTo(nearestPoint,query)
@@ -246,17 +245,17 @@ public class KdTree {
 	/**
 	 * Finds all points that are within a certain radius rad from the
 	 * given query point
-	 * @param query Point to search for closeby points, the center of the
+	 * @param query DisasterPoint to search for closeby points, the center of the
 	 * 				radius of search
 	 * @param rad Radius from query point to search for close by points
 	 * @return Iterable of all the points within the radius of query.
 	 */
 	@SuppressWarnings("unused")
-	public Iterable<Point> closePionts(Point query, double rad){
-		ArrayList<Point> not = new ArrayList<>();
+	public Iterable<DisasterPoint> closePionts(DisasterPoint query, double rad){
+		ArrayList<DisasterPoint> not = new ArrayList<>();
 		while(true) {
-			Point nearest = null;
-			Point p = nearestPoint(root,query,nearest,not);
+			DisasterPoint nearest = null;
+			DisasterPoint p = nearestPoint(root,query,nearest,not);
 			if (nearest == null) break;
 			if(distanceSquaredTo(p,query) <= rad * rad)not.add(p);
 			else break;	

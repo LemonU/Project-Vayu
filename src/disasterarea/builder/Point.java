@@ -1,7 +1,7 @@
 package disasterarea.builder;
 
 /**
- * Point data type which contains x and y positions which represent
+ * DisasterPoint data type which contains x and y positions which represent
  * latitude and longitude respectively. Each point corresponds to a 
  * disaster point, which is identified with the id field.
  * @author OussamaSaoudi
@@ -13,7 +13,7 @@ public class Point {
 	private double lon;
 	
 	/**
-	 * Constructs Point from the id, latitude, and longitude, which 
+	 * Constructs DisasterPoint from the id, latitude, and longitude, which 
 	 * corresponds to a DisasterPoint object
 	 * @param id Id of the corresponding event
 	 * @param lat latitude of the event
@@ -26,14 +26,14 @@ public class Point {
 	}
 	
 	/**
-	 * Returns the x position, ie the latitude of the Point
+	 * Returns the x position, ie the latitude of the DisasterPoint
 	 * @return Double latitude of the point
 	 */
 	public double x() {
 		return this.lat;
 	}
 	/**
-	 * Returns the y position, ie the longitude of the Point
+	 * Returns the y position, ie the longitude of the DisasterPoint
 	 * @return Double longitude of the point
 	 */
 	public double y() {
@@ -41,7 +41,7 @@ public class Point {
 	}
 	/**
 	 * Returns the id of the DisasterPoint object corresponding to the
-	 * Point
+	 * DisasterPoint
 	 * @return Integer id of the point
 	 */
 	public int id() {
