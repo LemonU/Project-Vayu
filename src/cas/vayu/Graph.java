@@ -3,17 +3,20 @@ package cas.vayu;
 import java.util.ArrayList;
 
 /**
- * Undirected graph that uses integers as vertex identifiers
+ * Undirected graph that uses integers as vertex identifiers. This
+ * is an array-based implementation, thus the range of vertex identifiers
+ * will be limited to correspond to the total number of nodes. This means
+ * that one may assume all vertex identifiers lies within [0, V)
  */
 public class Graph {
 
     private int V;    // number of vertices in this graph
-    private int E;  // edge count
-    // private Hashtable<Integer, ArrayList<Integer>> adj; 
+    private int E;    // edge count
     private ArrayList<Integer>[] adj;    // adjacency list
 
     /**
      * Constructs a new graph
+     * @param V The number of nodes in this graph
      */
     public Graph(int V) {
         this.V = V;
@@ -24,10 +27,14 @@ public class Graph {
     }
 
     /**
-     * Connect two verticies in the graph
-     * @param v
-     * @param w
+     * Connect two verticies in the graph with a new
+     * undirected graph.
+     * Notice: Duplicate edges are permitted in this implementation
+     * @param v First vertex
+     * @param w Second vertex
      * @throws IllegalArgumentException
+     * When either {@code v} or {@code w} is not a valid
+     * vertex identifier
      */
     public void addEdge(int v, int w) {
         validPoint(v);
@@ -45,8 +52,12 @@ public class Graph {
     /**
      * Gets the adjacent vertices of a specific vertex
      * @param v
+     * The vertex whose adjacent vertices are to be fetched
      * @return
+     * An iterable object containing all adjacent vertices
+     * of vertex {@code v}
      * @throws IllegalArgumentException
+     * When {@code v} is not a valid vertex identifier
      */
     public Iterable<Integer> adj(int v) {
         validPoint(v);
@@ -56,6 +67,7 @@ public class Graph {
     /**
      * Gets the number of vertices in this graph
      * @return
+     * The number of vertices in this graph
      */
     public int V() {
         return V;
@@ -64,6 +76,7 @@ public class Graph {
     /**
      * Gets the number of edges in this graph
      * @return
+     * The number of edges in this graph
      */
     public int E() {
         return E;
@@ -72,8 +85,11 @@ public class Graph {
     /**
      * Gets the number of edges of a specific vertex
      * @param v
+     * The specified vertex whose degree is to be returned
      * @return
+     * The degree of vertex {@code v}
      * @throws IllegalArgumentException
+     * When {code v} is not a valid vertex identifier
      */
     public int degree(int v) {
         validPoint(v);
@@ -81,7 +97,9 @@ public class Graph {
     }
 
     /**
-     * Gets the string representation of the graph
+     * Gets the string representation of this graph
+     * @return
+     * The string representation of this graph
      */
     @Override
     public String toString() {
