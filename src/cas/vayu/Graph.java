@@ -1,7 +1,6 @@
 package cas.vayu;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 /**
  * Undirected graph that uses integers as vertex identifiers
@@ -9,38 +8,47 @@ import java.util.Hashtable;
 public class Graph {
 
     private int E;  // edge count
-    private Hashtable<Integer, ArrayList<Integer>> adj; // adjacency list
+    // private Hashtable<Integer, ArrayList<Integer>> adj; 
+    private ArrayList<Integer>[] adj;    // adjacency list
 
     /**
      * Constructs a new graph
      */
-    public Graph() {
+    public Graph(int V) {
         this.E = 0;
-        adj = new Hashtable<>();
+        adj = (ArrayList<Integer>[]) new ArrayList[V];
+        for (int v = 0; v < V; v++)
+            adj[v] = new ArrayList<>();
     }
 
     /**
      * Connect two verticies in the graph
-     * @param V
-     * @param W
+     * @param v
+     * @param w
+     * @throws IllegalArgumentException
      */
-    public void addEdge(int V, int W) {
-        if (adj.get(V) == null)
-            adj.put(V, new ArrayList<>());
-        adj.get(V).add(W);
-        if (adj.get(W) == null)
-            adj.put(W, new ArrayList<>());
-        adj.get(W).add(V);
+    public void addEdge(int v, int w) {
+        validPoint(v);
+        validPoint(w);
+        adj[v].add(w);
+        adj[v].add(v);
         E++;
+    }
+
+    private void validPoint(int v) {
+        if (v < 0 || v >= V())
+            throw new IllegalArgumentException("Not a valid vertex!");
     }
 
     /**
      * Gets the adjacent vertices of a specific vertex
-     * @param V
+     * @param v
      * @return
+     * @throws IllegalArgumentException
      */
-    public Iterable<Integer> adj(int V) {
-        return adj.get(V);
+    public Iterable<Integer> adj(int v) {
+        validPoint(v);
+        return adj[v];
     }
 
     /**
@@ -49,7 +57,11 @@ public class Graph {
      * An Iterable object containing all vertices
      */
     public Iterable<Integer> vertices() {
-        return adj.keySet();
+        ArrayList<Integer> vertices = new ArrayList<>(V());
+        for (int i = 0; i < V(); i++)
+            vertices.set(i, i);
+
+        return vertices;
     }
 
     /**
@@ -57,7 +69,7 @@ public class Graph {
      * @return
      */
     public int V() {
-        return adj.size();
+        return adj.length;
     }
 
     /**
@@ -70,11 +82,13 @@ public class Graph {
 
     /**
      * Gets the number of edges of a specific vertex
-     * @param V
+     * @param v
      * @return
+     * @throws IllegalArgumentException
      */
-    public int degree(int V) {
-        return adj.get(V).size();
+    public int degree(int v) {
+        validPoint(v);
+        return adj[v].size();
     }
 
     /**
@@ -84,10 +98,10 @@ public class Graph {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Vertices = %d\nEdges = %d\n", V(), E()));
-        for (int V : adj.keySet()) {
-            sb.append(String.format("%d:", V));
-            if (adj(V) != null) {
-                for (int w : adj(V)) {
+        for (int v = 0; v < V(); v++) {
+            sb.append(String.format("%d:", v));
+            if (adj(v) != null) {
+                for (int w : adj(v)) {
                     sb.append(String.format(" -> %d", w));
                 }
             }
@@ -97,7 +111,7 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        Graph g = new Graph();
+        Graph g = new Graph(9);
         g.addEdge(0, 1);
         g.addEdge(2, 7);
         g.addEdge(5, 3);
