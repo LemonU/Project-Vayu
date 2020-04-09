@@ -52,19 +52,6 @@ public class Graph {
     }
 
     /**
-     * Gets all vertices in the graph
-     * @return
-     * An Iterable object containing all vertices
-     */
-    public Iterable<Integer> vertices() {
-        ArrayList<Integer> vertices = new ArrayList<>(V());
-        for (int i = 0; i < V(); i++)
-            vertices.set(i, i);
-
-        return vertices;
-    }
-
-    /**
      * Gets the number of vertices in this graph
      * @return
      */
