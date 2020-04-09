@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public class CCFinder {
 
-    private int componentCount;    // # of existing components
+    private int componentCount;    // number of existing components
     private boolean[] marked;    // records if a vertex has been explored
     private int[] id;    // maps a vertex to its belonged component's id
     private ArrayList<Integer>[] components;    // maps a component's id to its included vertices
@@ -52,6 +52,7 @@ public class CCFinder {
             marked[v] = true;
             id[v] = componentCount;
             components[componentCount].add(v);
+
             for (int w : G.adj(v)) {
                 if (!marked[w])
                     queue.enque(w);
@@ -66,6 +67,8 @@ public class CCFinder {
      * @param v The first vertex
      * @param w The second vertex
      * @throws IllegalArgumentException
+     * When either {@code v} or {@code w} is not a valid
+     * vertex identifier
      * @return
      * Returns true if {@code v} and {@code w} belong to
      * the same component, false otherwise
@@ -97,6 +100,7 @@ public class CCFinder {
      * Gets the id of the component that a vertex belongs to
      * @param v The vertex
      * @throws IllegalArgumentException
+     * When {@code v} is not a valid vertex identifier
      * @return
      * The id of the component that vertex {@code v} belongs to
      */
@@ -109,6 +113,7 @@ public class CCFinder {
      * Gets the size of the component that a vertex belongs to
      * @param v The vertex
      * @throws IllegalArgumentException
+     * When {@code v} is not a valid vertex identifier
      * @return
      * The size of the component that vertex {@code v} belongs to
      */
@@ -123,6 +128,7 @@ public class CCFinder {
      * Notice: the specifed vertex itself will be included as the result.
      * @param v The vertex used to find all other connected vertices
      * @throws IllegalArgumentException
+     * When {@code v} is not a valid vertex identifier
      * @return
      * And iterable object containing all vertices connected with {@code v}
      */
@@ -135,6 +141,8 @@ public class CCFinder {
      * Gets a connected component by its id
      * @param id The id of the connected component
      * @throws IllegalArgumentException
+     * When {@code id} is not a valid component ID (i.e. liies outside the
+     * range of [0, component count))
      * @return
      * An iterable object cotaining all vertices of this component
      */
