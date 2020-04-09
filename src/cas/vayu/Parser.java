@@ -15,26 +15,65 @@ public class Parser {
 	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
 	
 	
-	
-	
-	
 	public static void main(String[] args) throws IOException {
 		Parser par = new Parser();
-		System.out.println(nodelist.get(69));
-		System.out.println(nodelist.get(420));
-		System.out.println(lookup.get(nodelist.get(69).getID()));
+//		System.out.println(nodelist.get(69));
+//		System.out.println(nodelist.get(420));
+//		System.out.println(lookup.get(nodelist.get(69).getID()));
 
 	}
 
 	public static ArrayList<DisasterPoint> nodelist;
 	private static ArrayList<String> locationFiles;
+	
+	
+	
+	
 	public Parser() {
 		nodelist = new ArrayList<DisasterPoint>();
-		locationFiles = new ArrayList<String>();
+//		locationFiles = new ArrayList<String>();
+//
+//		locationFiles.add("StormEvents_locations-ftp_v1.0_d2019_c20200317");
+//		locationParser();
+		//getfiles();
 
-		locationFiles.add("StormEvents_locations-ftp_v1.0_d2019_c20200317");
-		locationParser();
+	}
+	private void getfiles() {
+		File currentDir = new File("./data/eventDetails"); // current directory
+		getfiles(currentDir);
+	}
+	private void getfiles(File dir) {
 
+		try {
+			File[] files = dir.listFiles();
+			
+			
+			for (File file : files) {
+				if (file.isDirectory()) {
+					System.out.println("directory:" + file.getCanonicalPath());
+					getfiles(file);
+				} else {
+					System.out.println("     file:" + file.getCanonicalPath());
+				
+					System.out.println("File name:" + file.getName());
+					String [] test = file.getName().split("-");
+					//System.out.println(test[0]);
+					String filetype =  test[0];
+					
+					
+					if (filetype.equalsIgnoreCase("StormEvents_locations")) {
+						System.out.println(file.getAbsolutePath());
+						
+					}
+	
+					
+				}
+			}
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void locationParser()  {
@@ -58,8 +97,6 @@ public class Parser {
 				int id = Integer.parseInt(line[2]);
 				
 
-				
-				
 				
 				DisasterPoint temp ;
 				
@@ -92,14 +129,6 @@ public class Parser {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
 		}
-	}
-	
-	private void detailsParser() {
-
-	}
-	
-	private void fatalitesParser() {
-
 	}
 	
 	public ArrayList<DisasterPoint> getNodelist(){
