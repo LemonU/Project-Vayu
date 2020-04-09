@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Graph {
 
+    private int V;    // number of vertices in this graph
     private int E;  // edge count
     // private Hashtable<Integer, ArrayList<Integer>> adj; 
     private ArrayList<Integer>[] adj;    // adjacency list
@@ -15,6 +16,7 @@ public class Graph {
      * Constructs a new graph
      */
     public Graph(int V) {
+        this.V = V;
         this.E = 0;
         adj = (ArrayList<Integer>[]) new ArrayList[V];
         for (int v = 0; v < V; v++)
@@ -31,7 +33,7 @@ public class Graph {
         validPoint(v);
         validPoint(w);
         adj[v].add(w);
-        adj[v].add(v);
+        adj[w].add(v);
         E++;
     }
 
@@ -56,7 +58,7 @@ public class Graph {
      * @return
      */
     public int V() {
-        return adj.length;
+        return V;
     }
 
     /**
