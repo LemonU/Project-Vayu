@@ -2,7 +2,7 @@ package cas.vayu;
 
 import java.util.Hashtable;
 
-public class Node {
+public class DisasterPoint {
 	
 	
 	
@@ -15,7 +15,7 @@ public class Node {
     private int ID;
     
     //when Node is intailized , it intailly "null", will be identified by id
-    public Node(int id){
+    public DisasterPoint(int id){
     	this.ID = id;
     	
     	this.year =0;
@@ -84,7 +84,7 @@ public class Node {
     public int hashCode() {
     	return ID;
     }
-    public boolean equals(Node other) {
+    public boolean equals(DisasterPoint other) {
     	return this.ID == other.ID ;	
     	
     }
