@@ -1,4 +1,4 @@
-package cas.vayu;
+package cas.vayu.graph;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
