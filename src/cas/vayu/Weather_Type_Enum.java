@@ -1,5 +1,9 @@
 package cas.vayu;
-
+/**
+ * 
+ * @author Christina Korsman
+ *
+ */
 public enum Weather_Type_Enum {
 	AstronomicalLowTide ("Astronomical Low Tide"),
 	Avalanche ("Avalanche"), 
@@ -59,11 +63,20 @@ public enum Weather_Type_Enum {
 	Weather_Type_Enum(String text) {
         this.text = text;
     }
-
+    
+    /**
+     * 
+     * @return weather type to string
+     */
     public String getText() {
         return this.text;
     }
-
+    
+    /**
+     * 
+     * @param textthe weather type in string format
+     * @return if the string type exist return enum otherwise return null
+     */
     public static Weather_Type_Enum fromString(String text) {
         for (Weather_Type_Enum type : Weather_Type_Enum.values()) {
             if (type.text.equalsIgnoreCase(text)) {

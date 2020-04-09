@@ -1,6 +1,5 @@
 package cas.vayu;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,27 +7,24 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
 
+
+/**
+ * 
+ * @author Christina Korsman
+ *
+ */
 public class Parser {
 
 	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
-
-
-	public static void main(String[] args) throws IOException {
-
-		//		File file = new File("./data/eventDetails/StormEvents_details-ftp_v1.0_d2019_c20200317.csv"); // current directory
-		//		nodelist = new ArrayList<DisasterPoint>();
-		//		detailsParser(file.getAbsolutePath());
-		//		System.out.println(nodelist.size());
-
+	public static void main(String[] args) throws IOException {//testing 
 		Parser par = new Parser();
-
-
 	}
 
 	public static ArrayList<DisasterPoint> nodelist;
-	private static ArrayList<String> locationFiles;
 
-
+	/**
+	 * When class is called reads through all the files and inputs them into the nodelist
+	 */
 	public Parser() {
 		nodelist = new ArrayList<DisasterPoint>();
 
@@ -37,35 +33,30 @@ public class Parser {
 
 	}
 
+	/**
+	 * Brief - setting the base dir for all files to be read 
+	 */
 	private void getfiles() {
 		File currentDir = new File("./data/eventDetails"); // current directory
 		getfiles(currentDir);
 	}
 
+	/**
+	 * 
+	 * @param dir the directory for the files to be read
+	 */
 	private void getfiles(File dir) {
 
 		try {
 			File[] files = dir.listFiles();
 
-
 			for (File file : files) {
 				if (file.isDirectory()) {
-					System.out.println("directory:" + file.getCanonicalPath());
+
 					getfiles(file);
 				} else {
-					System.out.println("     file:" + file.getCanonicalPath());
 					detailsParser(file.getCanonicalPath());
-					//					
-					//					System.out.println("File name:" + file.getName());
-					//					String [] test = file.getName().split("-");
-					//					//System.out.println(test[0]);
-					//					String filetype =  test[0];
-					//
-					//
-					//					if (filetype.equalsIgnoreCase("StormEvents_locations")) {
-					//						System.out.println(file.getAbsolutePath());
-					//
-					//					}
+
 				}
 			}
 
@@ -75,61 +66,10 @@ public class Parser {
 
 	}
 
-	private void locationParser()  {
-
-
-		//colunms order is YearMonth, EPISODE_ID, Event_ID, Location_index, Range, AZIMUTH, Location , Latitude, longtidue ,lat2, lon2
-		//split columns  :   0      ,      1    ,    2     ,        3     ,  4   ,    5   ,    6     ,   7     ,    8      , 9 , 10   
-		//		for (String i : locationFiles) {// for all files later
-		//			
-		//		}
-
-		try {
-			File myObj = new File("StormEvents_locations-ftp_v1.0_d2019_c20200317.csv");
-			Scanner myReader = new Scanner(myObj);
-
-			myReader.nextLine();//skip the heading
-			while (myReader.hasNextLine()) {
-
-				String data = myReader.nextLine();
-				String[] line = data.split(",");//spliting the columns up
-				int id = Integer.parseInt(line[2]);
-
-
-
-				DisasterPoint temp ;
-
-
-				if (  lookup.get(id) == null) {
-					temp = new DisasterPoint(id);
-					lookup.put(id, nodelist.size());
-					nodelist.add(temp);
-
-
-
-				}else {
-					temp = nodelist.get(lookup.get(id));
-
-				}
-
-
-
-				int year = Integer.parseInt ( line[0].substring(0, 4));
-				temp.setYear(year);
-				temp.setLat(Double.parseDouble(line[7]));
-				temp.setLon(Double.parseDouble(line[8]));
-
-
-
-			}
-			myReader.close();
-
-		} catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
-		}
-	}
-
+	/**
+	 * A method to perform parsing on a single file
+	 * @param file the file to be read and node inputed into nodelist
+	 */
 	public static  void detailsParser(String file ) {
 		try {
 			File myObj = new File(file);
@@ -180,6 +120,7 @@ public class Parser {
 						temp = nodelist.get(lookup.get(id));
 
 					}
+					//set all the field for the node
 					temp.setYear(year);
 					temp.setLat(lat);
 					temp.setLon(lon);
@@ -199,6 +140,14 @@ public class Parser {
 
 	}
 
+	/**
+	 * Brief takes the casualties column  and return the sum of them
+	 * @param cast1 casualties column 1 
+	 * @param cast2 casualties column 2 
+	 * @param cast3 casualties column 3
+	 * @param cast4 casualties column 4 
+	 * @return the sum of the  casualties columns
+	 */
 	private static int castparse(String cast1, String cast2, String cast3, String cast4) {
 		int cast =0;
 		try {
@@ -232,19 +181,25 @@ public class Parser {
 		return cast;
 	}
 
+	/**
+	 * Brief take the damages columns and returns the sum of them 
+	 * @param dam1 damages column 1
+	 * @param dam2 damages column 2
+	 * @return the sum of the damages columns
+	 */
 	private static int damparse(String dam1, String dam2) {
 		Double dam = 0.0;
 
 		if (dam1.contains("K")) {
 			String [] out = dam1.split("K");
 			if(out.length !=0) {
-			dam  +=( Double.parseDouble(out[0]))*1000;}
+				dam  +=( Double.parseDouble(out[0]))*1000;}
 
 		}
 		if (dam1.contains("M")) {
 			String [] out = dam1.split("M");
 			if(out.length !=0) {
-			dam  +=( Double.parseDouble(out[0]))*1000000;}
+				dam  +=( Double.parseDouble(out[0]))*1000000;}
 
 		}
 
@@ -252,21 +207,25 @@ public class Parser {
 		if (dam2.contains("K")) {
 			String [] out = dam2.split("K");
 			if(out.length !=0) {
-			dam  +=( Double.parseDouble(out[0]))*1000;}
+				dam  +=( Double.parseDouble(out[0]))*1000;}
 
 
 		}
 		if (dam2.contains("M")) {
 			String [] out = dam2.split("M");
 			if(out.length !=0) {
-			dam  +=( Double.parseDouble(out[0]))*1000000;}
+				dam  +=( Double.parseDouble(out[0]))*1000000;}
 
 		}
 
 
 		return (int) Math.round(dam);
 	}
-
+	
+	/**
+	 * Brief returns the nodelist
+	 * @return the nodelist
+	 */
 	public ArrayList<DisasterPoint> getNodelist(){
 		return nodelist;
 	}
