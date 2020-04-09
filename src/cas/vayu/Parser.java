@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
 
+import cas.Sorting.DisasterPoint;
+
 public class Parser {
 	
 	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
@@ -24,10 +26,10 @@ public class Parser {
 
 	}
 
-	public static ArrayList<Node> nodelist;
+	public static ArrayList<DisasterPoint> nodelist;
 	private static ArrayList<String> locationFiles;
 	public Parser() {
-		nodelist = new ArrayList<Node>();
+		nodelist = new ArrayList<DisasterPoint>();
 		locationFiles = new ArrayList<String>();
 
 		locationFiles.add("StormEvents_locations-ftp_v1.0_d2019_c20200317");
@@ -59,11 +61,11 @@ public class Parser {
 				
 				
 				
-				Node temp ;
+				DisasterPoint temp ;
 				
 				
 				if (  lookup.get(id) == null) {
-					temp = new Node(id);
+					temp = new DisasterPoint(id);
 					lookup.put(id, nodelist.size());
 					nodelist.add(temp);
 					
@@ -100,7 +102,7 @@ public class Parser {
 
 	}
 	
-	public ArrayList<Node> getNodelist(){
+	public ArrayList<DisasterPoint> getNodelist(){
 		return nodelist;
 	}
 	

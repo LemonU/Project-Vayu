@@ -1,4 +1,4 @@
-package cas.vayu;
+package cas.Sorting;
 
 public enum Weather_Type_Enum {
 	Astronomical_Low_Tide, 
