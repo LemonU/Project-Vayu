@@ -35,6 +35,8 @@ public class CommandlineController {
             sort(args);
         else if (cmd.equals(AREAS_COMMAND))
             areas(args);
+        else if (args.length == 1 && cmd.equals(""))
+            return;
         else
             printNoMatch();
     }
@@ -50,12 +52,52 @@ public class CommandlineController {
         }
         else {
             if (args[1].equals(SORT_COMMAND)) {
+                System.out.println("\nOutputs a sorted list of disaster locations to the desired file");
                 System.out.println("Synopsis: sort <comparator> <outfile>");
-                System.out.println("Avaiable comparators:");
-                System.out.println("    ");
+                System.out.println("Available comparators:");
+                System.out.println("  - byCasualty");
+                System.out.println("  - byProximity");
+                System.out.println("  - byDamage");
             }
             else if (args[1].equals(AREAS_COMMAND)) {
-
+                System.out.println("\nOutputs a list of disaster locations of a specific disaster type"
+                                    + "that are in close proximity with each other to the desired file");
+                System.out.println("Synopsis: areas <disaster> <outfile>");
+                System.out.println("Available disaster types:");
+                System.out.println("  - Astronomical_Low_Tide");
+                System.out.println("  - Avalanche");
+                System.out.println("  - Blizzard");
+                System.out.println("  - Coastal_Flood");
+                System.out.println("  - Cold_Wind_Chill");
+                System.out.println("  - Debris_Flow");
+                System.out.println("  - Dense_Fog");
+                System.out.println("  - Dense_Smoke");
+                System.out.println("  - Drought");
+                System.out.println("  - Dust_Devil");
+                System.out.println("  - Dust_Storm");
+                System.out.println("  - Excessive_Heat");
+                System.out.println("  - Extreme_Cold_Wind_Chill");
+                System.out.println("  - Flash_Flood");
+                System.out.println("  - Frost_Freeze");
+                System.out.println("  - Funnel_Cloud");
+                System.out.println("  - Freezing_Fog");
+                System.out.println("  - Heat");
+                System.out.println("  - Heavy_Rain");
+                System.out.println("  - Heavy_Snow");
+                System.out.println("  - High_Surf");
+                System.out.println("  - High_Wind");
+                System.out.println("  - Hurricane_Typhoon");
+                System.out.println("  - Ice_Storm");
+                System.out.println("  - Lake_Effect_Snow");
+                System.out.println("  - ");
+                System.out.println("  - ");
+                System.out.println("  - ");
+                System.out.println("  - ");
+                System.out.println("  - ");
+                System.out.println("  - ");
+                System.out.println("  - ");
+                System.out.println("  - ");
+                System.out.println("  - ");
             }
             else {
                 printNoMatch();
