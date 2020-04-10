@@ -28,7 +28,7 @@ public class Parser {
 	public Parser() {
 		nodelist = new ArrayList<DisasterPoint>();
 
-		getfiles();
+		parse();
 		System.out.print(nodelist.size());
 
 	}
@@ -36,7 +36,7 @@ public class Parser {
 	/**
 	 * Brief - setting the base dir for all files to be read 
 	 */
-	private void getfiles() {
+	private void parse() {
 		File currentDir = new File("./data/eventDetails"); // current directory
 		getfiles(currentDir);
 	}
@@ -226,7 +226,7 @@ public class Parser {
 	 * Brief returns the nodelist
 	 * @return the nodelist
 	 */
-	public ArrayList<DisasterPoint> getNodelist(){
+	public ArrayList<DisasterPoint> getData(){
 		return nodelist;
 	}
 
