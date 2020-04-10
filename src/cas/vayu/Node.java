@@ -8,13 +8,13 @@ public class Node {
 	
     private double latitude;
     private double  longitude;
-    private Weather_Type_Enum disaster_type;
+    private WeatherTypeEnum disaster_type;
     private int year;
     private int casulaties;
     private int property_damage;
     private int ID;
     
-    //when Node is intailized , it intailly "null", will be identified by id
+    //when DisasterPoint is intailized , it intailly "null", will be identified by id
     public Node(int id){
     	this.ID = id;
     	
@@ -36,7 +36,7 @@ public class Node {
     	this.longitude = setter;
     }
     
-    public void  settype(Weather_Type_Enum setter) {
+    public void  settype(WeatherTypeEnum setter) {
     	this.disaster_type = setter;
     }
     
@@ -65,7 +65,7 @@ public class Node {
         return longitude;
     }
 
-    public Weather_Type_Enum getweatherType(){
+    public WeatherTypeEnum getweatherType(){
         return disaster_type;
     }
 
@@ -84,7 +84,7 @@ public class Node {
     public int hashCode() {
     	return ID;
     }
-    public boolean equals(Node other) {
+    public boolean equals(DisasterPoint other) {
     	return this.ID == other.ID ;	
     	
     }

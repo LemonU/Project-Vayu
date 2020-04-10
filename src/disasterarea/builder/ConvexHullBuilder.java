@@ -11,9 +11,7 @@ import java.util.HashSet;
  */
 public class ConvexHullBuilder {
 	private Stack<DisasterPoint> pointStack;
-	public ConvexHullBuilder() {
-		
-	}
+
 	/**
 	 * Returns the second to the top item in the pointStack. The
 	 * item has a type DisasterPoint.
@@ -101,14 +99,14 @@ public class ConvexHullBuilder {
 	 * @param disasterPoints List of points in the set to compute convex set
 	 * @return Set of Points representing the convex hull of the points parameter
 	 */
-	private HashSet<DisasterPoint> convexHull(ArrayList<DisasterPoint> disasterPoints) {
+	private static ArrayList<DisasterPoint> convexHull(ArrayList<DisasterPoint> disasterPoints) {
 		double ymin = disasterPoints.get(0).y(); 
 		int min = 0;
 		
 		//Find lowest y, if there are multiple points with same y value, pick leftmost of them.
 		for(int i =1; i < disasterPoints.size(); i++) {
-			double y = disasterPoints.get(i).y();
-			if(y < ymin || (ymin == y && disasterPoints.get(i).x() < disasterPoints.get(min).x())) {
+			double y = disasterPoints.get(i).getLon();
+			if(y < ymin || (ymin == y && disasterPoints.get(i).getLat() < disasterPoints.get(min).getLat())) {
 				ymin = disasterPoints.get(i).y();
 				min = i;
 			}
@@ -149,7 +147,7 @@ public class ConvexHullBuilder {
 			pointStack.push(aux.get(i));	
 		}
 		
-		HashSet<DisasterPoint> output = new HashSet<>();
+		ArrayList<DisasterPoint> output = new ArrayList<>();
 		for(DisasterPoint e : pointStack) {
 			output.add(e);
 		}

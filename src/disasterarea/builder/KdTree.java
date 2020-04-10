@@ -13,9 +13,9 @@ public class KdTree {
 
 
 	/**
-	 * Node object representing node in the kd binary tree with 
+	 * DisasterPoint object representing node in the kd binary tree with 
 	 * representative point in 2d space, an orientation, showing
-	 * if its dividing line is horizontal or vertical. Node also has a
+	 * if its dividing line is horizontal or vertical. DisasterPoint also has a
 	 * left or right node, which could also represent up or down if its
 	 * line is horizontal. RectA inside node represents the Rectangle it 
 	 * sits in and divides.
@@ -29,7 +29,7 @@ public class KdTree {
 		private int size;
 		private RectA rect;
 		/**
-		 * Constructor for node taking all the information Node stores
+		 * Constructor for node taking all the information DisasterPoint stores
 		 * @param p DisasterPoint in 2D space the node represents
 		 * @param size Size of the node's subtree
 		 * @param orientation Orientation of the node's dividing line. True for
@@ -43,7 +43,7 @@ public class KdTree {
 			setPoint(p,orientation);
 		}
 		/**
-		 * Resets the Node's point p and orientation values
+		 * Resets the DisasterPoint's point p and orientation values
 		 * @param p DisasterPoint in 2D space the node represents
 		 * @param orientation Orientation of the node's dividing line. True for
 		 * 					vertical and false for horizontal
