@@ -2,12 +2,11 @@ package cas.Sorting;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Quicksort {
 
-	public ArrayList<DisasterPoint> quicksort(ArrayList<DisasterPoint> list, int low, int high,
+	private ArrayList<DisasterPoint> quicksort(ArrayList<DisasterPoint> list, int low, int high,
 			Comparator<DisasterPoint> comp) {
 		int ll = low;
 		int hh = high;
