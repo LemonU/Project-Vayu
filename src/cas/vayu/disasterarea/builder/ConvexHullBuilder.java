@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 
-import cas.vayu.DisasterPoint;
+import cas.vayu.fileio.DisasterPoint;
+
 import cas.vayu.sorting.Quicksort;
 /**
  * @brief Builds convex hull from given list of points and returns
