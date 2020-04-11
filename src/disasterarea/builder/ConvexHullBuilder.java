@@ -157,4 +157,7 @@ public class ConvexHullBuilder {
 		}
 		return output;
 	}
+	public static void main(String[] args) {
+		
+	}
 }
