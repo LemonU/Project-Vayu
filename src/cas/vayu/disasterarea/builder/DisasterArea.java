@@ -2,8 +2,8 @@ package cas.vayu.disasterarea.builder;
 
 import java.util.ArrayList;
 
-import cas.vayu.DisasterPoint;
-import cas.vayu.WeatherTypeEnum;
+import cas.vayu.fileio.DisasterPoint;
+import cas.vayu.fileio.WeatherTypeEnum;
 
 public class DisasterArea {
 	private ArrayList<DisasterPoint> convexHull;

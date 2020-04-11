@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 
+<<<<<<< src/cas/vayu/disasterarea/builder/ConvexHullBuilder.java
+import cas.vayu.fileio.DisasterPoint;
+=======
 import cas.vayu.DisasterPoint;
 import cas.vayu.sorting.Quicksort;
+>>>>>>> src/cas/vayu/disasterarea/builder/ConvexHullBuilder.java
 /**
  * @brief Builds convex hull from given list of points and returns
  * a set of Integers containing id's for the hull of the given points.
