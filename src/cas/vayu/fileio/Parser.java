@@ -15,9 +15,13 @@ import java.util.Scanner;
  */
 public class Parser {
 
+<<<<<<< HEAD
 	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
 	public static ArrayList<DisasterPoint> nodelist;//list of all nodes in all files
 	
+=======
+	public static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
+>>>>>>> 2ab7262f6ee98e81720c8871c3e3d7c58a6d585a
 	public static void main(String[] args) throws IOException {//testing 
 		Parser par = new Parser();
 		System.out.println(par.getNodeList());
