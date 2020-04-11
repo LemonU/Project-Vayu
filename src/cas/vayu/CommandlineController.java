@@ -9,6 +9,10 @@ public class CommandlineController {
     private static final String HELP_COMMAND = "help";
     private static final String EXIT_COMMAND = "exit";
 
+    private static final String BYCASUALTY_COMMAND = "bycasualty";
+    private static final String BYPROXIMITY_COMMAND = "byproximity";
+    private static final String BYDAMAGE_COMMAND = "bydamage";
+
     private static Scanner scanner = null;
 
     private CommandlineController() {}
@@ -52,52 +56,10 @@ public class CommandlineController {
         }
         else {
             if (args[1].equals(SORT_COMMAND)) {
-                System.out.println("\nOutputs a sorted list of disaster locations to the desired file");
-                System.out.println("Synopsis: sort <comparator> <outfile>");
-                System.out.println("Available comparators:");
-                System.out.println("  - byCasualty");
-                System.out.println("  - byProximity");
-                System.out.println("  - byDamage");
+                printHelpSort();
             }
             else if (args[1].equals(AREAS_COMMAND)) {
-                System.out.println("\nOutputs a list of disaster locations of a specific disaster type"
-                                    + "that are in close proximity with each other to the desired file");
-                System.out.println("Synopsis: areas <disaster> <outfile>");
-                System.out.println("Available disaster types:");
-                System.out.println("  - Astronomical_Low_Tide");
-                System.out.println("  - Avalanche");
-                System.out.println("  - Blizzard");
-                System.out.println("  - Coastal_Flood");
-                System.out.println("  - Cold_Wind_Chill");
-                System.out.println("  - Debris_Flow");
-                System.out.println("  - Dense_Fog");
-                System.out.println("  - Dense_Smoke");
-                System.out.println("  - Drought");
-                System.out.println("  - Dust_Devil");
-                System.out.println("  - Dust_Storm");
-                System.out.println("  - Excessive_Heat");
-                System.out.println("  - Extreme_Cold_Wind_Chill");
-                System.out.println("  - Flash_Flood");
-                System.out.println("  - Frost_Freeze");
-                System.out.println("  - Funnel_Cloud");
-                System.out.println("  - Freezing_Fog");
-                System.out.println("  - Heat");
-                System.out.println("  - Heavy_Rain");
-                System.out.println("  - Heavy_Snow");
-                System.out.println("  - High_Surf");
-                System.out.println("  - High_Wind");
-                System.out.println("  - Hurricane_Typhoon");
-                System.out.println("  - Ice_Storm");
-                System.out.println("  - Lake_Effect_Snow");
-                System.out.println("  - ");
-                System.out.println("  - ");
-                System.out.println("  - ");
-                System.out.println("  - ");
-                System.out.println("  - ");
-                System.out.println("  - ");
-                System.out.println("  - ");
-                System.out.println("  - ");
-                System.out.println("  - ");
+                printHelpAreas();
             }
             else {
                 printNoMatch();
@@ -106,16 +68,90 @@ public class CommandlineController {
         }
     }
 
+    private static void printHelpSort() {
+        System.out.println("\nOutputs a sorted list of disaster locations to the desired file");
+                System.out.println("Synopsis: sort <comparator> <outfile>");
+                System.out.println("Available comparators:");
+                System.out.println("  - byCasualty");
+                System.out.println("  - byProximity");
+                System.out.println("  - byDamage");
+    }
+
+    private static void printHelpAreas() {
+        System.out.println("\nOutputs a list of disaster locations of a specific disaster type"
+                            + "that are in close proximity with each other to the desired file");
+        System.out.println("Synopsis: areas <disaster> <outfile>");
+    }
+
+    private static void printHelpAreasExt() {
+        System.out.println("\nOutputs a list of disaster locations of a specific disaster type"
+                            + "that are in close proximity with each other to the desired file");
+        System.out.println("Synopsis: areas <disaster> <outfile>");
+        System.out.println("Available disaster types:");
+        System.out.println("  - Astronomical_Low_Tide");
+        System.out.println("  - Avalanche");
+        System.out.println("  - Blizzard");
+        System.out.println("  - Coastal_Flood");
+        System.out.println("  - Cold_Wind_Chill");
+        System.out.println("  - Debris_Flow");
+        System.out.println("  - Dense_Fog");
+        System.out.println("  - Dense_Smoke");
+        System.out.println("  - Drought");
+        System.out.println("  - Dust_Devil");
+        System.out.println("  - Dust_Storm");
+        System.out.println("  - Excessive_Heat");
+        System.out.println("  - Extreme_Cold_Wind_Chill");
+        System.out.println("  - Flash_Flood");
+        System.out.println("  - Frost_Freeze");
+        System.out.println("  - Funnel_Cloud");
+        System.out.println("  - Freezing_Fog");
+        System.out.println("  - Heat");
+        System.out.println("  - Heavy_Rain");
+        System.out.println("  - Heavy_Snow");
+        System.out.println("  - High_Surf");
+        System.out.println("  - High_Wind");
+        System.out.println("  - Hurricane_Typhoon");
+        System.out.println("  - Ice_Storm");
+        System.out.println("  - Lake_Effect_Snow");
+        System.out.println("  - ");
+        System.out.println("  - ");
+        System.out.println("  - ");
+        System.out.println("  - ");
+        System.out.println("  - ");
+        System.out.println("  - ");
+        System.out.println("  - ");
+        System.out.println("  - ");
+        System.out.println("  - ");
+    }
+
     private static void printNoMatch() {
         System.out.println("\nUnkown command! Enter \"help\" for list of commands.\n");
     }
 
     private static void sort(String[] args) {
-        String comparator;
-        String outFile;
+        if (args.length != 3) {
+            printHelpSort();
+            return;
+        }
+        String comparator = args[1];
+        String outFile = args[2];
+
+        if (comparator.equals(BYCASUALTY_COMMAND)) {
+
+        } else if (comparator.equals(BYPROXIMITY_COMMAND)) {
+
+        } else if (comparator.equals(BYDAMAGE_COMMAND)) {
+
+        } else {
+            
+        }
     }
 
     private static void areas(String[] args) {
+        if (args.length != 3) {
+            printHelpAreas();
+            return;
+        }
         String disaster;
         String outFile;
     }
