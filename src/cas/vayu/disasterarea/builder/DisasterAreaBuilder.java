@@ -2,8 +2,10 @@ package cas.vayu.disasterarea.builder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import cas.vayu.DisasterPoint;
+import cas.vayu.Parser;
 import cas.vayu.WeatherTypeEnum;
 import cas.vayu.graph.CCFinder;
 import cas.vayu.graph.Graph;
@@ -18,7 +20,7 @@ public class DisasterAreaBuilder {
 	private ArrayList<DisasterPoint> pointList;
 	private HashMap<WeatherTypeEnum,ArrayList<DisasterArea>> areaList;
 	
-	public DisasterAreaBuilder(HashMap<Integer,Integer> map, ArrayList<DisasterPoint> pointList,double rad) {
+	public DisasterAreaBuilder(Hashtable<Integer,Integer> map, ArrayList<DisasterPoint> pointList,double rad) {
 		this.pointList = pointList;
 		for(DisasterPoint p : pointList) {
 			if(kdtList.get(p.getweatherType().ordinal()) == null) {
@@ -60,5 +62,15 @@ public class DisasterAreaBuilder {
 			return null;
 		}
 		return areaList.get(type);
+	}
+	public static void main(String[] args) {
+		Parser in = new Parser();
+		ArrayList<DisasterPoint> pointlist = in.getNodelist();
+		Hashtable<Integer,Integer> map = in.lookup;
+		DisasterAreaBuilder b = new DisasterAreaBuilder(map,pointlist,100.0);
+		for(DisasterArea e : b.getAreas(WeatherTypeEnum.Cold_Wind_Chill)) {
+			System.out.println(e);
+		}
+		
 	}
 }

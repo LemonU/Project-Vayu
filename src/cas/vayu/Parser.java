@@ -12,7 +12,7 @@ import cas.vayu.DisasterPoint;
 
 public class Parser {
 	
-	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
+	public static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
 	
 	
 	
