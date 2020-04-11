@@ -30,9 +30,10 @@ public class CommandlineController {
 
     public CommandlineController() {
         inputScanner = new Scanner(System.in);
+        outputter = new FileOutput();
+
         parser = new Parser();
         DABuilder = new DisasterAreaBuilder(Parser.lookup, parser.getData(), RAD);
-        outputter = new FileOutput();
     }
 
     public void start() {
@@ -46,7 +47,7 @@ public class CommandlineController {
     }
 
     private void performNextCommand() {
-        String args[] = inputScanner.nextLine().toLowerCase().split(" ");
+        String args[] = inputScanner.nextLine().toLowerCase().trim().split(" ");
         String cmd = args[0];
 
         if (cmd.equals(EXIT_COMMAND))
@@ -75,11 +76,9 @@ public class CommandlineController {
         else {
             if (args[1].equals(SORT_COMMAND)) {
                 printHelpSort();
-            }
-            else if (args[1].equals(AREAS_COMMAND)) {
+            } else if (args[1].equals(AREAS_COMMAND)) {
                 printHelpAreas();
-            }
-            else {
+            } else {
                 printNoMatch();
                 return;
             }
@@ -174,13 +173,13 @@ public class CommandlineController {
             return;
         }
 
-        String outFile = args[2];
-
         WeatherTypeEnum disasterType = enumOfString(args[1]);
         if (disasterType == null)
             return;
 
         ArrayList<DisasterArea> result = DABuilder.getAreas(disasterType);
+
+        outputter.writeArea(args[2], result);
     }
 
     private WeatherTypeEnum enumOfString(String rpr) {
