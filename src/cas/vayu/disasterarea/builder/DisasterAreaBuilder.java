@@ -2,6 +2,7 @@ package cas.vayu.disasterarea.builder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 
 import cas.vayu.DisasterPoint;
 import cas.vayu.WeatherTypeEnum;
@@ -19,7 +20,7 @@ public class DisasterAreaBuilder {
 	private ArrayList<DisasterPoint> pointList;
 	private HashMap<WeatherTypeEnum,ArrayList<DisasterArea>> areaList;
 	
-	public DisasterAreaBuilder(HashMap<Integer,Integer> map, ArrayList<DisasterPoint> pointList,double rad) {
+	public DisasterAreaBuilder(Hashtable<Integer,Integer> map, ArrayList<DisasterPoint> pointList,double rad) {
 		this.pointList = pointList;
 		for(DisasterPoint p : pointList) {
 			if(kdtList.get(p.getweatherType().ordinal()) == null) {
