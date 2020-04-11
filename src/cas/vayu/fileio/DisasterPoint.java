@@ -5,9 +5,7 @@ package cas.vayu.fileio;
  *
  */
 public class DisasterPoint {
-	
-	
-	
+
     private double latitude;
     private double  longitude;
     private WeatherTypeEnum disaster_type;
@@ -22,6 +20,7 @@ public class DisasterPoint {
      * @param id the value to identity the node by 
      */
     public DisasterPoint(int id){
+    	
     	this.ID = id;
     	
     	this.year =0;

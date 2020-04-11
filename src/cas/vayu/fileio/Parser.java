@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class Parser {
 
-	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
+	public static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
 	public static void main(String[] args) throws IOException {//testing 
 		Parser par = new Parser();
 	}
