@@ -26,7 +26,7 @@ public class CommandlineController {
     private static final String BYPROXIMITY_COMMAND = "byproximity";
     private static final String BYDAMAGE_COMMAND = "bydamage";
 
-    private static final double RAD = 50;
+    private static final double RAD = 0.1;
 
     private Parser parser;
     private DisasterAreaBuilder DABuilder;

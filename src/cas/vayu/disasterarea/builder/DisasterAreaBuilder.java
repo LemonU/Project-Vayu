@@ -15,38 +15,51 @@ import cas.vayu.graph.Graph;
  *
  */
 public class DisasterAreaBuilder {
-	private ArrayList<KdTree> kdtList;
+	private Hashtable<WeatherTypeEnum, KdTree> kdtList;
 	private ArrayList<DisasterPoint> pointList;
 	private HashMap<WeatherTypeEnum,ArrayList<DisasterArea>> areaList;
 	
 	public DisasterAreaBuilder(Hashtable<Integer,Integer> map, ArrayList<DisasterPoint> pointList,double rad) {
 		this.pointList = pointList;
+		kdtList = new Hashtable<>();
 		for(DisasterPoint p : pointList) {
-			if(kdtList.get(p.getweatherType().ordinal()) == null) {
-				kdtList.set(p.getweatherType().ordinal(),new KdTree());
-				kdtList.get(p.getweatherType().ordinal()).insert(p);
-			} else {
-				kdtList.get(p.getweatherType().ordinal()).insert(p);
+			if(p.getweatherType() != null && !kdtList.containsKey(p.getweatherType())) {
+				kdtList.put(p.getweatherType(),new KdTree());
+			}
+			if(p.getweatherType() != null) {
+				kdtList.get(p.getweatherType()).insert(p);
 			}
 		}
+		System.out.println("Kd-Trees initialized");
 		Graph G = new Graph(pointList.size());
 		for(DisasterPoint p: pointList) {
-			for(DisasterPoint e : kdtList.get(p.getweatherType().ordinal()).closePionts(p,rad)) {
+			if (p.getweatherType() == null) continue;
+			for(DisasterPoint e : kdtList.get(p.getweatherType()).closePionts(p,rad)) {
 				G.addEdge(map.get(e.getID()) , map.get(p.getID()));
 			}
 		}
+		System.out.println("Graph initialized");
+
 		CCFinder componentFinder = new CCFinder(G);
-		
+		System.out.println("Connected Components initialized");
+
 		areaList = new HashMap<WeatherTypeEnum, ArrayList<DisasterArea>>();
 		for(int i = 0; i < componentFinder.componentCount(); i++) {
 			ArrayList<DisasterPoint> p = convertToPoint(componentFinder.getComponentById(i));
 			WeatherTypeEnum type = p.get(0).getweatherType();
-			DisasterArea a = new DisasterArea(ConvexHullBuilder.convexHull(p),p,type);
+			ArrayList<DisasterPoint> convexHull = ConvexHullBuilder.convexHull(p);
+			DisasterArea a;
+			if (convexHull != null) {
+				a = new DisasterArea(convexHull,p,type);
+			} else {
+				continue;
+			}
 			if(!areaList.containsKey(type)) {
 				areaList.put(type, new ArrayList<DisasterArea>());
 			}
 			areaList.get(type).add(a);
 		}
+		System.out.println("Disaster Areas Initialized");
 	}
 	private ArrayList<DisasterPoint> convertToPoint(Iterable<Integer> iterable){
 		ArrayList<DisasterPoint> a = new ArrayList<>();

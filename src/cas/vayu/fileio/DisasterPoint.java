@@ -30,6 +30,17 @@ public class DisasterPoint {
         this.casulaties = 0;
         this.property_damage =0;
     }
+    public DisasterPoint(int id, double lat, double lon){
+    	
+    	this.ID = id;
+    	
+    	this.year =0;
+        this.latitude = lat;
+        this.longitude = lon;
+        
+        this.casulaties = 0;
+        this.property_damage =0;
+    }
 
     /**
      * 
