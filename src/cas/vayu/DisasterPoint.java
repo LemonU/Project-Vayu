@@ -14,19 +14,13 @@ public class DisasterPoint {
     private int property_damage;
     private int ID;
     
-<<<<<<< HEAD:src/cas/vayu/Node.java
     //when DisasterPoint is intailized , it intailly "null", will be identified by id
-    public Node(int id){
-=======
-    //when Node is intailized , it intailly "null", will be identified by id
     public DisasterPoint(int id){
->>>>>>> origin/master:src/cas/vayu/DisasterPoint.java
     	this.ID = id;
     	
     	this.year =0;
         this.latitude = 0;
         this.longitude = 0;
-        this.disaster_type = null;
         
         this.casulaties = 0;
         this.property_damage =0;

@@ -1,29 +1,32 @@
 package disasterarea.builder;
 
-import cas.vayu.Weather_Type_Enum;
+import java.util.ArrayList;
+
+import cas.vayu.DisasterPoint;
+import cas.vayu.WeatherTypeEnum;
 
 public class DisasterArea {
 	private ArrayList<DisasterPoint> convexHull;
 	private ArrayList<DisasterPoint> allNodes;
-	private Weather_Type_Enum disasterType;
+	private WeatherTypeEnum disasterType;
 	private double severity;
 	
-	public DisasterArea(ArrayList<DisasterPoint> convexHull,ArrayList<DisasterPoint> allNodes, Weather_Type_Enum disasterType) {
+	public DisasterArea(ArrayList<DisasterPoint> convexHull,ArrayList<DisasterPoint> allNodes, WeatherTypeEnum disasterType) {
 		this.convexHull = convexHull;
-		this.allNodes = allNode;
+		this.allNodes = allNodes;
 		this.disasterType = disasterType;
 	}
 	
-	public Weather_Type_Enum getType() {
-		
+	public WeatherTypeEnum getType() {
+		return disasterType;
 	}
 	public double getSeverity() {
-		
+		return severity;
 	}
 	public ArrayList<DisasterPoint> getHull(){
-		
+		return convexHull;
 	}
 	public ArrayList<DisasterPoint> getAllNodes(){
-		
+		return allNodes;
 	}
 }

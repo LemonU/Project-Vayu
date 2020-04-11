@@ -2,6 +2,8 @@ package disasterarea.builder;
 
 import java.util.ArrayList;
 
+import cas.vayu.DisasterPoint;
+
 public class KdTree {
     private static final boolean VERT = true;
     private Node root;
@@ -79,7 +81,10 @@ public class KdTree {
 		 * @param ymax Maximum y value
 		 */
 		private RectA(double xmin, double xmax, double ymin,double ymax) {
-			
+			this.xmin = xmin;
+			this.xmax = xmax;
+			this.ymin = ymin;
+			this.ymax = ymax;
 		}
 		/**
 		 * Checks if given point p is in the RectA object, ie if it is within
@@ -88,7 +93,7 @@ public class KdTree {
 		 * @return boolean to represent if the point is inside the RectA
 		 */
 		private boolean contains(DisasterPoint p) {
-			return xmin <= p.x() && p.x() <= xmax && ymin <= p.y() && p.y() <= ymax; 
+			return xmin <= p.getLat() && p.getLat() <= xmax && ymin <= p.getLon() && p.getLon() <= ymax; 
 		}
 		
 		/**
@@ -99,29 +104,34 @@ public class KdTree {
 		 */
 		private double distanceSquaredTo(DisasterPoint p) {
 			if(contains(p)) return 0;
-			if(p.x() < xmin) {
-				if(p.y() < ymin) {
-					return (p.y()-ymin)*(p.y()-ymin) + (p.x()-xmin)*(p.y()-xmin);
-				} else if(p.y() > ymax) {
-					return (p.y()-ymax)*(p.y()-ymax) + (p.x()-xmin)*(p.y()-xmin);
+			if(p.getLat() < xmin) {
+				if(p.getLon() < ymin) {
+					return (p.getLon()-ymin)*(p.getLon()-ymin) + (p.getLat()-xmin)*(p.getLon()-xmin);
+				} else if(p.getLon() > ymax) {
+					return (p.getLon()-ymax)*(p.getLon()-ymax) + (p.getLat()-xmin)*(p.getLon()-xmin);
 				} else{
-					return xmin - p.x();
+					return xmin - p.getLat();
 				}
-			} else if(p.x() > xmax) {
-				if(p.y() < ymin) {
-					return (p.y()-ymin)*(p.y()-ymin) + (p.x()-xmax)*(p.y()-xmax);
-				} else if(p.y() > ymax) {
-					return (p.y()-ymax)*(p.y()-ymax) + (p.x()-xmax)*(p.y()-xmax);
+			} else if(p.getLat() > xmax) {
+				if(p.getLon() < ymin) {
+					return (p.getLon()-ymin)*(p.getLon()-ymin) + (p.getLat()-xmax)*(p.getLon()-xmax);
+				} else if(p.getLon() > ymax) {
+					return (p.getLon()-ymax)*(p.getLon()-ymax) + (p.getLat()-xmax)*(p.getLon()-xmax);
 				} else{
-					return p.x() - xmax;
+					return p.getLat() - xmax;
 				}
 			} else {
-				if(p.y() < ymin) {
-					return ymin - p.y();
+				if(p.getLon() < ymin) {
+					return ymin - p.getLon();
 				} else {
-					return p.y() - ymax;
+					return p.getLon() - ymax;
 				}
 			}
+		}
+		
+		private boolean intersects(RectA other) {
+	        return this.xmax >= other.xmin() && this.ymax >= other.ymin()
+	                && other.xmax() >= this.xmin && other.ymax() >= this.ymin;
 		}
 		
 		private double xmin() {
@@ -138,7 +148,7 @@ public class KdTree {
 		}
 	}
 	private double distanceSquaredTo(DisasterPoint p1, DisasterPoint p2) {
-		return (p1.x() - p2.x())*(p1.x() - p2.x()) + (p1.y() - p2.y()) *(p1.y() - p2.y());
+		return (p1.getLat() - p2.getLat())*(p1.getLat() - p2.getLat()) + (p1.getLon() - p2.getLon()) *(p1.getLon() - p2.getLon());
 	}
 	
 	/**
@@ -151,7 +161,7 @@ public class KdTree {
 	}
 	private Node insert(Node node, DisasterPoint p, boolean orientation, double xmin, double ymin, double xmax, double ymax) {
 		if(node == null) {
-			return new Node(p,1,orientation,new RectA(xmin, ymin, xmax, ymax));
+			return new Node(p,1,orientation,new RectA(xmin, xmax, ymin, ymax));
 		}
 		int cmp;
 		
@@ -160,9 +170,9 @@ public class KdTree {
 			cmp = compareX(p,node.p);
 			
 			if(cmp >= 0) {
-				node.right = insert(node.right,p,!orientation,node.getPoint().x(),ymin,xmax,ymax);
+				node.right = insert(node.right,p,!orientation,node.getPoint().getLat(),ymin,xmax,ymax);
 			} else{
-				node.left = insert(node.left,p,!orientation,xmin,ymin,node.getPoint().x(),ymax);
+				node.left = insert(node.left,p,!orientation,xmin,ymin,node.getPoint().getLat(),ymax);
 			}
 		} 
 		// Horizontal line, check if point resides above or below
@@ -170,9 +180,9 @@ public class KdTree {
 			cmp = compareY(p,node.p);
 			
 			if(cmp >= 0) {
-				node.right = insert(node.right,p,!orientation,xmin,node.getPoint().y(),xmax,ymax);
+				node.right = insert(node.right,p,!orientation,xmin,node.getPoint().getLon(),xmax,ymax);
 			} else {
-				node.left = insert(node.left,p,!orientation,xmin,ymin,xmax,node.getPoint().y());
+				node.left = insert(node.left,p,!orientation,xmin,ymin,xmax,node.getPoint().getLon());
 			}
 		}
 		node.size = 1 + size(node.right)+ size(node.left); 
@@ -185,13 +195,13 @@ public class KdTree {
 	}
 	
 	private int compareX(DisasterPoint p1, DisasterPoint p2) {
-		if( p2.x() > p1.x()) return 1;
-		else if(p1.x() > p2.x() ) return -1;
+		if( p1.getLat() > p2.getLat()) return 1;
+		else if(p2.getLat() > p1.getLat() ) return -1;
 		else return 0;
 	}
 	private int compareY(DisasterPoint p1, DisasterPoint p2) {
-		if( p2.y() > p1.y()) return 1;
-		else if(p1.y() > p2.y() ) return -1;
+		if( p1.getLon() > p2.getLon()) return 1;
+		else if(p2.getLon() > p1.getLon() ) return -1;
 		else return 0;
 	}
 	
@@ -205,15 +215,14 @@ public class KdTree {
 		if(query == null) throw new IllegalArgumentException();
 		if (root == null) return null;
 		DisasterPoint nearest = null;
-		ArrayList<DisasterPoint> not = new ArrayList<>();
-		return nearestPoint(root,query,nearest,not);
+		return nearestPoint(root,query,nearest);
 	}
 	
-	private DisasterPoint nearestPoint(Node node, DisasterPoint query, DisasterPoint nearestPoint, ArrayList<DisasterPoint> not) {
-		if(nearestPoint == null && !not.contains(node.getPoint())) nearestPoint = node.getPoint();
+	private DisasterPoint nearestPoint(Node node, DisasterPoint query, DisasterPoint nearestPoint) {
+		if(nearestPoint == null) nearestPoint = node.getPoint();
 		if(node == null) return nearestPoint;
-		if(distanceSquaredTo(node.getPoint(),query) < distanceSquaredTo(nearestPoint,query)
-				&& !not.contains(node.getPoint())) nearestPoint = node.getPoint();
+		if(distanceSquaredTo(node.getPoint(),query) < distanceSquaredTo(nearestPoint,query))
+				nearestPoint = node.getPoint();
 		
 		double distanceToLine = -1;
 		int cmp;
@@ -224,9 +233,9 @@ public class KdTree {
 		}
 		
 		if(cmp < 0) {
-			nearestPoint = nearestPoint(node.left,query,nearestPoint, not);
+			nearestPoint = nearestPoint(node.left,query,nearestPoint);
 		} else {
-			nearestPoint = nearestPoint(node.right,query,nearestPoint, not);
+			nearestPoint = nearestPoint(node.right,query,nearestPoint);
 		}
 		
 		if(cmp >= 0 && node.left != null ) {
@@ -237,7 +246,7 @@ public class KdTree {
 		}
 		
 		if(distanceToLine != -1 && distanceToLine < distanceSquaredTo(nearestPoint,query)) {
-			nearestPoint = nearestPoint(cmp < 0 ? node.right : node.left,query,nearestPoint, not);
+			nearestPoint = nearestPoint(cmp < 0 ? node.right : node.left,query,nearestPoint);
 		}
 		return nearestPoint;
 	}
@@ -252,15 +261,66 @@ public class KdTree {
 	 */
 	@SuppressWarnings("unused")
 	public Iterable<DisasterPoint> closePionts(DisasterPoint query, double rad){
-		ArrayList<DisasterPoint> not = new ArrayList<>();
-		while(true) {
-			DisasterPoint nearest = null;
-			DisasterPoint p = nearestPoint(root,query,nearest,not);
-			if (nearest == null) break;
-			if(distanceSquaredTo(p,query) <= rad * rad)not.add(p);
-			else break;	
-		}
-		return not;
+		RectA area = new RectA(query.getLat()-rad,query.getLat()+rad,query.getLon()-rad,query.getLon()+rad);
+		Stack<DisasterPoint> output = new Stack<>();
+		range(root,area,output);
+		return output;
 	}
-	
+
+    private void range(Node node, RectA rect, Stack<DisasterPoint> stack) {
+        if (node == null) return;
+
+        if (node.getPoint().getLat() <= rect.xmax() && node.getPoint().getLat() >= rect.xmin() && node.getPoint().getLon() <= rect.ymax() && node.getPoint().getLon() >= rect.ymin()) {
+            stack.push(node.getPoint());
+        }
+        if (node.right != null && rect.intersects(node.right.rect)) {
+            range(node.right, rect, stack);
+        }
+        if (node.left != null && rect.intersects(node.left.rect)) {
+            range(node.left, rect, stack);
+        }
+        return;
+    }
+	public static void main(String[] args) {
+		KdTree tree = new KdTree();
+		ArrayList<DisasterPoint> points = new ArrayList<>();
+		for(int i = 0; i < 10; i++) {
+			DisasterPoint p = new DisasterPoint(i);
+			p.setLat(i*1.0);
+			p.setLon(i*1.0);
+			tree.insert(p);
+		}
+		DisasterPoint a = new DisasterPoint(11);
+		a.setLat(0.499999);
+		a.setLon(0.50001);
+		//System.out.println(tree.nearestPoint(a));
+		
+		KdTree tree2 = new KdTree();
+		DisasterPoint p = new DisasterPoint(2);
+		p.setLat(-1.0);
+		p.setLon(-1.0);
+		DisasterPoint p1 = new DisasterPoint(39);
+		p1.setLat(1.0);
+		p1.setLon(-1.0);
+		DisasterPoint p2 = new DisasterPoint(4);
+		p2.setLat(-1.0);
+		p2.setLon(1.0);
+		DisasterPoint p3 = new DisasterPoint(5);
+		p3.setLat(1.0);
+		p3.setLon(1.0);
+		tree2.insert(p);
+		tree2.insert(p3);
+		tree2.insert(p1);
+		tree2.insert(p2);
+
+		DisasterPoint c = new DisasterPoint(2);
+		c.setLat(0);
+		c.setLon(0);
+		//System.out.println(tree2.closePionts(c, 0.1));
+		for(DisasterPoint e : tree2.closePionts(c, 1)) {
+			System.out.println(e);
+		}
+		
+		
+	}
 }

@@ -3,6 +3,8 @@ package disasterarea.builder;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+
+import cas.vayu.DisasterPoint;
 /**
  * @brief Builds convex hull from given list of points and returns
  * a set of Integers containing id's for the hull of the given points.
@@ -10,14 +12,13 @@ import java.util.HashSet;
  *
  */
 public class ConvexHullBuilder {
-	private Stack<DisasterPoint> pointStack;
 
 	/**
 	 * Returns the second to the top item in the pointStack. The
 	 * item has a type DisasterPoint.
 	 * @return second to top item in Stack pointStack.
 	 */
-	private DisasterPoint nextToTop() {
+	private static DisasterPoint nextToTop(Stack<DisasterPoint> pointStack) {
 		DisasterPoint temp = pointStack.pop();
 		DisasterPoint output = pointStack.top();
 		pointStack.push(temp);
@@ -32,7 +33,7 @@ public class ConvexHullBuilder {
 	 * @param point2 Index of the second element to swap with
 	 * @return
 	 */
-	private void exch(ArrayList<DisasterPoint> disasterPoints, int p1, int p2) {
+	private static void exch(ArrayList<DisasterPoint> disasterPoints, int p1, int p2) {
 		DisasterPoint temp = disasterPoints.get(p1);
 		disasterPoints.set(p1, disasterPoints.get(p2));
 		disasterPoints.set(p2, temp);
@@ -46,7 +47,7 @@ public class ConvexHullBuilder {
 	 * @return the distance squared between p1 and p2, of type Double
 	 */
 	private double distanceSq(DisasterPoint p1,DisasterPoint p2) {
-		return (p1.x() - p2.x())*(p1.x() - p2.x()) + (p1.y() - p2.y())*(p1.y() - p2.y());
+		return (p1.getLat() - p2.getLat())*(p1.getLat() - p2.getLat()) + (p1.getLon() - p2.getLon())*(p1.getLon() - p2.getLon());
 	}
 	
 	/**
@@ -58,9 +59,9 @@ public class ConvexHullBuilder {
 	 * @param p3 Third DisasterPoint in orientation
 	 * @return Integer representing orientation of the Points.
 	 */
-	private int orientation(DisasterPoint p1, DisasterPoint p2, DisasterPoint p3) {
-		double val = (p2.y() - p1.y())*(p3.x() - p2.x()) -
-					(p2.x() - p1.x()) * (p3.y() - p2.y());
+	private static int orientation(DisasterPoint p1, DisasterPoint p2, DisasterPoint p3) {
+		double val = (p2.getLon() - p1.getLon())*(p3.getLat() - p2.getLat()) -
+					(p2.getLat() - p1.getLat()) * (p3.getLon() - p2.getLon());
 		if(val == 0) return 0;
 		return (val > 0) ? 1 : 2;
 	}
@@ -99,15 +100,16 @@ public class ConvexHullBuilder {
 	 * @param disasterPoints List of points in the set to compute convex set
 	 * @return Set of Points representing the convex hull of the points parameter
 	 */
-	private static ArrayList<DisasterPoint> convexHull(ArrayList<DisasterPoint> disasterPoints) {
-		double ymin = disasterPoints.get(0).y(); 
+	public static ArrayList<DisasterPoint> convexHull(ArrayList<DisasterPoint> disasterPoints) {
+		Stack<DisasterPoint> pointStack = new Stack<>();
+		double ymin = disasterPoints.get(0).getLon(); 
 		int min = 0;
 		
 		//Find lowest y, if there are multiple points with same y value, pick leftmost of them.
 		for(int i =1; i < disasterPoints.size(); i++) {
 			double y = disasterPoints.get(i).getLon();
 			if(y < ymin || (ymin == y && disasterPoints.get(i).getLat() < disasterPoints.get(min).getLat())) {
-				ymin = disasterPoints.get(i).y();
+				ymin = disasterPoints.get(i).getLon();
 				min = i;
 			}
 		}
@@ -116,7 +118,9 @@ public class ConvexHullBuilder {
 		// Place bottom-most point at the first position
 		exch(disasterPoints,0,min);
 		
-		qsort(disasterPoints.subList(1, disasterPoints.size()-1),new PointComparator(disasterPoints.get(0)));
+		
+		/* TO DO: ADD QUICKSORT */
+		//qsort(disasterPoints.subList(1, disasterPoints.size()-1),new PointComparator(disasterPoints.get(0)));
 		
 		ArrayList<DisasterPoint> aux = new ArrayList<>();
 		aux.add(disasterPoints.get(0));
@@ -141,7 +145,7 @@ public class ConvexHullBuilder {
 		pointStack.push(aux.get(2));
 		
 		for(int i = 0; i < aux.size(); i++) {
-			while(orientation(nextToTop(),pointStack.top(),aux.get(i)) != 2) {
+			while(orientation(nextToTop(pointStack),pointStack.top(),aux.get(i)) != 2) {
 				pointStack.pop();
 			}
 			pointStack.push(aux.get(i));	
