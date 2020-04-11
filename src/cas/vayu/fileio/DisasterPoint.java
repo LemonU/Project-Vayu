@@ -1,6 +1,4 @@
-package cas.vayu;
-
-import java.util.Hashtable;
+package cas.vayu.fileio;
 /**
  * 
  * @author Christina Korsman
@@ -16,7 +14,11 @@ public class DisasterPoint {
     private int property_damage;
     private int ID;
     
-    //when DisasterPoint is intailized , it intailly "null", will be identified by id
+    
+    /**
+     * 
+     * @param id the value to identity the node by 
+     */
     public DisasterPoint(int id){
     	
     	this.ID = id;
@@ -28,30 +30,34 @@ public class DisasterPoint {
         this.casulaties = 0;
         this.property_damage =0;
     }
-    
+
     /**
      * 
-     * @param setter value to set latitude
+     * @param setter The value for latitude to be set to 
      */
     public void  setLat(double setter) {
     	this.latitude = setter;
     }
     
     /**
-     * 
-     * @param setter value to set longitude
-     */
+    * 
+    * @param setter The value for longitude to be set to 
+    */
     public void  setLon(double setter) {
     	this.longitude = setter;
     }
     
+    /**
+     * 
+     * @param setter The value for disaster type to be set to 
+     */
     public void  settype(WeatherTypeEnum setter) {
     	this.disaster_type = setter;
     }
     
     /**
      * 
-     * @param setter value to set casualties
+     * @param setter The value for casualties type to be set to 
      */
     public void  setCas(int setter) {
     	this.casulaties = setter;
@@ -59,15 +65,16 @@ public class DisasterPoint {
     
     /**
      * 
-     * @param setter value to set year
+     * @param setter The value for year type to be set to 
      */
     public void setYear(int setter) {
     	this.year = setter;
-    } 
+    }
+    
     
     /**
      * 
-     * @param setter value to set property damage
+     * @param setter The value for property damage to be set to 
      */
     public void  setProDam(int setter) {
     	this.property_damage = setter;
@@ -75,7 +82,7 @@ public class DisasterPoint {
     
     /**
      * 
-     * @return the node id
+     * @return The ID of this node
      */
     public int getID() {
     	return this.ID;
@@ -83,47 +90,54 @@ public class DisasterPoint {
     
     /**
      * 
-     * @return the node latitude
+     * @return The latitude of this node
      */
     public double getLat(){
         return latitude;
     }
-
+    
     /**
      * 
-     * @return the node longitude
+     * @return The longitude of this node
      */
     public double getLon(){
         return longitude;
     }
-
-    public WeatherTypeEnum getweatherType(){
-        return disaster_type;
-    }
     
     /**
      * 
-     * @return the node casualties
+     * @return The Weather type of this node
+     */
+    public WeatherTypeEnum getweatherType(){
+        return disaster_type;
+    }
+
+    /**
+     * 
+     * @return The casualties of this node
      */
     public int getCasulaties(){
         return casulaties;
     }
-
+    
     /**
      * 
-     * @return the node property damages
+     * @return The property damage of this node
      */
     public int getproperty_damage(){
         return property_damage;
     }
     
+    /**
+     * 
+     * @return The year of this node
+     */
     public int getYear() {
     	return year;
     }
     
     /**
-     * 
-     * @return the node hashcode id
+     * @return The Hashcode of this node
      */
     public int hashCode() {
     	return ID;
@@ -131,7 +145,8 @@ public class DisasterPoint {
     
     /**
      * 
-     * @return if a node is equal to each other
+     * @param other The other node to be compared
+     * @return If this node and the other node are equal
      */
     public boolean equals(DisasterPoint other) {
     	return this.ID == other.ID ;	
@@ -139,7 +154,7 @@ public class DisasterPoint {
     }
     
     /**
-     * The node to string 
+     * @return String of all contents of this node
      */
     public String toString () {
     	return ("Id " + ID + " Lon : " +  longitude + "Lat : " + latitude );

@@ -1,4 +1,4 @@
-package cas.vayu;
+package cas.vayu.fileio;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,16 +7,20 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
 
-import cas.vayu.DisasterPoint;
 
+/**
+ * 
+ * @author Christina Korsman
+ *
+ */
 public class Parser {
 
-	public static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
+	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
 	public static void main(String[] args) throws IOException {//testing 
 		Parser par = new Parser();
 	}
 
-	private static ArrayList<DisasterPoint> nodelist;
+	public static ArrayList<DisasterPoint> nodelist;//list of all nodes in all files
 
 	/**
 	 * When class is called reads through all the files and inputs them into the nodelist

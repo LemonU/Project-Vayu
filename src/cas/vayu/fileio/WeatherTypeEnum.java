@@ -1,5 +1,10 @@
-package cas.vayu;
-
+package cas.vayu.fileio;
+/**
+ * 
+ * @author Christina Korsman
+ *
+ */
+//listing of all given disaster types
 public enum WeatherTypeEnum {
 	AstronomicalLowTide ("Astronomical Low Tide"),
 	Avalanche ("Avalanche"), 
@@ -81,5 +86,4 @@ public enum WeatherTypeEnum {
         }
         return null;
     }
-
 }
