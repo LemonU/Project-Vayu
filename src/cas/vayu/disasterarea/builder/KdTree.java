@@ -2,7 +2,7 @@ package cas.vayu.disasterarea.builder;
 
 import java.util.ArrayList;
 
-import cas.vayu.DisasterPoint;
+import cas.vayu.fileio.DisasterPoint;
 
 public class KdTree {
     private static final boolean VERT = true;

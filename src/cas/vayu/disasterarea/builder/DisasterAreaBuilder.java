@@ -3,8 +3,8 @@ package cas.vayu.disasterarea.builder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cas.vayu.DisasterPoint;
-import cas.vayu.WeatherTypeEnum;
+import cas.vayu.fileio.DisasterPoint;
+import cas.vayu.fileio.WeatherTypeEnum;
 import cas.vayu.graph.CCFinder;
 import cas.vayu.graph.Graph;
 
