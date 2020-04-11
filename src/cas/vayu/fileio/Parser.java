@@ -46,7 +46,6 @@ public class Parser {
 	 * @param dir the directory for the files to be read
 	 */
 	private void getfiles(File dir) {
-
 		try {
 			File[] files = dir.listFiles();
 
