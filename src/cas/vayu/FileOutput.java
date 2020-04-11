@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import cas.vayu.disasterarea.builder.DisasterArea;
+
 public class FileOutput {
 	public static void main(String[] args){
 
@@ -13,7 +15,7 @@ public class FileOutput {
 		x1.setLat(3);
 		x1.setLon(4);
 		x1.setYear(1999);
-		x1.settype(Weather_Type_Enum.Avalanche);
+		x1.settype(WeatherTypeEnum.Avalanche);
 		DisasterPoint x2 = new DisasterPoint(12345);
 		x2.setLat(23);
 		x2.setLon(24);
