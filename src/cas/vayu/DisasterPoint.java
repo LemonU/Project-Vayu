@@ -10,16 +10,13 @@ public class DisasterPoint {
 
     private double latitude;
     private double  longitude;
-    private Weather_Type_Enum disaster_type;
+    private WeatherTypeEnum disaster_type;
     private int year;
     private int casulaties;
     private int property_damage;
     private int ID;
-        
-    /**
-     * 
-     * @param id the id to identify the node
-     */
+    
+    //when DisasterPoint is intailized , it intailly "null", will be identified by id
     public DisasterPoint(int id){
     	
     	this.ID = id;
@@ -27,7 +24,6 @@ public class DisasterPoint {
     	this.year =0;
         this.latitude = 0;
         this.longitude = 0;
-        this.disaster_type = null;
         
         this.casulaties = 0;
         this.property_damage =0;
@@ -49,11 +45,7 @@ public class DisasterPoint {
     	this.longitude = setter;
     }
     
-    /**
-     * 
-     * @param setter value to set disaster_type
-     */
-    public void  settype(Weather_Type_Enum setter) {
+    public void  settype(WeatherTypeEnum setter) {
     	this.disaster_type = setter;
     }
     
@@ -105,11 +97,7 @@ public class DisasterPoint {
         return longitude;
     }
 
-    /**
-     * 
-     * @return the node weather type
-     */
-    public Weather_Type_Enum getweatherType(){
+    public WeatherTypeEnum getweatherType(){
         return disaster_type;
     }
     

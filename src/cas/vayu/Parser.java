@@ -7,12 +7,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
 
+import cas.vayu.DisasterPoint;
 
-/**
- * 
- * @author Christina Korsman
- *
- */
 public class Parser {
 
 	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
