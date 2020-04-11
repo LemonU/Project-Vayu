@@ -1,6 +1,10 @@
 package cas.vayu;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import cas.vayu.disasterarea.builder.DisasterArea;
+import cas.vayu.disasterarea.builder.DisasterAreaBuilder;
 
 public class CommandlineController {
 
@@ -13,22 +17,32 @@ public class CommandlineController {
     private static final String BYPROXIMITY_COMMAND = "byproximity";
     private static final String BYDAMAGE_COMMAND = "bydamage";
 
-    private static Scanner scanner = null;
+    private static final double RAD = 50;
 
-    private CommandlineController() {}
+    private Parser parser;
+    private DisasterAreaBuilder DABuilder;
+    private Scanner inputScanner;
+    private FileOutput outputter;
 
-    public static void start() {
-        scanner = new Scanner(System.in);
-        System.out.println("Project Vayu command-line user interface: V 0.0.1");
+    public CommandlineController() {
+        inputScanner = new Scanner(System.in);
+        parser = new Parser();
+        DABuilder = new DisasterAreaBuilder(Parser.lookup, parser.getData(), RAD);
+        outputter = new FileOutput();
+    }
+
+    public void start() {
+        System.out.println("Project Vayu command-line user interface: V0.0.1");
         System.out.println("Type \"help\" to get the list of commands...\n");
+
         while(true) {
             System.out.print("> ");
             performNextCommand();
         }
     }
 
-    private static void performNextCommand() {
-        String args[] = scanner.nextLine().toLowerCase().split(" ");
+    private void performNextCommand() {
+        String args[] = inputScanner.nextLine().toLowerCase().split(" ");
         String cmd = args[0];
 
         if (cmd.equals(EXIT_COMMAND))
@@ -45,7 +59,7 @@ public class CommandlineController {
             printNoMatch();
     }
 
-    private static void printHelp(String[] args) {
+    private void printHelp(String[] args) {
         if (args.length == 1) {
             System.out.println("Available commands:");
             System.out.println("--------------------------------");
@@ -68,7 +82,7 @@ public class CommandlineController {
         }
     }
 
-    private static void printHelpSort() {
+    private void printHelpSort() {
         System.out.println("\nOutputs a sorted list of disaster locations to the desired file");
                 System.out.println("Synopsis: sort <comparator> <outfile>");
                 System.out.println("Available comparators:");
@@ -77,13 +91,13 @@ public class CommandlineController {
                 System.out.println("  - byDamage");
     }
 
-    private static void printHelpAreas() {
+    private void printHelpAreas() {
         System.out.println("\nOutputs a list of disaster locations of a specific disaster type"
                             + "that are in close proximity with each other to the desired file");
         System.out.println("Synopsis: areas <disaster> <outfile>");
     }
 
-    private static void printHelpAreasExt() {
+    private void printHelpAreasExt() {
         System.out.println("\nOutputs a list of disaster locations of a specific disaster type"
                             + "that are in close proximity with each other to the desired file");
         System.out.println("Synopsis: areas <disaster> <outfile>");
@@ -124,20 +138,23 @@ public class CommandlineController {
         System.out.println("  - ");
     }
 
-    private static void printNoMatch() {
+    private void printNoMatch() {
         System.out.println("\nUnkown command! Enter \"help\" for list of commands.\n");
     }
 
-    private static void sort(String[] args) {
+    private void sort(String[] args) {
         if (args.length != 3) {
             printHelpSort();
             return;
         }
+
         String comparator = args[1];
         String outFile = args[2];
+        ArrayList<DisasterPoint> result;
 
         if (comparator.equals(BYCASUALTY_COMMAND)) {
-
+            result = null;
+            outputter.writeData(outFile, result);
         } else if (comparator.equals(BYPROXIMITY_COMMAND)) {
 
         } else if (comparator.equals(BYDAMAGE_COMMAND)) {
@@ -147,26 +164,32 @@ public class CommandlineController {
         }
     }
 
-    private static void areas(String[] args) {
+    private void areas(String[] args) {
         if (args.length != 3) {
             printHelpAreas();
             return;
         }
-        String disaster;
-        String outFile;
+
+        String outFile = args[2];
+
+        WeatherTypeEnum disasterType = enumOfString(args[1]);
+        if (disasterType == null)
+            return;
+
+        ArrayList<DisasterArea> result = DABuilder.getAreas(disasterType);
     }
 
-    private static void exit(int exitCode) {
+    private WeatherTypeEnum enumOfString(String rpr) {
+        return null;
+    }
+
+    private void exit(int exitCode) {
         close();
         System.exit(exitCode);
     }
 
-    private static void close() {
-        scanner.close();
-    }
-
-    public static void main(String[] args) {
-        CommandlineController.start();
+    private void close() {
+        inputScanner.close();
     }
 
 }
