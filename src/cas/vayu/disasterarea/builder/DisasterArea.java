@@ -1,4 +1,4 @@
-package disasterarea.builder;
+package cas.vayu.disasterarea.builder;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package cas.Sorting;
+package cas.vayu.sorting;
 
 public class ByProximity {
 

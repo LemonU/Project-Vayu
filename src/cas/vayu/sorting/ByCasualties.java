@@ -1,7 +1,8 @@
-package cas.Sorting;
+package cas.vayu.sorting;
 
 import java.util.Comparator;
 import cas.vayu.DisasterPoint;
+
 public class ByCasualties implements Comparator<DisasterPoint> {
 
 	/**

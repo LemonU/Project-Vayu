@@ -1,4 +1,4 @@
-package disasterarea.builder;
+package cas.vayu.disasterarea.builder;
 
 /**
  * DisasterPoint data type which contains x and y positions which represent
