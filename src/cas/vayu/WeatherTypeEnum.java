@@ -1,6 +1,6 @@
-package cas.Sorting;
+package cas.vayu;
 
-public enum Weather_Type_Enum {
+public enum WeatherTypeEnum {
 	Astronomical_Low_Tide, 
 	Avalanche, 
 	Blizzard, 
