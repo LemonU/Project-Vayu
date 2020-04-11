@@ -20,6 +20,7 @@ public class Parser {
 	
 	public static void main(String[] args) throws IOException {//testing 
 		Parser par = new Parser();
+		System.out.println(par.getNodeList());
 	}
 
 
