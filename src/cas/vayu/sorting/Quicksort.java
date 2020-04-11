@@ -1,15 +1,16 @@
-package cas.sorting;
+package cas.vayu.sorting;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 import cas.vayu.DisasterPoint;
 
+import java.util.Collection;
 import java.util.Collections;
 
 public class Quicksort {
 
-	private ArrayList<DisasterPoint> quicksort(ArrayList<DisasterPoint> list, int low, int high,
+	public ArrayList<DisasterPoint> quicksort(ArrayList<DisasterPoint> list, int low, int high,
 			Comparator<DisasterPoint> comp) {
 		int ll = low;
 		int hh = high;

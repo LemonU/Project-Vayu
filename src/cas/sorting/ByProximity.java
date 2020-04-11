@@ -1,4 +1,4 @@
-package cas.Sorting;
+package cas.sorting;
 
 public class ByProximity {
 

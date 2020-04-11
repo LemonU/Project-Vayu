@@ -1,4 +1,4 @@
-package disasterarea.builder;
+package cas.vayu.disasterarea.builder;
 
 import java.util.ArrayList;
 
@@ -317,7 +317,7 @@ public class KdTree {
 		c.setLat(0);
 		c.setLon(0);
 		//System.out.println(tree2.closePionts(c, 0.1));
-		for(DisasterPoint e : tree2.closePionts(c, 1)) {
+		for(DisasterPoint e : tree2.closePionts(c, 12)) {
 			System.out.println(e);
 		}
 		

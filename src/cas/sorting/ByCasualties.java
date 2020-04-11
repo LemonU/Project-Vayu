@@ -1,4 +1,4 @@
-package cas.Sorting;
+package cas.sorting;
 
 import java.util.Comparator;
 import cas.vayu.DisasterPoint;
