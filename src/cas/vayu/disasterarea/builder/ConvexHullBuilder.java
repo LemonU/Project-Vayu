@@ -72,7 +72,7 @@ public class ConvexHullBuilder {
 	 * @author OussamaSaoudi
 	 *
 	 */
-	private class PointComparator implements Comparator<DisasterPoint>{
+	private static class PointComparator implements Comparator<DisasterPoint>{
 
 		private DisasterPoint anchor;
 		private PointComparator(DisasterPoint anchor) {
@@ -90,10 +90,10 @@ public class ConvexHullBuilder {
 			// return -1 if orientation is counter clock-wise, 1 if clock-wise
 			return (ori == 2) ? -1 : 1;
 		}
+		private double distanceSq(DisasterPoint p1,DisasterPoint p2) {
+			return (p1.getLat() - p2.getLat())*(p1.getLat() - p2.getLat()) + (p1.getLon() - p2.getLon())*(p1.getLon() - p2.getLon());
 		}
-	
-	// TEMPORARY METHOD
-	private void qsort(ArrayList<Object> list,Comparator k ) {}
+		}
 	
 	/**
 	 * Computes the convex hull of the list of points provided
@@ -120,7 +120,7 @@ public class ConvexHullBuilder {
 		
 		
 		/* TO DO: ADD QUICKSORT */
-		//qsort(disasterPoints.subList(1, disasterPoints.size()-1),new PointComparator(disasterPoints.get(0)));
+		disasterPoints = Quicksort.sort(disasterPoints,1,disasterPoints.size()-1,new PointComparator(disasterPoints.get(0)));
 		
 		ArrayList<DisasterPoint> aux = new ArrayList<>();
 		aux.add(disasterPoints.get(0));
@@ -144,7 +144,7 @@ public class ConvexHullBuilder {
 		pointStack.push(aux.get(1));
 		pointStack.push(aux.get(2));
 		
-		for(int i = 0; i < aux.size(); i++) {
+		for(int i = 3; i < aux.size(); i++) {
 			while(orientation(nextToTop(pointStack),pointStack.top(),aux.get(i)) != 2) {
 				pointStack.pop();
 			}
@@ -158,6 +158,34 @@ public class ConvexHullBuilder {
 		return output;
 	}
 	public static void main(String[] args) {
-		
+		DisasterPoint p = new DisasterPoint(0);
+		p.setLat(1);
+		p.setLon(1);
+		DisasterPoint p1 = new DisasterPoint(1);
+		p1.setLat(-1);
+		p1.setLon(-1);
+		DisasterPoint p2 = new DisasterPoint(2);
+		p2.setLat(-1);
+		p2.setLon(1);
+		DisasterPoint p3 = new DisasterPoint(3);
+		p3.setLat(1);
+		p3.setLon(-1);
+		DisasterPoint p4 = new DisasterPoint(4);
+		p4.setLat(0);
+		p4.setLon(0);
+		DisasterPoint p5 = new DisasterPoint(5);
+		p4.setLat(0.5);
+		p4.setLon(-0.5);
+		ArrayList<DisasterPoint> test = new ArrayList<>();
+		test.add(p);
+		test.add(p1);
+		test.add(p2);
+		test.add(p3);
+		test.add(p4);
+		test.add(p5);
+		ArrayList<DisasterPoint> hull = ConvexHullBuilder.convexHull(test);
+		for(DisasterPoint point: hull) {
+			System.out.println(point);
+		}
 	}
 }

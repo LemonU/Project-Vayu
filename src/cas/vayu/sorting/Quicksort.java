@@ -2,6 +2,7 @@ package cas.vayu.sorting;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import cas.vayu.fileio.DisasterPoint;
 
@@ -9,42 +10,53 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class Quicksort {
-
-	public ArrayList<DisasterPoint> quicksort(ArrayList<DisasterPoint> list, int low, int high,
-			Comparator<DisasterPoint> comp) {
-		int ll = low;
-		int hh = high;
-
-		if (hh > ll) {
-			DisasterPoint pivot = list.get((ll + hh) / 2);
-			while (ll < hh) {
-				while (ll < high && comp.compare(list.get(ll), pivot) < 0) {
-					ll += 1;
-				}
-				while (hh > low && comp.compare(list.get(hh), pivot) > 0) {
-					hh -= 1;
-				}
-				if (ll <= hh) {
-					Collections.swap(list, ll, hh);
-					ll += 1;
-					hh -= 1;
-				}
-				if (low < hh) {
-					quicksort(list, low, hh, comp);
-				}
-				if (ll < high) {
-					quicksort(list, ll, high, comp);
-				}
-
-			}
+	public static <T> ArrayList<T> sort(List<T> array, Comparator<T> c) {
+		ArrayList<T> output = new ArrayList<T>();
+		for(T e : array) {
+			output.add(e);
 		}
-		return list;
+		int lo = 0;
+		int hi = array.size() - 1;
+		quicksort(output,lo,hi,c); 
+		return output;
+	}
+	public static <T> ArrayList<T> sort(List<T> array,int lo, int hi, Comparator<T> c) {
+		if(lo < 0 || hi >= array.size()) {
+			throw new IllegalArgumentException("Array indices to sort must exist in the array");
+		}
+		ArrayList<T> output = new ArrayList<T>();
+		for(T e : array) {
+			output.add(e);
+		}
+
+		quicksort(output,lo,hi,c); 
+		return output;
+	}
+	public static <T> void quicksort(ArrayList<T> list, int lo, int hi,
+			Comparator<T> c) {
+		if (hi <= lo) return;
+		int j = partition(list,lo,hi,c); 
+		quicksort(list,lo,j-1,c);
+		quicksort(list,j+1,hi,c);
+		
+	}
+	private static <T> int partition(List<T> list,int lo, int hi, Comparator<T> c) {
+		int i = lo, j = hi+ 1;
+		T v = list.get(lo);
+		while(true) {
+			while(c.compare(list.get(++i), v) < 0) if (i == hi) break;
+			while(c.compare(v, list.get(--j)) < 0) if (j == lo) break;
+			if(i >= j) break;
+			exch(list,i,j);
+		}
+		exch(list,lo,j);
+		return j;
+	}
+	private static <T> void exch(List<T> list, int i1, int i2) {
+		T temp = list.get(i1);
+		list.set(i1, list.get(i2));
+		list.set(i2, temp);
 	}
 
-	public ArrayList<DisasterPoint> sort(ArrayList<DisasterPoint> list, Comparator<DisasterPoint> comp) {
-		int low = 0;
-		int high = list.size() - 1;
-		return quicksort(list, low, high, comp);
-	}
 
 }

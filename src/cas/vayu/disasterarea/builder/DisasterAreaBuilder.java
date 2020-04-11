@@ -16,7 +16,6 @@ import cas.vayu.graph.Graph;
  */
 public class DisasterAreaBuilder {
 	private ArrayList<KdTree> kdtList;
-	private HashMap<Integer,Integer> map;
 	private ArrayList<DisasterPoint> pointList;
 	private HashMap<WeatherTypeEnum,ArrayList<DisasterArea>> areaList;
 	
