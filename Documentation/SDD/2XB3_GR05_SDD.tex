@@ -309,10 +309,10 @@ Here is the summary.
                 %............................................................
                 %/////////////////////////////////////////////////////////////
                  \newpage
-                \subsection* {Node}
+                \subsection* {DisasterPoint}
                 
                 \subsubsection*{Module}
-                Node
+                DisasterPoint
                 
                 \subsection* {Uses}
                 N/A
@@ -322,7 +322,7 @@ Here is the summary.
                 \subsubsection{}* {Exported Constants}
                 None
                 \subsubsection* {Exported Types}
-                Node = ?
+                DisasterPoint = ?
 
                 
                 \subsubsection* {Exported Access Programs}
@@ -372,7 +372,7 @@ Here is the summary.
                 KdTree
                 
                 \subsection* {Uses}
-                Node
+                DisasterPoint
                 
                 \subsection* {Syntax}
                 
@@ -389,9 +389,9 @@ Here is the summary.
                     \hline
                     \textbf{Routine Name} & \textbf{In} & \textbf{Out} & \textbf{Description}\\
                     \hline
-                    sortByPorximity&lat: int, long: int&ArrayList<Node>& Returns a sorted list of nodes sorted by their proximity to a given point\\
+                    sortByPorximity&lat: int, long: int&ArrayList<DisasterPoint>& Returns a sorted list of nodes sorted by their proximity to a given point\\
                     \hline
-                    getPoints&point: Node, radius: int&Set<Node>& Returns set of nodes that are within the radius of the Node, and have same DisasterType\\
+                    getPoints&point: DisasterPoint, radius: int&Set<DisasterPoint>& Returns set of nodes that are within the radius of the DisasterPoint, and have same DisasterType\\
                     \hline
                     \end{tabular}
                 
@@ -416,7 +416,7 @@ Here is the summary.
                 CCFinder
                 
                 \subsection* {Uses}
-                Graph, Node
+                Graph, DisasterPoint
                 
                 \subsection* {Syntax}
                 
@@ -433,7 +433,7 @@ Here is the summary.
                 \hline
                 \textbf{Routine name} & \textbf{In} & \textbf{Out} & \textbf{Description}\\
                 \hline
-                getCC & Graph & Set<Set<Node>> & Generates the set of connected components and returns a set of set of nodes, where
+                getCC & Graph & Set<Set<DisasterPoint>> & Generates the set of connected components and returns a set of set of nodes, where
                 each set of nodes is a conncected component.\\
                 \hline
                 \end{tabular}
@@ -473,7 +473,7 @@ Here is the summary.
                 
                 \subsubsection* {Exported Types}
                 
-                getData() = ArrayList$<$Node$>$
+                getData() = ArrayList$<$DisasterPoint$>$
                 
                 \subsubsection* {Exported Access Programs}
                 
@@ -521,7 +521,7 @@ Here is the summary.
                     \item Casualties Comparator - A module compare the casualties of two disasters 
                     \item Property Damage Comparator - A module compare the property damage of two disasters 
                     \item Proximity Comparator 
-                    \item Node - A class that store the data relating to a disaster occurrence. 
+                    \item DisasterPoint - A class that store the data relating to a disaster occurrence. 
                     \item Weather Type Enum - A Data type for all type of disasters in the data set
                     \item Parser -Take the file and transfers the data to another class to be used 
                    % \item File Output - The result of the user interacting with the program. It is an interface
@@ -536,15 +536,15 @@ Here is the summary.
                 
             \subsubsection{Design relationships}
                 \begin{itemize}
-                    \item Quicksort use the node class as it the object type to be sorted.
-                    \item Causalities Comparator will use Node. It will use the getter accessor methods to allow the comparison 
-                    \item Property Damage Comparator will use Node. It will use the getter accessor methods to allow the comparison
-                    \item Promitiy Comparator will use Node. It will use the getter accessor methods to allow the comparison 
-                    \item Node use Enum for the disaster type that it will store for that occurrence 
+                    \item Quicksort use the DisasterPoint class as it the object type to be sorted.
+                    \item Causalities Comparator will use DisasterPoint. It will use the getter accessor methods to allow the comparison 
+                    \item Property Damage Comparator will use DisasterPoint. It will use the getter accessor methods to allow the comparison
+                    \item Promitiy Comparator will use DisasterPoint. It will use the getter accessor methods to allow the comparison 
+                    \item DisasterPoint use Enum for the disaster type that it will store for that occurrence 
                    % \item File Output use Filter to make a list of disaster of the filter input types. 
                     \item Filter use Weather Type to apply the filter to be used.
-                    \item Graph class use the node class to create a graph data structure 
-                    \item Parser use Nodes, taking data and separating it into the correct places for the Node.
+                    \item Graph class use the DisasterPoint class to create a graph data structure 
+                    \item Parser use Nodes, taking data and separating it into the correct places for the DisasterPoint.
                     \item finder use Graph and Convex Hull
                     
                     \item Convex hull will use graph 
@@ -554,7 +554,7 @@ Here is the summary.
                 
             \subsubsection{Design Attributes}
                 %persistence and quality properties
-                Node will be persistently use through out this software,as it is the main container for the data.
+                DisasterPoint will be persistently use through out this software,as it is the main container for the data.
                 
         \subsection{Patterns use viewpoint}%Lennon
             Summary of patterns use viewpoint here.
