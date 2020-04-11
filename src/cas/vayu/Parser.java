@@ -11,12 +11,12 @@ import cas.vayu.DisasterPoint;
 
 public class Parser {
 
-	private static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
+	public static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
 	public static void main(String[] args) throws IOException {//testing 
 		Parser par = new Parser();
 	}
 
-	public static ArrayList<DisasterPoint> nodelist;
+	private static ArrayList<DisasterPoint> nodelist;
 
 	/**
 	 * When class is called reads through all the files and inputs them into the nodelist
@@ -84,7 +84,7 @@ public class Parser {
 
 				int dam = damparse(line[24].replaceAll("\"", ""), line[25].replaceAll("\"", ""));
 
-				Weather_Type_Enum type = Weather_Type_Enum.fromString(line[12].replaceAll("\"", ""));
+				WeatherTypeEnum type = WeatherTypeEnum.fromString(line[12].replaceAll("\"", ""));
 
 
 				double lat = 0.0;
