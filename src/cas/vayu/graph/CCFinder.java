@@ -42,10 +42,6 @@ public class CCFinder {
         }
     }
 
-    private class Queue extends LinkedList<Integer>{
-        void enque(int v) { this.add(v); }
-        int dequeue() { return this.remove(0); }
-    }
     private void bfs(Graph G, int s) {
         Stack<Integer> queue = new Stack();
         queue.push(s);
