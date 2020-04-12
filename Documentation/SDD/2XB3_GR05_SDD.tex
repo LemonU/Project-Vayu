@@ -1493,17 +1493,29 @@ Project: Vayu is a system which parses NCDC Storm and Weather Events Database to
     
     \paragraph{Overall Design} An important decision made with the overall design is to create a list of disaster points and a lookup table and pass references to them the primary controlling methods, namely DisasterAreaBuilder and CommandlineController. The use of both a list and a lookup table is to allow for constant time operation of getting the index representation of a DisasterPoint and getting a DisasterPoint from its index. An example of use of the lookup table is inserting edges into the graph in DisasterAreaBuilder, where the DisasterPoints were known but the index versions of the node were needed to insert edges into the graph. An example of the use of the DisasterPoints list is in passing the reference for sorting in CommandlineController, as well as converting integer points into DisasterPoints such as when the connected components were retrieved from the graph implementation in DisasterAreaBuilder.
 %\section{Review}%design review
+\newpage
+\section{Internal Review}
 
-\section*{State machines}
-\subsection*{DisasterAreaBuilder}  
+Overall the design meets all the updated functional requirements and has been outputting accurate disaster areas based on internal testing and validation. Some particularly noteworthy things that could improve or that were done well are mentioned below:
+\begin{itemize}
+\item The design decision to use a graph implementation for CCFinder as opposed to a union-find implementation may have been the wrong choice to make as the performance has significantly affected by the use of the graph algorithms in the pre-processing of the application.
+\item The file outputter could have been made to be made up of static methods as opposed to having to instantiate the object, making the code cleaner.
+\item The choice to use a KdTree was a good one as the KdTree not only fulfilled the requirement but used little time in the pre-processing section of the program.
+\item Some methods in modules could have been omitted, but were implemented because it was unclear how some modules would be used at ponts. An example of this is in CCFinder which has methods for getting the connected components of a single vertex as well as the nearest neighbor mehtod in KdTree.
+\item Sections of code in DisasterBuilder and ConvexHullBuilder could have definitely been broken down into smaller methods but were instead kept as one for simplicity and due to time constraints.
+\item Exported routine names could be more descriptive in some cases. For example, the detailsParser() method under the Parser module bears an ambiguous name in terms of explaining the basic functionality of this method. Fixing these naming issues would have reduced time wasted during the development process as group members would not have to rely on the person-in-charge to explain the usage of a specific method. Also it would help clients to understand the design better.
+\end{itemize}
+
+\section{UML State Diagrams}
 \newpage
 \begin{figure}
-            \includegraphics[scale=0.5]{State_Machine_DisasterAreaBuilder.jpeg}
+            \includegraphics[scale=0.7]{State_Machine_DisasterAreaBuilder.jpeg}
             \caption{UML State Diagram for DisasterAreaBuilder}
             \label{fig:state_one}
 \end{figure}
+
 \begin{figure}
-            \includegraphics[scale=0.5]{State_Diagram_CLC.png}
+            \includegraphics[scale=0.7]{State_Diagram_CLC.png}
             \caption{UML State Diagram for CommandlineController}
             \label{fig:state_two}
 \end{figure}
