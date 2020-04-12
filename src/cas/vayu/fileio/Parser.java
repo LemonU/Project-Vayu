@@ -72,6 +72,7 @@ public class Parser {
 	public  void detailsParser(String fileName ) {
 		try {
 			File myObj = new File(fileName);
+			@SuppressWarnings("resource")
 			Scanner myReader = new Scanner(myObj);
 
 			myReader.nextLine();//skip the heading
@@ -127,7 +128,7 @@ public class Parser {
 					temp.setYear(year);
 					temp.setLat(lat);
 					temp.setLon(lon);
-					temp.settype(type);
+					temp.setType(type);
 					temp.setCas(cast);
 					temp.setPropertyDam(dam);
 				}

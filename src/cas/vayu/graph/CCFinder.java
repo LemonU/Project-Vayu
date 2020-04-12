@@ -7,6 +7,7 @@ import cas.vayu.disasterarea.builder.Stack;
 
 /**
  * Connected Component finder for undirected graph with numerical vertex identifiers
+ * @author Lennon Yu
  */
 public class CCFinder {
 

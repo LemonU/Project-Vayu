@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * is an array-based implementation, thus the range of vertex identifiers
  * will be limited to correspond to the total number of nodes. This means
  * that one may assume all vertex identifiers lies within [0, V)
+ * @author Lennon Yu
  */
 public class Graph {
 
@@ -18,7 +19,8 @@ public class Graph {
      * Constructs a new graph
      * @param V The number of nodes in this graph
      */
-    public Graph(int V) {
+    @SuppressWarnings("unchecked")
+	public Graph(int V) {
         this.V = V;
         this.E = 0;
         adj = (ArrayList<Integer>[]) new ArrayList[V];
@@ -122,7 +124,11 @@ public class Graph {
         }
         return sb.toString();
     }
-
+    
+    /**
+     * Main method used for unit testing
+     * @param args arguments to be passed to the main
+     */
     public static void main(String[] args) {
         Graph g = new Graph(9);
         g.addEdge(0, 1);

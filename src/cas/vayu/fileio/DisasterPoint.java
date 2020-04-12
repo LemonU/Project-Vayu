@@ -12,7 +12,7 @@ public class DisasterPoint {
     private double  longitude;
     private WeatherTypeEnum disasterType;
     private int year;
-    private int casulaties;
+    private int casualties;
     private int propertyDamage;
     private int id;
     
@@ -30,7 +30,7 @@ public class DisasterPoint {
         this.latitude = 0;
         this.longitude = 0;
         
-        this.casulaties = 0;
+        this.casualties = 0;
         this.propertyDamage =0;
     }
     /**
@@ -48,7 +48,7 @@ public class DisasterPoint {
         this.latitude = lat;
         this.longitude = lon;
         
-        this.casulaties = 0;
+        this.casualties = 0;
         this.propertyDamage =0;
     }
 
@@ -72,7 +72,7 @@ public class DisasterPoint {
      * Sets the WeatherTypeEnum weather type of the DisasterPoint to the passed type
      * @param type The value for the DisasterPoint's WeatherTypeEnum type to be set to 
      */
-    public void  settype(WeatherTypeEnum type) {
+    public void  setType(WeatherTypeEnum type) {
     	this.disasterType = type;
     }
     
@@ -81,7 +81,7 @@ public class DisasterPoint {
      * @param cas The value for casualties to be set to 
      */
     public void  setCas(int cas) {
-    	this.casulaties = cas;
+    	this.casualties = cas;
     }
     
     /**
@@ -137,8 +137,8 @@ public class DisasterPoint {
      * Getter for the casualties of the DisasterPoint
      * @return The casualties of this DisasterPoint
      */
-    public int getCasulaties(){
-        return casulaties;
+    public int getCasualties(){
+        return casualties;
     }
     
     /**

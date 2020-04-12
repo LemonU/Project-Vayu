@@ -69,7 +69,7 @@ public class FileOutput {
 				out.append(String.format("%-20s|", i.getLat()));
 				out.append(String.format("%-20s|", i.getLon()));
 				out.append(String.format("%-20s|", i.getPropertyDamage()));
-				out.append(String.format("%-20s|", i.getCasulaties()));
+				out.append(String.format("%-20s|", i.getCasualties()));
 
 				out.append("\n");
 				out.append(sep);
@@ -120,7 +120,7 @@ public class FileOutput {
 					out.append(String.format("%-20s|", x.getLat()));
 					out.append(String.format("%-20s|", x.getLon()));
 					out.append(String.format("%-20s|", x.getPropertyDamage()));
-					out.append(String.format("%-20s|", x.getCasulaties()));
+					out.append(String.format("%-20s|", x.getCasualties()));
 
 					out.append("\n");
 					out.append(sep);

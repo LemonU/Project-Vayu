@@ -20,13 +20,13 @@ public class ByCasualties implements Comparator<DisasterPoint> {
 	 */
 	@Override
 	public int compare(DisasterPoint o1, DisasterPoint o2) {
-		if (o1.getCasulaties() < o2.getCasulaties()) {
+		if (o1.getCasualties() < o2.getCasualties()) {
 			return -1;
 		}
-		if (o1.getCasulaties() == o2.getCasulaties()) {
+		if (o1.getCasualties() == o2.getCasualties()) {
 			return 0;
 		}
-		if (o1.getCasulaties() > o2.getCasulaties()) {
+		if (o1.getCasualties() > o2.getCasualties()) {
 			return 1;
 		}
 		return 0;

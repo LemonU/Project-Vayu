@@ -12,9 +12,13 @@ import cas.vayu.fileio.Parser;
 import cas.vayu.fileio.WeatherTypeEnum;
 import cas.vayu.sorting.ByCasualties;
 import cas.vayu.sorting.ByDamage;
-import cas.vayu.sorting.ByProximity;
 import cas.vayu.sorting.Quicksort;
-
+/**
+ * Program Controller which reads input from the user and gives a 
+ * user interface for the user to use.
+ * @author Lennon Yu
+ *
+ */
 public class CommandlineController {
 
     private static final String SORT_COMMAND = "sort";
@@ -23,7 +27,6 @@ public class CommandlineController {
     private static final String EXIT_COMMAND = "exit";
 
     private static final String BYCASUALTY_COMMAND = "bycasualty";
-    private static final String BYPROXIMITY_COMMAND = "byproximity";
     private static final String BYDAMAGE_COMMAND = "bydamage";
 
     private static final double RAD = 0.1;
@@ -33,6 +36,10 @@ public class CommandlineController {
     private Scanner inputScanner;
     private FileOutput outputter;
 
+    /**
+     * Constructs the CommandlineController and initializes
+     * Parser, FileOutput, and DisasterAreas
+     */
     public CommandlineController() {
         inputScanner = new Scanner(System.in);
         outputter = new FileOutput();
@@ -40,7 +47,9 @@ public class CommandlineController {
         parser = new Parser();
         DABuilder = new DisasterAreaBuilder(parser.getTable(), parser.getData(), RAD,50);
     }
-
+/**
+ * Starts the user interface
+ */
     public void start() {
         System.out.println("Project Vayu command-line user interface: V0.0.1");
         System.out.println("Type \"help\" to get the list of commands...\n");
@@ -50,7 +59,9 @@ public class CommandlineController {
             performNextCommand();
         }
     }
-
+    /**
+     * Takes user input and performs command based on the input
+     */
     private void performNextCommand() {
         String args[] = inputScanner.nextLine().toLowerCase().trim().split(" ");
         String cmd = args[0];
@@ -69,6 +80,11 @@ public class CommandlineController {
             printNoMatch();
     }
 
+    /**
+     * Prints help information, depending on the user input prints
+     * information on the sort command or the areas command
+     * @param args Input argument from the user
+     */
     private void printHelp(String[] args) {
         if (args.length == 1) {
             System.out.println("Available commands:");
@@ -89,38 +105,44 @@ public class CommandlineController {
             }
         }
     }
-
+    /**
+     * Prints the help for the sort function 
+     */
     private void printHelpSort() {
         System.out.println("\nOutputs a sorted list of disaster locations to the desired file");
                 System.out.println("Synopsis: sort <comparator> <outfile>");
                 System.out.println("Available comparators:");
                 System.out.println("  - byCasualty");
-                System.out.println("  - byProximity");
                 System.out.println("  - byDamage");
     }
-
+    
+    /**
+     * Prints the help for the areas function
+     */
     private void printHelpAreas() {
         System.out.println("\nOutputs a list of disaster locations of a specific disaster type"
                             + "that are in close proximity with each other to the desired file");
         System.out.println("Synopsis: areas <disaster> <outfile>");
         System.out.println("Available disaster types:");
-        System.out.println("  - Astronomical_Low_Tide");
-        System.out.println("  - Avalanche");
-        System.out.println("  - Blizzard");
+        System.out.println("  - Tornado");
+        System.out.println("  - Hail");
+        System.out.println("  - Thunderstorm_Wind");
         System.out.println("  - Coastal_Flood");
         System.out.println("  - Cold_Wind_Chill");
         System.out.println("  - ...");
-        System.out.println("To see more, enter \"help areas --more\"");
     }
 
-    private void printHelpAreasExt() {
-        
-    }
-
+    /**
+     * Prints if no match to the command input by user is found
+     */
     private void printNoMatch() {
         System.out.println("\nUnkown command! Enter \"help\" for list of commands.\n");
     }
-
+    /**
+     * Initializes the sort command, with the input being the user's arguments 
+     * for the type of sorting and output file
+     * @param args Array of string for user input sorting type and output file name
+     */
     private void sort(String[] args) {
         if (args.length != 3) {
             printHelpSort();
@@ -132,8 +154,6 @@ public class CommandlineController {
             comparator = new ByDamage();
         else if (args[1].equalsIgnoreCase(BYCASUALTY_COMMAND))
             comparator = new ByCasualties();
-        else if (args[1].equalsIgnoreCase(BYPROXIMITY_COMMAND))
-            comparator = new ByProximity();
         else {
             printHelpSort();
             return;
@@ -143,7 +163,11 @@ public class CommandlineController {
         System.out.println("Writing to file...");
         outputter.writeData(args[2], result);
     }
-
+    /**
+     * Initializes the areas command, with the input being the user's arguments 
+     * for the type of sorting and output file
+     * @param args Array of string for user input weather type and output file name
+     */
     private void areas(String[] args) {
         if (args.length != 3) {
             printHelpAreas();
@@ -162,6 +186,12 @@ public class CommandlineController {
         outputter.writeArea(args[2], result);
     }
 
+    /**
+     * Takes string rpr and returns the corresponding WeatherTypeEnum which
+     * is associated with that string
+     * @param rpr User input weather type
+     * @return WeatherTypeEnum associated with rpr string, and null otherwise
+     */
     private WeatherTypeEnum enumOfString(String rpr) {
         WeatherTypeEnum matchedType = null;
 
@@ -322,12 +352,17 @@ public class CommandlineController {
 
         return matchedType;
     }
-
+    /**
+     * Exits from the program with the given exitCode
+     * @param exitCode exit code to give to system when exiting the program
+     */
     private void exit(int exitCode) {
         close();
         System.exit(exitCode);
     }
-
+    /**
+     * Closes the input scanner used in the command line8
+     */
     private void close() {
         inputScanner.close();
     }
