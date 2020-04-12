@@ -1,7 +1,10 @@
 package cas.vayu.graph;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
+
+import cas.vayu.disasterarea.builder.Stack;
 
 /**
  * Connected Component finder for undirected graph with numerical vertex identifiers
@@ -11,7 +14,7 @@ public class CCFinder {
     private int componentCount;    // number of existing components
     private boolean[] marked;    // records if a vertex has been explored
     private int[] id;    // maps a vertex to its belonged component's id
-    private ArrayList<Integer>[] components;    // maps a component's id to its included vertices
+    private ArrayList<HashSet<Integer>> components;    // maps a component's id to its included vertices
 
     /**
      * Constructs a new Connected Component Finder
@@ -23,15 +26,16 @@ public class CCFinder {
         componentCount = 0;
         marked = new boolean[G.V()];
         id = new int[G.V()];
-        components = (ArrayList<Integer>[]) new ArrayList[G.V()];
+        components = new ArrayList<>();
         for (int v = 0; v < G.V(); v++) {
             marked[v] = false;
             id[v] = 0;
-            components[v] = new ArrayList<>();
         }
 
         for (int v = 0; v < G.V(); v++) {
             if (!marked[v]) {
+            	HashSet<Integer> component = new HashSet<>();
+            	components.add(component);
                 bfs(G, v);
                 componentCount++;
             }
@@ -42,24 +46,23 @@ public class CCFinder {
         void enque(int v) { this.add(v); }
         int dequeue() { return this.remove(0); }
     }
-
     private void bfs(Graph G, int s) {
-        Queue queue = new Queue();
-        queue.enque(s);
+        Stack<Integer> queue = new Stack();
+        queue.push(s);
 
         while(!queue.isEmpty()) {
-            int v = queue.dequeue();
+            int v = queue.pop();
             marked[v] = true;
             id[v] = componentCount;
-            components[componentCount].add(v);
-
+            components.get(componentCount).add(v);
             for (int w : G.adj(v)) {
                 if (!marked[w])
-                    queue.enque(w);
+                    queue.push(w);
             }
         }
         
     }
+
 
     /**
      * Checks if two vertices are in the same component
@@ -96,46 +99,6 @@ public class CCFinder {
         return componentCount;
     }
 
-    /**
-     * Gets the id of the component that a vertex belongs to
-     * @param v The vertex
-     * @throws IllegalArgumentException
-     * When {@code v} is not a valid vertex identifier
-     * @return
-     * The id of the component that vertex {@code v} belongs to
-     */
-    public int componentIdOf(int v) {
-        validPoint(v);
-        return id[v];
-    }
-
-    /**
-     * Gets the size of the component that a vertex belongs to
-     * @param v The vertex
-     * @throws IllegalArgumentException
-     * When {@code v} is not a valid vertex identifier
-     * @return
-     * The size of the component that vertex {@code v} belongs to
-     */
-    public int componentSizeOf(int v) {
-        validPoint(v);
-        return components[id[v]].size();
-    }
-
-    /**
-     * Gets all vertices that are in the same component as a specifed
-     * vertex.
-     * Notice: the specifed vertex itself will be included as the result.
-     * @param v The vertex used to find all other connected vertices
-     * @throws IllegalArgumentException
-     * When {@code v} is not a valid vertex identifier
-     * @return
-     * And iterable object containing all vertices connected with {@code v}
-     */
-    public Iterable<Integer> connectedVerticesOf(int v) {
-        validPoint(v);
-        return components[componentIdOf(v)];
-    }
     
     /**
      * Gets a connected component by its id
@@ -146,10 +109,10 @@ public class CCFinder {
      * @return
      * An iterable object cotaining all vertices of this component
      */
-    public Iterable<Integer> getComponentById(int id) {
+    public HashSet<Integer> getComponentById(int id) {
         if (id < 0 || id > componentCount())
             throw new IllegalArgumentException("Not a valid component ID!");
-        return components[id];
+        return components.get(id);
     }
 
     @Override

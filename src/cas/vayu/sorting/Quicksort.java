@@ -3,6 +3,7 @@ package cas.vayu.sorting;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import cas.vayu.fileio.DisasterPoint;
 
@@ -35,10 +36,16 @@ public class Quicksort {
 	public static <T> void quicksort(ArrayList<T> list, int lo, int hi,
 			Comparator<T> c) {
 		if (hi <= lo) return;
-		int j = partition(list,lo,hi,c); 
+		int j = partitionRandom(list,lo,hi,c); 
 		quicksort(list,lo,j-1,c);
 		quicksort(list,j+1,hi,c);
 		
+	}
+	private static <T> int partitionRandom(ArrayList<T> list, int lo, int hi,
+			Comparator<T> c) {
+		int r = (int) (Math.random() *((hi-lo)+1)+lo);
+		exch(list,lo,r);
+		return partition(list,lo,hi,c);
 	}
 	private static <T> int partition(List<T> list,int lo, int hi, Comparator<T> c) {
 		int i = lo, j = hi+ 1;

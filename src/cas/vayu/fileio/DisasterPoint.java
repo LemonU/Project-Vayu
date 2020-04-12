@@ -170,5 +170,6 @@ public class DisasterPoint {
     public String toString () {
     	return ("Id " + ID + " Lon : " +  longitude + "Lat : " + latitude );
     }
+    
 }
 

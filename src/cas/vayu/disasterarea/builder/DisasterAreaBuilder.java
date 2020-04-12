@@ -19,7 +19,7 @@ public class DisasterAreaBuilder {
 	private ArrayList<DisasterPoint> pointList;
 	private HashMap<WeatherTypeEnum,ArrayList<DisasterArea>> areaList;
 	
-	public DisasterAreaBuilder(Hashtable<Integer,Integer> map, ArrayList<DisasterPoint> pointList,double rad) {
+	public DisasterAreaBuilder(Hashtable<Integer,Integer> map, ArrayList<DisasterPoint> pointList,double rad, int thresh) {
 		this.pointList = pointList;
 		kdtList = new Hashtable<>();
 		for(DisasterPoint p : pointList) {
@@ -45,6 +45,7 @@ public class DisasterAreaBuilder {
 
 		areaList = new HashMap<WeatherTypeEnum, ArrayList<DisasterArea>>();
 		for(int i = 0; i < componentFinder.componentCount(); i++) {
+			if(componentFinder.getComponentById(i).size() < 50) continue;
 			ArrayList<DisasterPoint> p = convertToPoint(componentFinder.getComponentById(i));
 			WeatherTypeEnum type = p.get(0).getweatherType();
 			ArrayList<DisasterPoint> convexHull = ConvexHullBuilder.convexHull(p);

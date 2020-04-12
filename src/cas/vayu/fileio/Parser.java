@@ -29,7 +29,7 @@ public class Parser {
 		nodelist = new ArrayList<DisasterPoint>();
 
 		parse();
-		System.out.print(nodelist.size());
+		System.out.println(nodelist.size());
 
 	}
 
@@ -80,9 +80,12 @@ public class Parser {
 				//parsing the line into the correct data types
 				String data = myReader.nextLine();
 				String[] line = data.split(",", -1);
-
+				if(line.length < 45) {
+					continue;
+				}
 				int id = Integer.parseInt(line[7]);
 				int year = Integer.parseInt ( line[0].substring(0, 4));
+				
 				int cast = castparse(line[20].replaceAll("\"", "") , line[21].replaceAll("\"", ""), line[22].replaceAll("\"", ""), line[23].replaceAll("\"", "")   );
 
 				int dam = damparse(line[24].replaceAll("\"", ""), line[25].replaceAll("\"", ""));

@@ -128,6 +128,8 @@ public class FileOutput {
 			out.close();
 		}catch(IOException e){
 			System.out.println("error in file creation");
+		} catch(NullPointerException e) {
+			System.out.println("Area does not exist");
 		}
 
 
