@@ -153,18 +153,12 @@ The format accepted for input data files shall only be of Comma Separated Value 
 \subsection{Functional Requirements}
 \subparagraph*{[FR1.1]} The system shall provide the user with a list of affected areas sorted by property damage cost.
 \subparagraph*{[FR1.2]} The system shall provide the user with a list of affected areas sorted by casualties
-\subparagraph*{[FR1.3]} The system shall provide the user with the list of affected locations with particular disaster types filtered out.
-\subparagraph*{[FR1.4]} The system shall provide the user with the list of affected locations sorted by proximity to a given location in latitude and longitude.
+\subparagraph*{[FR1.3]} The system shall provide the user with the list of affected locations sorted by proximity to a given location in latitude and longitude.
 \subparagraph*{[FR2.1]} The system shall output a set of convex hulls representing regions affected by a particular type of disaster.
-\subparagraph*{[FR2.2]} The system shall give each disaster area a severity rating calclated proportional to casualties and property damage and inverseley proportional to area.
 \subparagraph*{[FR3.1]} The output file shall be a text file
-\subparagraph*{[FR3.2]} The output formal shall be CSV (Comma Separated Value)
-\subparagraph*{[FR4.1]} The system shall Display the convex hull of each affected area superimposed on a map.
-\subparagraph*{[FR4.2]} The map display shall allow the filtering of disaster types.
-\subparagraph*{[FR4.3]} The map display shall allow the filtering of disasters based on time.
-\subparagraph*{[FR5.1]} The sorting of locations shall take no more than 15 minutes 95\% of the time.
-\subparagraph*{[FR5.2]} User-submitted reviews on interface compatibility and ease of use must be at least 75\% positive.
-\subparagraph*{[FR5.3]} The convex hulls representing disaster affected areas will cover at minimum 100\% of the areas affected by the disaster type.The area unaffected by the disaster that may be covered by the convex will be at most 50\% of the area of the convex hull.
+\subparagraph*{[FR4.1]} The sorting of locations shall take no more than 15 minutes 95\% of the time.
+\subparagraph*{[FR4.2]} User-submitted reviews on interface compatibility and ease of use must be at least 75\% positive.
+\subparagraph*{[FR4.3]} The convex hulls representing disaster affected areas will cover at minimum 100\% of the areas affected by the disaster type.The area unaffected by the disaster that may be covered by the convex will be at most 50\% of the area of the convex hull.
 
 \subsection{Non-Functional  Requirements}
 \subparagraph*{Scalability} The system shall be able to handle input above what is required by 2XB3 course at McMaster University.
