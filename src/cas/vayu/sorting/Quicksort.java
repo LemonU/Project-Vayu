@@ -10,6 +10,13 @@ import cas.vayu.fileio.DisasterPoint;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Quicksort class which provides static sorting methods which return a sorted copy
+ * of an ArrayList
+ * @author Oussama Saoudi
+ * @author Diego Soriano
+ *
+ */
 public class Quicksort {
 	public static <T> ArrayList<T> sort(List<T> array, Comparator<T> c) {
 		ArrayList<T> output = new ArrayList<T>();
