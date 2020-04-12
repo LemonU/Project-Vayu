@@ -1,13 +1,15 @@
 package cas.vayu.disasterarea.builder;
-
-import java.util.ArrayList;
-
 import cas.vayu.fileio.DisasterPoint;
 
+/**
+ * KdTree is a binary tree representing points in 2d space with methods for inserting,
+ * finding nearest point, and finding point within a given range of a point.
+ * @author Oussama Saoudi
+ *
+ */
 public class KdTree {
     private static final boolean VERT = true;
     private Node root;
-	private RectA fullMap;
 	private static final double maxLat = 180;
 	private static final double maxLon = 180;
 	private static final double minLat = -180;
@@ -71,7 +73,6 @@ public class KdTree {
 	 */
 	private class RectA{
 		private double xmin,xmax,ymin,ymax;
-		private Node root;
 		
 		/**
 		 * Constructor for RectA, sets minimum and maximum x and y values
@@ -129,24 +130,53 @@ public class KdTree {
 			}
 		}
 		
+		/**
+		 * Method to check if this rectangle RectA intersects at any point,
+		 * including right at the bounds, to the passed other RectA
+		 * @param other RectA to check if intersecting with this RectA
+		 * object
+		 * @return Boolean representing whether this and the other RectA
+		 * rectangles interscet
+		 */
 		private boolean intersects(RectA other) {
 	        return this.xmax >= other.xmin() && this.ymax >= other.ymin()
 	                && other.xmax() >= this.xmin && other.ymax() >= this.ymin;
 		}
-		
+		/**
+		 * Getter for minimum x value of the rectangle RectA
+		 * @return minimum x value of rectangle
+		 */
 		private double xmin() {
 			return xmin;
 		}
+		/**
+		 * Getter for minimum y value of the rectangle RectA
+		 * @return minimum y value of rectangle
+		 */
 		private double ymin() {
 			return ymin; 
 		}
+		/**
+		 * Getter for maximum y value of the rectangle RectA
+		 * @return maximum y value of rectangle
+		 */
 		private double ymax() {
 			return ymax;
 		}
+		/**
+		 * Getter for maximum x value of the rectangle RectA
+		 * @return maximum x value of rectangle
+		 */
 		private double xmax() {
 			return xmax;
 		}
 	}
+	/**
+	 * Returns the direct distance squared between two points
+	 * @param p1 Beginning of line to find distance squared of
+	 * @param p2 End of line to find distance squared of
+	 * @return distance squared of line from p1 to p2
+	 */
 	private double distanceSquaredTo(DisasterPoint p1, DisasterPoint p2) {
 		return (p1.getLat() - p2.getLat())*(p1.getLat() - p2.getLat()) + (p1.getLon() - p2.getLon()) *(p1.getLon() - p2.getLon());
 	}
@@ -159,6 +189,22 @@ public class KdTree {
 		if(p == null) throw new IllegalArgumentException();
 		this.root = insert(root,p,VERT,minLat,minLon,maxLat,maxLon);
 	}
+	/**
+	 * Inserts the DisasterPoint p at the kdTree by analyzing the node and orientation
+	 * to find placement of the point. xmin, ymin, xmax, and ymax represent the bounds
+	 * of the area being checked by the kdtree for the position to place the point.
+	 * When the new node is made with its associated point, it will occupy a RectA area
+	 * with bounds xmin, ymin, xmax, and ymax.
+	 * @param node Node on KdTree to check where point should be placed
+	 * @param p Point to be placed into the kdtree
+	 * @param orientation Orientation of the dividing line of the node, representing if
+	 * the node divides the space it occupies with a vertical or horizontal line
+	 * @param xmin Minimum x value of space occupied by the node
+	 * @param ymin Minimum y value of space occupied by the node
+	 * @param xmax Maximum x value of space occupied by the node
+	 * @param ymax Maximum x value of space occupied by the node
+	 * @return Reference to the node occupying the space
+	 */
 	private Node insert(Node node, DisasterPoint p, boolean orientation, double xmin, double ymin, double xmax, double ymax) {
 		if(node == null) {
 			return new Node(p,1,orientation,new RectA(xmin, xmax, ymin, ymax));
@@ -189,16 +235,39 @@ public class KdTree {
 		return node;
 	}
 	
+	/**
+	 * Returns the size of the node's subtree if it is not null,
+	 * else returns 0
+	 * @param n size of the node's subtree
+	 * @return the size of the node's subtree if it is not null,
+	 * else returns 0
+	 */
 	private int size(Node n) {
 		if (n == null) return 0;
 		return n.size;
 	}
 	
+	/**
+	 * Compares the x value between two DisasterPoints p1 and p2.
+	 * Returns 1 if p1 has greater x value, returns -1 if p2 has
+	 * greater value, and 0 otherwise.
+	 * @param p1 First point to compare
+	 * @param p2 Second point to compare
+	 * @return Comparison between the two points p1 and p2
+	 */
 	private int compareX(DisasterPoint p1, DisasterPoint p2) {
 		if( p1.getLat() > p2.getLat()) return 1;
 		else if(p2.getLat() > p1.getLat() ) return -1;
 		else return 0;
 	}
+	/**
+	 * Compares the y value between two DisasterPoints p1 and p2.
+	 * Returns 1 if p1 has greater y value, returns -1 if p2 has
+	 * greater value, and 0 otherwise.
+	 * @param p1 First point to compare
+	 * @param p2 Second point to compare
+	 * @return Comparison between the two points p1 and p2
+	 */
 	private int compareY(DisasterPoint p1, DisasterPoint p2) {
 		if( p1.getLon() > p2.getLon()) return 1;
 		else if(p2.getLon() > p1.getLon() ) return -1;
@@ -217,7 +286,13 @@ public class KdTree {
 		DisasterPoint nearest = null;
 		return nearestPoint(root,query,nearest);
 	}
-	
+	/**
+	 * Finds the nearest point in the kdTree to the query DisasterPoint.
+	 * @param node Node occupying space being analyzed
+	 * @param query Node to find nearest neighbor in the kdTree
+	 * @param nearestPoint The nearest point found so far in the search
+	 * @return returns the nearest point found so far in the kd tree.
+	 */
 	private DisasterPoint nearestPoint(Node node, DisasterPoint query, DisasterPoint nearestPoint) {
 		if(nearestPoint == null) nearestPoint = node.getPoint();
 		if(node == null) return nearestPoint;
@@ -259,7 +334,6 @@ public class KdTree {
 	 * @param rad Radius from query point to search for close by points
 	 * @return Iterable of all the points within the radius of query.
 	 */
-	@SuppressWarnings("unused")
 	public Iterable<DisasterPoint> closePionts(DisasterPoint query, double rad){
 		RectA area = new RectA(query.getLat()-rad,query.getLat()+rad,query.getLon()-rad,query.getLon()+rad);
 		Stack<DisasterPoint> output = new Stack<>();
@@ -267,6 +341,15 @@ public class KdTree {
 		return output;
 	}
 
+	/**
+	 * Finds all DisasterPoints existing in the RectA rectangle passed to the
+	 * method
+	 * @param node Node occupying space being analyzed
+	 * @param rect RectA rectangular area to find all points within, bounds 
+	 * included
+	 * @param stack Stack of DisasterPoints which are found to reside inside the
+	 * rectangular area RectA
+	 */
     private void range(Node node, RectA rect, Stack<DisasterPoint> stack) {
         if (node == null) return;
 
@@ -281,9 +364,12 @@ public class KdTree {
         }
         return;
     }
+    /**
+     * Main method used for unit testing of the KdTree
+     * @param args Arguments to be passed to the main method.
+     */
 	public static void main(String[] args) {
 		KdTree tree = new KdTree();
-		ArrayList<DisasterPoint> points = new ArrayList<>();
 		for(int i = 0; i < 10; i++) {
 			DisasterPoint p = new DisasterPoint(i);
 			p.setLat(i*1.0);

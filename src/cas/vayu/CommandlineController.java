@@ -38,7 +38,7 @@ public class CommandlineController {
         outputter = new FileOutput();
 
         parser = new Parser();
-        DABuilder = new DisasterAreaBuilder(Parser.lookup, parser.getData(), RAD,50);
+        DABuilder = new DisasterAreaBuilder(parser.getTable(), parser.getData(), RAD,50);
     }
 
     public void start() {

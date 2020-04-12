@@ -43,7 +43,13 @@ public class Graph {
         adj[w].add(v);
         E++;
     }
-
+    /**
+     * Checks if the passed integer vertex is in the graph. If it isn't
+     * throws IllegalArgumentException.
+     * @param v Vertex to check if existing in the graph
+     * @throws IllegalArgumentException if the given vertex is less than 0 or
+     * greater than the size of the graph
+     */
     private void validPoint(int v) {
         if (v < 0 || v >= V())
             throw new IllegalArgumentException("Not a valid vertex!");
@@ -98,8 +104,8 @@ public class Graph {
 
     /**
      * Gets the string representation of this graph
-     * @return
-     * The string representation of this graph
+     * @return String with number of vertices and edges, followed by
+     * each edge on a new line in the format "v1 -> v2"
      */
     @Override
     public String toString() {

@@ -33,7 +33,6 @@ public class Stack<Item> implements Iterable<Item>{
         public boolean hasNext(){
             return current != null;
         }
-        public void remove(){}
         public Item next() {
             Item output = current.item;
             current = current.next;

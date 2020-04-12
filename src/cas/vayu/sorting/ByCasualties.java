@@ -3,7 +3,11 @@ package cas.vayu.sorting;
 import java.util.Comparator;
 
 import cas.vayu.fileio.DisasterPoint;
-
+/**
+ * Comparator which compares two DisasterPoints by the casualties
+ * @author Diego Soriano
+ * 
+ */
 public class ByCasualties implements Comparator<DisasterPoint> {
 
 	/**

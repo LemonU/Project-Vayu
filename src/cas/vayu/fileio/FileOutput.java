@@ -1,26 +1,28 @@
 package cas.vayu.fileio;
 
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import cas.vayu.disasterarea.builder.DisasterArea;
 /**
- * 
+ * Module which handles file outputting of lists of DisasterPoint and lists of
+ * DisasterAreas
  * @author Christina Korsman
  *
  */
 public class FileOutput {
 	
-	String sep;//the line separated the nodes
-	int linesize ; // the size of sep
+	private String sep;//the line separated the DisasterPoints 
+	private static final int numOfFields = 7;
+	private static final int sizeOfField = 21;
 	/**
-	 * Initialized the FileOutput and sets up the linesize
+	 * Initializes the FileOutput and creates the line separator which
+	 * separates the DisasterPoints when being printed
 	 */
 	public FileOutput() {
 		//setting up sep size 
-		int lineSize = 21*7;
+		int lineSize = numOfFields*sizeOfField;
 		sep = "";
 		for (int i =0; i< lineSize; i++ ) {
 			sep = sep + "-";
@@ -29,11 +31,12 @@ public class FileOutput {
 	}
 
 	/**
-	 * @brief write a file format to be easy to read with the given arraylist of nodes
+	 * Writes the DisasterPoints found in the pointList into a file with the name
+	 * fileName
 	 * @param fileName  the output file name
-	 * @param nodelist	the arraylist of nodes
+	 * @param pointList	the ArrayList of DisasterPoint to be written
 	 */
-	public void writeData(String fileName, ArrayList<DisasterPoint> nodelist){
+	public void writeData(String fileName, ArrayList<DisasterPoint> pointList){
 		try {
 			
 			FileWriter out = new FileWriter(fileName);
@@ -53,19 +56,19 @@ public class FileOutput {
 
 			//give all items 20 spaces
 			//append all the node item in the correct format
-			for (DisasterPoint i : nodelist) {
-				out.append(String.format("%-20d|", i.getID()));
+			for (DisasterPoint i : pointList) {
+				out.append(String.format("%-20d|", i.getId()));
 				out.append(String.format("%-20d|", i.getYear()));
 				
-				if (i.getweatherType() == null) {// not showing the user changing it to blank instead
+				if (i.getWeatherType() == null) {// not showing the user changing it to blank instead
 					out.append((String.format("%-20s|","")));
 				}else {
-					out.append(String.format("%-20s|", i.getweatherType()));
+					out.append(String.format("%-20s|", i.getWeatherType()));
 				}
 				
 				out.append(String.format("%-20s|", i.getLat()));
 				out.append(String.format("%-20s|", i.getLon()));
-				out.append(String.format("%-20s|", i.getproperty_damage()));
+				out.append(String.format("%-20s|", i.getPropertyDamage()));
 				out.append(String.format("%-20s|", i.getCasulaties()));
 
 				out.append("\n");
@@ -79,9 +82,9 @@ public class FileOutput {
 	}
 
 	/**
-	 * @brief write a file formated to be easy to read given the arraylist of disaster areas
+	 * Write the DisasterAreas found in areas to a file with name fileName
 	 * @param fileName the output file name
-	 * @param areas the arraylist of area to be outputed
+	 * @param areas the ArrayList of areas to be written
 	 */
 	public void writeArea(String fileName, ArrayList<DisasterArea> areas){
 		try {
@@ -107,16 +110,16 @@ public class FileOutput {
 
 					
 					//outputting all the contents 
-					out.append(String.format("%-20d|", x.getID()));
+					out.append(String.format("%-20d|", x.getId()));
 					out.append(String.format("%-20d|", x.getYear()));
-					if (x.getweatherType() == null) {// not showing the user changing it to blank instead
+					if (x.getWeatherType() == null) {// not showing the user changing it to blank instead
 						out.append((String.format("%-20s|","")));
 					}else {
-						out.append(String.format("%-20s|", x.getweatherType()));
+						out.append(String.format("%-20s|", x.getWeatherType()));
 					}
 					out.append(String.format("%-20s|", x.getLat()));
 					out.append(String.format("%-20s|", x.getLon()));
-					out.append(String.format("%-20s|", x.getproperty_damage()));
+					out.append(String.format("%-20s|", x.getPropertyDamage()));
 					out.append(String.format("%-20s|", x.getCasulaties()));
 
 					out.append("\n");

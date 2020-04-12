@@ -2,7 +2,6 @@ package cas.vayu.disasterarea.builder;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashSet;
 
 import cas.vayu.fileio.DisasterPoint;
 import cas.vayu.sorting.Quicksort;
@@ -40,16 +39,6 @@ public class ConvexHullBuilder {
 		disasterPoints.set(p2, temp);
 	}
 	
-	/**
-	 * Returns the distance squared of the two Points p1 and p2 by calculating the
-	 * hypotenuse squared. 
-	 * @param p1 First DisasterPoint to calculate distance
-	 * @param p2 Second DisasterPoint to calculate distance
-	 * @return the distance squared between p1 and p2, of type Double
-	 */
-	private double distanceSq(DisasterPoint p1,DisasterPoint p2) {
-		return (p1.getLat() - p2.getLat())*(p1.getLat() - p2.getLat()) + (p1.getLon() - p2.getLon())*(p1.getLon() - p2.getLon());
-	}
 	
 	/**
 	 * Checks if points p1, p2, and p3 have a clockwise, collinear, or counterclockwise
@@ -76,9 +65,24 @@ public class ConvexHullBuilder {
 	private static class PointComparator implements Comparator<DisasterPoint>{
 
 		private DisasterPoint anchor;
+		/**
+		 * Constructs a comparator that compares DisasterPoints based on the
+		 * radial distance from the x axis relative to the anchor DisasterPoint
+		 * @param anchor DisasterPoint used to compare points passed to 
+		 * comparator
+		 */
 		private PointComparator(DisasterPoint anchor) {
 			this.anchor = anchor;
 		}
+		/**
+		 * Compares two DisasterPoints p1 and p2 based on their radial distance
+		 * relative to the anchor DisasterPOint
+		 * @param p1 First DisasterPoint to compare
+		 * @param p2 Second DisasterPoint to compare
+		 * @return Integer representing radial distance. If the points are collinear, returns 
+		 * -1 if p2 is farther than p1, and returns 1 otherwise. Else, return -1 if the orientation
+		 * of anchor, p1,and p2 is counter clockwise, and 1 otherwise.
+		 */
 		@Override
 		public int compare(DisasterPoint p1, DisasterPoint p2) {
 			int ori = orientation(anchor,p1,p2);
@@ -91,13 +95,22 @@ public class ConvexHullBuilder {
 			// return -1 if orientation is counter clock-wise, 1 if clock-wise
 			return (ori == 2) ? -1 : 1;
 		}
+		/**
+		 * Returns the distance squared of the two Points p1 and p2 by calculating the
+		 * hypotenuse squared. 
+		 * @param p1 First DisasterPoint to calculate distance
+		 * @param p2 Second DisasterPoint to calculate distance
+		 * @return the distance squared between p1 and p2, of type Double
+		 */
 		private double distanceSq(DisasterPoint p1,DisasterPoint p2) {
 			return (p1.getLat() - p2.getLat())*(p1.getLat() - p2.getLat()) + (p1.getLon() - p2.getLon())*(p1.getLon() - p2.getLon());
 		}
 		}
 	
 	/**
-	 * Computes the convex hull of the list of points provided
+	 * Computes the convex hull of the list of points provided. ie; it computes the
+	 * smallest set of points when if connected as a polygon contain all the points in 
+	 * the input set disasterPoints
 	 * @param disasterPoints List of points in the set to compute convex set
 	 * @return Set of Points representing the convex hull of the points parameter
 	 */
@@ -158,6 +171,10 @@ public class ConvexHullBuilder {
 		}
 		return output;
 	}
+	/**
+	 * Main method used for unit testing
+	 * @param args Arguments to method
+	 */
 	public static void main(String[] args) {
 		DisasterPoint p = new DisasterPoint(0);
 		p.setLat(1);

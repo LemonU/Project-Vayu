@@ -1,6 +1,6 @@
 package cas.vayu.fileio;
 /**
- * 
+ * Enum representing a weather disaster type, with associated string representations
  * @author Christina Korsman
  *
  */
@@ -61,22 +61,28 @@ public enum WeatherTypeEnum {
     
     private String text;
 
-	WeatherTypeEnum(String text) {
+    /**
+     * Constructs WeatherTypeEnum from associated text.
+     * @param text name of the created WeatherTypeEnum
+     */
+	private WeatherTypeEnum(String text) {
         this.text = text;
     }
     
     /**
-     * 
-     * @return weather type to string
+     * Returns the associated name of the WeatherTypeEnum
+     * @return name of the WeatherTypeEnum
      */
     public String getText() {
         return this.text;
     }
     
     /**
-     * 
-     * @param textthe weather type in string format
-     * @return if the string type exist return enum otherwise return null
+     * Returns the WeatherTypeEnum associated with the given text if it exists,
+     * else return null.
+     * @param text Name of the WeatherTypeEnum
+     * @return WeatherTypeEnum if there is one with associated text, and null
+     * otherwise
      */
     public static WeatherTypeEnum fromString(String text) {
         for (WeatherTypeEnum type : WeatherTypeEnum.values()) {

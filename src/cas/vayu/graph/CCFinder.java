@@ -35,24 +35,29 @@ public class CCFinder {
             if (!marked[v]) {
             	HashSet<Integer> component = new HashSet<>();
             	components.add(component);
-                bfs(G, v);
+                dfs(G, v);
                 componentCount++;
             }
         }
     }
+    /**
+     * Performs depth first search in the graph G starting from source s.
+     * Adds all the explored points to a connected component
+     * @param G Graph to search for connected nodes
+     * @param s source of the depth first search in the graph
+     */
+    private void dfs(Graph G, int s) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(s);
 
-    private void bfs(Graph G, int s) {
-        Stack<Integer> queue = new Stack<>();
-        queue.push(s);
-
-        while(!queue.isEmpty()) {
-            int v = queue.pop();
+        while(!stack.isEmpty()) {
+            int v = stack.pop();
             marked[v] = true;
             id[v] = componentCount;
             components.get(componentCount).add(v);
             for (int w : G.adj(v)) {
                 if (!marked[w])
-                    queue.push(w);
+                    stack.push(w);
             }
         }
         
@@ -77,6 +82,13 @@ public class CCFinder {
         return id[v] == id[w];
     }
 
+    /**
+     * Checks if the passed integer vertex is in the graph. If it isn't
+     * throws IllegalArgumentException.
+     * @param v Vertex to check if existing in the graph
+     * @throws IllegalArgumentException if the given vertex is less than 0 or
+     * greater than the size of the graph
+     */
     private void validPoint(int v) {
         int V = marked.length;
         if (v < 0 || v >= V)
@@ -110,6 +122,11 @@ public class CCFinder {
         return components.get(id);
     }
 
+    /**
+     * String representation of CCFinder. Has the form:
+     * "Number of Components: componentCount"
+     * @return Returns the string representation of the CCFinder
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -123,6 +140,10 @@ public class CCFinder {
         return sb.toString();
     }
 
+    /**
+     * Main method used for unit testing the CCFinder
+     * @param args Arguments passed to the main methods
+     */
     public static void main(String[] args) {
         Graph g = new Graph(10);
         g.addEdge(0, 1);

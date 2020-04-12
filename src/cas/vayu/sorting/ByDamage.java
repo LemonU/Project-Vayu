@@ -3,6 +3,11 @@ package cas.vayu.sorting;
 import java.util.Comparator;
 
 import cas.vayu.fileio.DisasterPoint;
+/**
+ * Comparator which compares two DisasterPoints by their property damage
+ * @author Diego Soriano
+ *
+ */
 public class ByDamage implements Comparator<DisasterPoint> {
 
 	/**
@@ -15,13 +20,13 @@ public class ByDamage implements Comparator<DisasterPoint> {
 	 */
 	@Override
 	public int compare(DisasterPoint o1, DisasterPoint o2) {
-		if (o1.getproperty_damage() < o2.getproperty_damage()) {
+		if (o1.getPropertyDamage() < o2.getPropertyDamage()) {
 			return -1;
 		}
-		if (o1.getproperty_damage() == o2.getproperty_damage()) {
+		if (o1.getPropertyDamage() == o2.getPropertyDamage()) {
 			return 0;
 		}
-		if (o1.getproperty_damage() > o2.getproperty_damage()) {
+		if (o1.getPropertyDamage() > o2.getPropertyDamage()) {
 			return 1;
 		}
 		return 0;

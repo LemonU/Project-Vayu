@@ -9,50 +9,49 @@ import java.util.Scanner;
 
 
 /**
- * 
+ * Parser which reads input files and constructs DisasterPoints
+ * from the DisasterPoints
  * @author Christina Korsman
  *
  */
 public class Parser {
 
-	public static Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
-	public static void main(String[] args) throws IOException {//testing 
-		Parser par = new Parser();
-	}
-
+	private Hashtable<Integer,Integer> lookup = new Hashtable<Integer,Integer>(); // id to index 
 	public static ArrayList<DisasterPoint> nodelist;//list of all nodes in all files
 
 	/**
-	 * When class is called reads through all the files and inputs them into the nodelist
+	 * Initializes parsing of the input files and creation of DisasterPoints
 	 */
 	public Parser() {
 		nodelist = new ArrayList<DisasterPoint>();
 
 		parse();
-		System.out.println(nodelist.size());
+		System.out.println("Parsing successful. Number of nodes: " + nodelist.size());
 
 	}
 
 	/**
-	 * Brief - setting the base dir for all files to be read 
+	 * Sets the base directory for all the files to be parsed
 	 */
 	private void parse() {
 		File currentDir = new File("./data/eventDetails"); // current directory
-		getfiles(currentDir);
+		getFiles(currentDir);
 	}
 
 	/**
-	 * 
+	 * Gets all the files in the given directory dir and runs the detailsParser
+	 * on files that are not directories. If a directory is contained in dir, it
+	 * recursively searches by called getFiles on that directory.
 	 * @param dir the directory for the files to be read
 	 */
-	private void getfiles(File dir) {
+	private void getFiles(File dir) {
 		try {
 			File[] files = dir.listFiles();
 
 			for (File file : files) {
 				if (file.isDirectory()) {
 
-					getfiles(file);
+					getFiles(file);
 				} else {
 					detailsParser(file.getCanonicalPath());
 
@@ -66,12 +65,13 @@ public class Parser {
 	}
 
 	/**
-	 * A method to perform parsing on a single file
-	 * @param file the file to be read and node inputed into nodelist
+	 * Parses given file with name fileName, and creates DisasterPoints from data.
+	 * Adds all the created DisasterPoints to a the nodeList
+	 * @param fileName Name of file to be read to parse data for DisasterPoints from
 	 */
-	public static  void detailsParser(String file ) {
+	public  void detailsParser(String fileName ) {
 		try {
-			File myObj = new File(file);
+			File myObj = new File(fileName);
 			Scanner myReader = new Scanner(myObj);
 
 			myReader.nextLine();//skip the heading
@@ -86,10 +86,11 @@ public class Parser {
 				int id = Integer.parseInt(line[7]);
 				int year = Integer.parseInt ( line[0].substring(0, 4));
 				
-				int cast = castparse(line[20].replaceAll("\"", "") , line[21].replaceAll("\"", ""), line[22].replaceAll("\"", ""), line[23].replaceAll("\"", "")   );
+				int cast = sumCasualties(line[20].replaceAll("\"", "") , line[21].replaceAll("\"", ""), line[22].replaceAll("\"", ""), line[23].replaceAll("\"", "")   );
 
-				int dam = damparse(line[24].replaceAll("\"", ""), line[25].replaceAll("\"", ""));
+				int dam = damageParse(line[24].replaceAll("\"", ""), line[25].replaceAll("\"", ""));
 
+				
 				WeatherTypeEnum type = WeatherTypeEnum.fromString(line[12].replaceAll("\"", ""));
 
 
@@ -110,7 +111,7 @@ public class Parser {
 					lon =0;
 				}
 
-				//void any points that do not have a lat or long
+				//void any points that do not have a lat or lon
 				if(!(Math.round(lat) == 0 || Math.round(lon) == 0)) {
 					DisasterPoint temp ; // creating point checking if it exist and update it other wise make a new  point base on the unique id
 					if (  lookup.get(id) == null) {
@@ -128,6 +129,7 @@ public class Parser {
 					temp.setLon(lon);
 					temp.settype(type);
 					temp.setCas(cast);
+					temp.setPropertyDam(dam);
 				}
 
 
@@ -143,38 +145,39 @@ public class Parser {
 	}
 
 	/**
-	 * Brief takes the casualties column  and return the sum of them
-	 * @param cast1 casualties column 1 
-	 * @param cast2 casualties column 2 
-	 * @param cast3 casualties column 3
-	 * @param cast4 casualties column 4 
-	 * @return the sum of the  casualties columns
+	 * Takes 4 strings which are each representing integers for injuries and deaths,
+	 * converts them to integer, and returns the sum of all the integers.
+	 * @param injuryD String of integer direct injuries 
+	 * @param injuryI String of integer indirect injuries
+	 * @param deathD String of integer direct deaths
+	 * @param deathI String of integer indirect deaths   
+	 * @return the sum of the the injuries and deaths to represent casualties
 	 */
-	private static int castparse(String cast1, String cast2, String cast3, String cast4) {
+	private static int sumCasualties(String injuryD, String injuryI, String deathD, String deathI) {
 		int cast =0;
 		try {
-			cast += Integer.parseInt(cast1.replaceAll("\"", ""));
+			cast += Integer.parseInt(injuryD.replaceAll("\"", ""));
 
 		}catch (NumberFormatException e){
 			cast +=0;
 		}
 
 		try {
-			cast += Integer.parseInt(cast2.replaceAll("\"", ""));
+			cast += Integer.parseInt(injuryI.replaceAll("\"", ""));
 
 		}catch (NumberFormatException e){
 			cast +=0;
 		}
 
 		try {
-			cast += Integer.parseInt(cast3.replaceAll("\"", ""));
+			cast += Integer.parseInt(deathD.replaceAll("\"", ""));
 
 		}catch (NumberFormatException e){
 			cast +=0;
 		}
 
 		try {
-			cast += Integer.parseInt(cast4.replaceAll("\"", ""));
+			cast += Integer.parseInt(deathI.replaceAll("\"", ""));
 
 		}catch (NumberFormatException e){
 			cast +=0;
@@ -184,37 +187,38 @@ public class Parser {
 	}
 
 	/**
-	 * Brief take the damages columns and returns the sum of them 
-	 * @param dam1 damages column 1
-	 * @param dam2 damages column 2
-	 * @return the sum of the damages columns
+	 * Takes string representation of  property damage and crop damage and 
+	 * converts to Double, then returns their sum
+	 * @param pDamage String of property damage in USD
+	 * @param cDamage String of crop damage in USD
+	 * @return the sum of the property and crop damage
 	 */
-	private static int damparse(String dam1, String dam2) {
+	private static int damageParse(String pDamage, String cDamage) {
 		Double dam = 0.0;
 
-		if (dam1.contains("K")) {
-			String [] out = dam1.split("K");
+		if (pDamage.contains("K")) {
+			String [] out = pDamage.split("K");
 			if(out.length !=0) {
 				dam  +=( Double.parseDouble(out[0]))*1000;}
 
 		}
-		if (dam1.contains("M")) {
-			String [] out = dam1.split("M");
+		if (pDamage.contains("M")) {
+			String [] out = pDamage.split("M");
 			if(out.length !=0) {
 				dam  +=( Double.parseDouble(out[0]))*1000000;}
 
 		}
 
 
-		if (dam2.contains("K")) {
-			String [] out = dam2.split("K");
+		if (cDamage.contains("K")) {
+			String [] out = cDamage.split("K");
 			if(out.length !=0) {
 				dam  +=( Double.parseDouble(out[0]))*1000;}
 
 
 		}
-		if (dam2.contains("M")) {
-			String [] out = dam2.split("M");
+		if (cDamage.contains("M")) {
+			String [] out = cDamage.split("M");
 			if(out.length !=0) {
 				dam  +=( Double.parseDouble(out[0]))*1000000;}
 
@@ -225,11 +229,20 @@ public class Parser {
 	}
 	
 	/**
-	 * Brief returns the nodelist
-	 * @return the nodelist
+	 * Returns the ArrayList of DisasterPoints created and stored by the parser
+	 * @return ArrayList of DisasterPoints created by parser
 	 */
 	public ArrayList<DisasterPoint> getData(){
 		return nodelist;
+	}
+	/**
+	 * Getter for the hash table constructed by parser to map id of Disasterpoint
+	 * to its index
+	 * @return hash table which maps the id of a DisasterPoint to the point's
+	 * ArrayList index
+	 */
+	public Hashtable<Integer,Integer> getTable(){
+		return lookup;
 	}
 
 
