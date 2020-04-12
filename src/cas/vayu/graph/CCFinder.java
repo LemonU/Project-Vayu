@@ -2,7 +2,6 @@ package cas.vayu.graph;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 import cas.vayu.disasterarea.builder.Stack;
 
@@ -43,7 +42,7 @@ public class CCFinder {
     }
 
     private void bfs(Graph G, int s) {
-        Stack<Integer> queue = new Stack();
+        Stack<Integer> queue = new Stack<>();
         queue.push(s);
 
         while(!queue.isEmpty()) {
