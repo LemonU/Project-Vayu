@@ -30,7 +30,7 @@ public class Graph {
 
     /**
      * Connect two verticies in the graph with a new
-     * undirected graph.
+     * undirected edge.
      * Notice: Duplicate edges are permitted in this implementation
      * @param v First vertex
      * @param w Second vertex

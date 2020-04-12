@@ -45,7 +45,7 @@ public class DisasterAreaBuilder {
 		Graph G = new Graph(pointList.size());
 		for(DisasterPoint p: pointList) {
 			if (p.getWeatherType() == null) continue;
-			for(DisasterPoint e : kdtList.get(p.getWeatherType()).closePionts(p,rad)) {
+			for(DisasterPoint e : kdtList.get(p.getWeatherType()).closePoints(p,rad)) {
 				G.addEdge(map.get(e.getId()) , map.get(p.getId()));
 			}
 		}

@@ -334,7 +334,7 @@ public class KdTree {
 	 * @param rad Radius from query point to search for close by points
 	 * @return Iterable of all the points within the radius of query.
 	 */
-	public Iterable<DisasterPoint> closePionts(DisasterPoint query, double rad){
+	public Iterable<DisasterPoint> closePoints(DisasterPoint query, double rad){
 		RectA area = new RectA(query.getLat()-rad,query.getLat()+rad,query.getLon()-rad,query.getLon()+rad);
 		Stack<DisasterPoint> output = new Stack<>();
 		range(root,area,output);
@@ -403,7 +403,7 @@ public class KdTree {
 		c.setLat(0);
 		c.setLon(0);
 		//System.out.println(tree2.closePionts(c, 0.1));
-		for(DisasterPoint e : tree2.closePionts(c, 12)) {
+		for(DisasterPoint e : tree2.closePoints(c, 12)) {
 			System.out.println(e);
 		}
 		
